@@ -1,11 +1,8 @@
-from enum import Enum
+from utils import Enum
 
 
-class Direction(Enum):
-    north = 1
-    south = 2
-    west = 3
-    east = 4
+Direction = Enum('North', 'NorthEast', 'East', 'SouthEast',
+                 'South', 'SouthWest', 'West', 'NorthWest')
 
 
 class Action:
@@ -19,18 +16,16 @@ class Action:
 
 
 class Shot(Action):
-
-    def __init__(self, angle):
+    def __init__(self, direction):
         """
             Args:
-                angle (float): value in range <0, 2pi>
+                direction (Direction): enum value
         """
         Action.__init__(self)
-        self.angle = angle
+        self.direction = direction
 
 
 class Move(Action):
-
     def __init__(self, direction):
         """
             Args:
@@ -41,6 +36,5 @@ class Move(Action):
 
 
 class Nothing(Action):
-
     def __init__(self):
         Action.__init__(self)
