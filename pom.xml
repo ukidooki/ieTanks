@@ -11,6 +11,9 @@
 
     <modules>
         <module>ieTanks-server</module>
+        <module>ieTanks-engine</module>
+        <module>ieTanks-gameplay</module>
+        <module>ieTanks-sandbox</module>
     </modules>
 
     <properties>
