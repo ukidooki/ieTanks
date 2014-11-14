@@ -1,4 +1,4 @@
-package pl.edu.agh.ietanks.engine;
+package pl.edu.agh.ietanks.engine.api;
 
 /**
  * Bot behavior/logic interface

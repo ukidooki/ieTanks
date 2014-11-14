@@ -1,4 +1,4 @@
-package pl.edu.agh.ietanks.engine;
+package pl.edu.agh.ietanks.engine.api;
 
 import java.util.List;
 
