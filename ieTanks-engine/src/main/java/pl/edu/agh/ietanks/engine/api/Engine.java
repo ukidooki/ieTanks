@@ -1,5 +1,7 @@
 package pl.edu.agh.ietanks.engine.api;
 
+import pl.edu.agh.ietanks.engine.api.events.Event;
+
 import java.util.List;
 
 /**
@@ -13,7 +15,7 @@ public interface Engine {
      * @param initialBoard a board state we are starting with
      * @param bots list of bot definitions, capable of performing moves
      */
-    void setup(Board initialBoard, List<Bot> bots);
+    void setup(MutableBoard initialBoard, List<Bot> bots);
 
     /**
      * Performs next move.
