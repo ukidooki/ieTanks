@@ -29,6 +29,6 @@ public interface Board {
     boolean isAccessibleForTank(Position position);
 
     enum Direction {
-        Right
+        Right, Left, Up, Down
     }
 }

@@ -9,8 +9,20 @@ public class Position {
         this.fromLeft = fromLeft;
     }
 
-    public Position oneRight() {
-        return new Position(fromTop, fromLeft+1);
+    public Position toRight(int step) {
+        return new Position(fromTop, fromLeft+step);
+    }
+    
+    public Position toLeft(int step) {
+        return new Position(fromTop, fromLeft-step);
+    }
+    
+    public Position toUp(int step) {
+        return new Position(fromTop-step, fromLeft);
+    }
+    
+    public Position toDown(int step) {
+        return new Position(fromTop+step, fromLeft);
     }
 
     public int fromLeft() {

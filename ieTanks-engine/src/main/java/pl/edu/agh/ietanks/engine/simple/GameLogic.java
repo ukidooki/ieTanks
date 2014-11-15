@@ -7,6 +7,7 @@ import pl.edu.agh.ietanks.engine.api.MutableBoard;
 import pl.edu.agh.ietanks.engine.api.events.Event;
 import pl.edu.agh.ietanks.engine.api.Position;
 import pl.edu.agh.ietanks.engine.api.events.TankMoved;
+import pl.edu.agh.ietanks.engine.simple.actions.Move;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,15 +36,33 @@ public class GameLogic {
             return events;
         }
 
-        if(proposedAction == Action.MoveRight) {
-            Position destination = botPosition.get().oneRight();
+        if(proposedAction instanceof Move) {
+        	Move move = (Move) proposedAction;
+            Position destination;
+            
+            if (move.getDirection() == Board.Direction.Right) {
+            	destination = botPosition.get().toRight(move.getStep());
+            }
+            else if (move.getDirection() == Board.Direction.Left) {
+            	destination = botPosition.get().toLeft(move.getStep());
+            }
+            else if (move.getDirection() == Board.Direction.Up) {
+            	destination = botPosition.get().toUp(move.getStep());
+            }
+            else {
+            	destination = botPosition.get().toDown(move.getStep());
+            }
 
-            if(board.isWithin(destination) && board.isAccessibleForTank(destination)) {
+            if(canTankBeMoved(destination)) {
                 board.replaceTank(botId, destination);
-                events.add(new TankMoved(botId, Board.Direction.Right));
+                events.add(new TankMoved(botId, move.getDirection(), move.getStep()));
             }
         }
 
         return events;
     }
+
+	private boolean canTankBeMoved(Position destination) {
+		return board.isWithin(destination) && board.isAccessibleForTank(destination);
+	}
 }
