@@ -25,5 +25,24 @@ public class Move implements Action{
 	public int getStep() {
 		return step;
 	}
-	
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Move move = (Move) o;
+
+        if (step != move.step) return false;
+        if (direction != move.direction) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = direction.hashCode();
+        result = 31 * result + step;
+        return result;
+    }
 }

@@ -2,3 +2,5 @@
 *.iml
 */target/
 target/
+cachedir
+ieTanks-gameplay/cachedir
