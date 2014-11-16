@@ -5,25 +5,25 @@ import pl.edu.agh.ietanks.engine.api.Board;
 import pl.edu.agh.ietanks.engine.api.Board.Direction;
 
 /**
- * Represents move request from the bot to the game engine.
+ * Represents shot request from the bot to the game engine.
  */
-public class Move implements Action{
+public class Shot implements Action {
 	
 	private Board.Direction direction;
-	private int step;
+	private int speed;
 	
-	public Move(Direction direction, int step) {
+	public Shot(Direction direction, int speed) {
 		super();
 		this.direction = direction;
-		this.step = step;
+		this.speed = speed;
 	}
 
 	public Board.Direction getDirection() {
 		return direction;
 	}
 
-	public int getStep() {
-		return step;
+	public int getSpeed() {
+		return speed;
 	}
-	
+
 }

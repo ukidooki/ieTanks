@@ -24,6 +24,22 @@ public class Position {
     public Position toDown(int step) {
         return new Position(fromTop+step, fromLeft);
     }
+    
+    public Position toUpLeft(int step) {
+        return new Position(fromTop-step, fromLeft-step);
+    }
+    
+    public Position toDownLeft(int step) {
+        return new Position(fromTop+step, fromLeft-step);
+    }
+    
+    public Position toUpRight(int step) {
+        return new Position(fromTop-step, fromLeft+step);
+    }
+    
+    public Position toDownRight(int step) {
+        return new Position(fromTop+step, fromLeft+step);
+    }
 
     public int fromLeft() {
         return fromLeft;
