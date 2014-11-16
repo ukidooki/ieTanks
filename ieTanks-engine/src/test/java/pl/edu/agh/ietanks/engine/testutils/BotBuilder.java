@@ -1,12 +1,14 @@
 package pl.edu.agh.ietanks.engine.testutils;
 
-import com.google.common.collect.Lists;
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 import pl.edu.agh.ietanks.engine.api.Action;
 import pl.edu.agh.ietanks.engine.api.Board;
 import pl.edu.agh.ietanks.engine.api.Bot;
+import pl.edu.agh.ietanks.engine.simple.actions.NoOperation;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
+import com.google.common.collect.Lists;
 
 public class BotBuilder {
     public static Bot fromSequence(final Action... actions) {
@@ -16,7 +18,7 @@ public class BotBuilder {
             @Override
             public Action performAction(Board currentBoard) {
                 if(actionQueue.isEmpty()) {
-                    return Action.NoOperation;
+                    return new NoOperation();
                 }
                 else {
                     return actionQueue.poll();

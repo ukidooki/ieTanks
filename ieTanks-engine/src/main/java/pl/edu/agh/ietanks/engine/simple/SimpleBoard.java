@@ -1,21 +1,26 @@
 package pl.edu.agh.ietanks.engine.simple;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
-import pl.edu.agh.ietanks.engine.api.Board;
-import pl.edu.agh.ietanks.engine.api.MutableBoard;
-import pl.edu.agh.ietanks.engine.api.Position;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import pl.edu.agh.ietanks.engine.api.Missile;
+import pl.edu.agh.ietanks.engine.api.MutableBoard;
+import pl.edu.agh.ietanks.engine.api.Position;
+
+import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
+
 public class SimpleBoard implements MutableBoard {
     final Set<Position> taken = new HashSet<>();
     final Map<Integer, Position> tanks;
+    final List<Missile> missiles;
 
     private final int width;
     private final int height;
@@ -25,6 +30,7 @@ public class SimpleBoard implements MutableBoard {
         this.height = height;
 
         tanks = new HashMap<>(initialTankPositions);
+        missiles = new ArrayList<>();
         taken.addAll(tanks.values());
     }
 
@@ -37,6 +43,32 @@ public class SimpleBoard implements MutableBoard {
     public Optional<Position> findTank(int tankId) {
         return Optional.fromNullable(tanks.get(tankId));
     }
+    
+	@Override
+	public Collection<Missile> findMissiles() {
+		return Collections.unmodifiableCollection(missiles);
+	}
+	
+	@Override
+	public Integer findTank(Position position) {
+		for (int tankId : tanks.keySet()) {
+			if (tanks.get(tankId).equals(position)) {
+				return tankId; 
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public Collection<Missile> findMissiles(Position position) {
+		Collection<Missile> missilesHere = new ArrayList<>();
+		for (Missile missile : missiles) {
+			if (missile.position().equals(position)) {
+				missilesHere.add(missile);
+			}
+		}
+		return Collections.unmodifiableCollection(missilesHere);
+	}
 
     @Override
     public boolean isWithin(Position position) {
@@ -60,6 +92,35 @@ public class SimpleBoard implements MutableBoard {
         tanks.put(tankId, destination);
         taken.add(destination);
     }
+    
+	@Override
+	public void removeTank(int tankId) {
+		taken.remove(tanks.get(tankId));
+		tanks.remove(tankId);
+	}
+    
+	@Override
+	public void createMissile(Missile missile) {
+		if (isWithin(missile.position())) {
+			missiles.add(missile);
+		}
+	}
+
+	@Override
+	public void replaceMissile(Missile missile, Position destination) {
+		if (isWithin(destination)) {
+			missile.changePosition(destination);
+		}
+		else {
+			missiles.remove(missile);
+		}
+	}
+	
+	@Override
+	public void removeMissile(Missile missile) {
+		missiles.remove(missile);
+		
+	}
 
     @Override
     public String toString() {
@@ -109,4 +170,5 @@ public class SimpleBoard implements MutableBoard {
         result = 31 * result + height;
         return result;
     }
+
 }

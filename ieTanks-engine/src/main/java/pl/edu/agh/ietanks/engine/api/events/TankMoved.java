@@ -8,10 +8,12 @@ import pl.edu.agh.ietanks.engine.api.Board;
 public class TankMoved implements Event {
     private final int tankId;
     private final Board.Direction direction;
+    private final int step;
 
-    public TankMoved(int tankId, Board.Direction direction) {
+    public TankMoved(int tankId, Board.Direction direction, int step) {
         this.tankId = tankId;
         this.direction = direction;
+        this.step = step;
     }
 
     public int tankId() {
@@ -21,14 +23,30 @@ public class TankMoved implements Event {
     public Board.Direction direction() {
         return direction;
     }
+    
+    public int step() {
+    	return step;
+    }
 
     @Override
     public String toString() {
         return "TankMoved{" +
                 "tankId=" + tankId +
                 ", direction=" + direction +
+                ", step=" + step +
                 '}';
     }
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((direction == null) ? 0 : direction.hashCode());
+		result = prime * result + step;
+		result = prime * result + tankId;
+		return result;
+	}
 
     @Override
     public boolean equals(Object o) {
@@ -39,14 +57,9 @@ public class TankMoved implements Event {
 
         if (tankId != tankMoved.tankId) return false;
         if (direction != tankMoved.direction) return false;
+        if (step != tankMoved.step) return false;
 
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        int result = tankId;
-        result = 31 * result + (direction != null ? direction.hashCode() : 0);
-        return result;
-    }
 }

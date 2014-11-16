@@ -1,8 +1,9 @@
 package pl.edu.agh.ietanks.engine.api;
 
-import com.google.common.base.Optional;
-
+import java.util.Collection;
 import java.util.List;
+
+import com.google.common.base.Optional;
 
 /**
  * Board state interface for engine purposes.
@@ -17,6 +18,21 @@ public interface Board {
      * Finds tank on map by its id.
      */
     Optional<Position> findTank(int tankId);
+    
+    /**
+     * Finds tank on given position on map.
+     */
+    Integer findTank(Position position);
+    
+    /**
+     * Finds all missiles.
+     */
+    Collection<Missile> findMissiles();
+    
+    /**
+     * Finds missiles on given position on map.
+     */
+    Collection<Missile> findMissiles(Position position);
 
     /**
      * Checks whether the given position is within the board.
@@ -24,11 +40,11 @@ public interface Board {
     boolean isWithin(Position position);
 
     /**
-     * Checks whether the tank may tak a given position
+     * Checks whether the tank may take a given position
      */
     boolean isAccessibleForTank(Position position);
 
     enum Direction {
-        Right
+        Right, Left, Up, Down, Up_Right, Up_Left, Down_Right, Down_Left
     }
 }
