@@ -1,14 +1,10 @@
 package pl.edu.agh.ietanks.game.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import pl.edu.agh.ietanks.game.BoardInterface;
 import pl.edu.agh.ietanks.game.ProjectileInterface;
 import pl.edu.agh.ietanks.game.TankInterface;
+
+import java.util.*;
 
 public class GameBoard implements BoardInterface {
 
@@ -54,7 +50,7 @@ public class GameBoard implements BoardInterface {
 		return height;
 	}
 
-	@Override
+	//TODO needs change:
 	public Object getBoard() {
 		char gamefield[][] = new char[height][width];
 		for(int i = 0; i < height; ++i){
