@@ -2,20 +2,31 @@ import json
 
 __author__ = 'adrian'
 
-from os import listdir
-import tornado.ioloop
-import tornado.web
+from os import listdir, path
+from tornado.ioloop import IOLoop
+from tornado.web import RequestHandler, Application, url
 
 
-class BotsList(tornado.web.RequestHandler):
+class BotsListHandler(RequestHandler):
     def get(self):
-        bots = [f for f in listdir('bots')]
+        bots = [{'id': path.splitext(f)[0]} for f in listdir('bots')]
         self.write(json.dumps(bots))
 
-application = tornado.web.Application([
-    (r"/rest/bots/", BotsList),
+
+class BotsHandler(RequestHandler):
+    def get(self, bot_id):
+        try:
+            f = open('bots/%s.py' % bot_id)
+            self.write(f.read())
+        except IOError as e:
+            self.write(json.dumps({'error': str(e)}))
+
+
+application = Application([
+    url(r"/rest/bots", BotsListHandler),
+    url(r"/rest/bots/(.+)", BotsHandler),
 ])
 
 if __name__ == "__main__":
     application.listen(8888)
-    tornado.ioloop.IOLoop.instance().start()
+    IOLoop.instance().start()
