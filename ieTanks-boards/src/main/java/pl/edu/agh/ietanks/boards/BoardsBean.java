@@ -2,6 +2,7 @@ package pl.edu.agh.ietanks.boards;
 
 import pl.edu.agh.ietanks.boards.api.BoardsReader;
 import pl.edu.agh.ietanks.boards.model.Board;
+import pl.edu.agh.ietanks.boards.model.Obstacle;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,8 +16,17 @@ public class BoardsBean implements BoardsReader {
     public BoardsBean() {
         Board board = new Board();
         board.setId(1);
+        board.setName("Test board");
         board.setHeight(10);
         board.setWidth(20);
+
+        List<Obstacle> obstacles = new ArrayList<>();
+        Obstacle obstacle = new Obstacle();
+        obstacle.setX(5);
+        obstacle.setY(10);
+        obstacles.add(obstacle);
+
+        board.setObstacles(obstacles);
         boards.put(1, board);
     }
 
