@@ -26,4 +26,23 @@ public class Shot implements Action {
 		return speed;
 	}
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Shot shot = (Shot) o;
+
+        if (speed != shot.speed) return false;
+        if (direction != shot.direction) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = direction.hashCode();
+        result = 31 * result + speed;
+        return result;
+    }
 }
