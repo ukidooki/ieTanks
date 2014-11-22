@@ -17,9 +17,9 @@ import static org.fest.assertions.Assertions.assertThat;
 public class BotExecutorTest {
     private String loadResourceFromFile(String filename) throws IOException {
         StringBuffer sb = new StringBuffer();
-        BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/"+filename)));
+        BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/" + filename)));
         String line;
-        while((line = br.readLine()) != null) {
+        while ((line = br.readLine()) != null) {
             sb.append(line).append("\n");
         }
         br.close();
@@ -43,13 +43,13 @@ public class BotExecutorTest {
         //given
         String pythonAlgorithm = loadResourceFromFile("TestBot.py");
         BotExecutor underTest = new BotExecutor(pythonAlgorithm);
-        Board board = new SimpleBoard(3,3,new HashMap<>());
+        Board board = new SimpleBoard(3, 3, new HashMap<>());
 
         //when
         Action resultAction = underTest.performAction(board);
 
         //then
         assertThat(resultAction).isInstanceOf(Action.class);
-        assertThat((Action)resultAction).isEqualTo(new Move(Board.Direction.Right,1));
+        assertThat((Action) resultAction).isEqualTo(new Move(Board.Direction.Right, 1));
     }
 }
