@@ -1,9 +1,21 @@
 package pl.edu.agh.ietanks.gameplay.bot.api;
 
-public interface Position {
+public class Position {
 
-    Integer fromLeft();
+    private Integer fromLeft;
+    private Integer fromTop;
 
-    Integer fromTop();
+    public Position(Integer fromLeft, Integer fromTop) {
+        this.fromLeft = fromLeft;
+        this.fromTop = fromTop;
+    }
+
+    public Integer fromTop() {
+        return fromTop;
+    }
+
+    public Integer fromLeft() {
+        return fromLeft;
+    }
 
 }
