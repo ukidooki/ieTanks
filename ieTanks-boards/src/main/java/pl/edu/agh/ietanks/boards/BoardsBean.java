@@ -1,12 +1,13 @@
 package pl.edu.agh.ietanks.boards;
 
+import org.springframework.stereotype.Service;
 import pl.edu.agh.ietanks.boards.api.BoardsReader;
 import pl.edu.agh.ietanks.boards.model.Board;
 import pl.edu.agh.ietanks.boards.model.Obstacle;
 
 import java.util.*;
 
-
+@Service
 public class BoardsBean implements BoardsReader {
     private Map<Integer, Board> boards = new HashMap<>();
 
