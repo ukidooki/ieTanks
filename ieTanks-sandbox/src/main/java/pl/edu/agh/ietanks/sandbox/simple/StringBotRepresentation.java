@@ -2,16 +2,16 @@ package pl.edu.agh.ietanks.sandbox.simple;
 
 public class StringBotRepresentation {
 
-    private final String id;
+    private final BotId id;
 
     private final String botSourceCode;
 
-    public StringBotRepresentation(String id, String botSourceCode) {
+    public StringBotRepresentation(BotId id, String botSourceCode) {
         this.id = id;
         this.botSourceCode = botSourceCode;
     }
 
-    public String id() {
+    public BotId id() {
         return id;
     }
 
@@ -26,9 +26,9 @@ public class StringBotRepresentation {
 
         StringBotRepresentation that = (StringBotRepresentation) o;
 
-        if (id != that.id) return false;
         if (botSourceCode != null ? !botSourceCode.equals(that.botSourceCode) : that.botSourceCode != null)
             return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
 
         return true;
     }

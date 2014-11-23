@@ -12,6 +12,7 @@
     <artifactId>ieTanks-sandbox</artifactId>
     <properties>
         <google-http-client.version>1.19.0</google-http-client.version>
+        <jackson.version>2.4.3</jackson.version>
     </properties>
 
     <dependencies>
@@ -34,10 +35,16 @@
             <artifactId>google-http-client</artifactId>
             <version>${google-http-client.version}</version>
         </dependency>
+
         <dependency>
-            <groupId>com.google.http-client</groupId>
-            <artifactId>google-http-client-jackson2</artifactId>
-            <version>${google-http-client.version}</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
 
         <dependency>
@@ -47,6 +54,10 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -1,6 +1,7 @@
 package pl.edu.agh.ietanks.sandbox.simple;
 
 import pl.edu.agh.ietanks.boards.api.BoardsReader;
+import pl.edu.agh.ietanks.boards.model.Board;
 
 import java.util.List;
 
@@ -15,8 +16,10 @@ public class SimpleSandbox {
         this.boardsReader = boardsReader;
     }
 
-    public void startNewGameplay(int boardId, List<String> botIds) {
-        // TODO - after https://jira.iisg.agh.edu.pl/browse/IETANKS-66 add integration with gameplay module API
+    //
+    public void startNewGameplay(int boardId, List<BotId> botIds) {
+        Board board = boardsReader.getBoard(boardId);
+        List<StringBotRepresentation> bots = botService.fetch(botIds);
     }
 
 
