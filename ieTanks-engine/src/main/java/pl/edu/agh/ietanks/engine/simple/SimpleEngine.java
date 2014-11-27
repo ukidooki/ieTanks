@@ -8,6 +8,7 @@ import pl.edu.agh.ietanks.engine.api.Bot;
 import pl.edu.agh.ietanks.engine.api.Engine;
 import pl.edu.agh.ietanks.engine.api.MutableBoard;
 import pl.edu.agh.ietanks.engine.api.events.Event;
+import pl.edu.agh.ietanks.engine.api.events.RoundResults;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
@@ -20,8 +21,7 @@ public class SimpleEngine implements Engine {
     private Map<Bot, Integer> botIds = new HashMap<>();
     private Queue<Bot> turns = new ArrayDeque<>();
 
-    @Override
-    public void setup(MutableBoard initialBoard, List<Bot> bots) {
+    public void setupOld(MutableBoard initialBoard, List<Bot> bots) {
         this.gameLogic = new GameLogic(initialBoard);
 
         int id = 0;
@@ -31,8 +31,7 @@ public class SimpleEngine implements Engine {
         }
     }
 
-    @Override
-    public List<Event> nextMove() {
+    public List<Event> nextMoveOld() {
         Bot currentBot = turns.poll();
         int botId = botIds.get(currentBot);
 
@@ -44,6 +43,17 @@ public class SimpleEngine implements Engine {
         turns.add(currentBot);
 
         return Lists.newArrayList(Iterables.concat(missileEvents, tankEvents));
+    }
+
+    @Override
+    public void setup(pl.edu.agh.ietanks.boards.model.Board initialBoard, List<? extends Bot> bots) {
+        //TODO rewrite implementation
+    }
+
+    @Override
+    public RoundResults nextMove() {
+        //TODO rewrite implementation
+        return null;
     }
 
     @Override
