@@ -8,22 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class InMemoryGameHistory implements GameHistory, GameHistoryStorage {
 
     private Map<Integer, Game> historyGames = new ConcurrentHashMap<Integer, Game>();
-    private ReentrantLock gameIdLock = new ReentrantLock();
-    private int gameIdCounter = 0;
+    private AtomicInteger gameIdCounter = new AtomicInteger(0);
 
-    private int nextGameId(){
-        try{
-            gameIdLock.lock();
-            return gameIdCounter++;
-        }finally {
-            gameIdLock.unlock();
-        }
-    }
 
     @Override
     public List<Integer> getFinishedGamesIds() {
@@ -40,7 +31,7 @@ public class InMemoryGameHistory implements GameHistory, GameHistoryStorage {
 
     @Override
     public int storeFinishedGame(Game game) {
-        int gameId = nextGameId();
+        int gameId = gameIdCounter.getAndIncrement();
         historyGames.put(gameId, game);
         return gameId;
     }
