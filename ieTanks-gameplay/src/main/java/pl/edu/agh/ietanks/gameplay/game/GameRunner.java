@@ -14,6 +14,7 @@ import pl.edu.agh.ietanks.gameplay.game.innerapi.GameHistoryStorage;
 import pl.edu.agh.ietanks.gameplay.game.innerapi.GameLogger;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -77,11 +78,11 @@ class GameRunner implements Runnable, Game {
 
     @Override
     public List<Event> getGameEvents() {
-        return gameEvents;
+        return Collections.unmodifiableList(gameEvents);
     }
 
     @Override
     public List<BotAlgorithm> getGameParticipants() {
-        return bots;
+        return Collections.unmodifiableList(bots);
     }
 }
