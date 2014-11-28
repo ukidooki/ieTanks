@@ -4,10 +4,10 @@ ieTanksVisualization.controller('GameCtrl', ['$scope', '$interval',
     function ($scope, $interval) {
         $scope.map = {border: 20, obstacles:[{type:'', x:5, y:10}]};
 
-        var states = [{players:[{id:'blabla', action:'move', x:'10', y:'5'}], missiles:[]},
-            {players:[{id:'blabla', action:'move', x:'6', y:'2'}], missiles:[]},
-            {players:[{id:'blabla', action:'move', x:'15', y:'19'}], missiles:[]},
-            {players:[{id:'blabla', action:'move', x:'0', y:'19'}], missiles:[]}];
+        var states = [{players:[{id:'blabla', action:'move', x:'10', y:'5'}, {id:'blabla2', action:'move', x:'3', y:'2'}], missiles:[]},
+            {players:[{id:'blabla', action:'move', x:'6', y:'2'}, {id:'blabla2', action:'move', x:'11', y:'2'}], missiles:[]},
+            {players:[{id:'blabla', action:'move', x:'15', y:'19'}, {id:'blabla2', action:'move', x:'5', y:'5'}], missiles:[]},
+            {players:[{id:'blabla', action:'move', x:'0', y:'19'}, {id:'blabla2', action:'move', x:'7', y:'0'}], missiles:[]}];
         $interval(function () {
             var ind = Math.floor(Math.random()*states.length);
             $scope.state = states[ind];
@@ -53,8 +53,8 @@ ieTanksVisualization.controller('GameCtrl', ['$scope', '$interval',
                 function preload() {
                     //load image which will be used as ground texture
                     game.load.image('ground', 'assets/scorched_earth.png');
-                    game.load.image('tank', 'assets/tankBase.png');
-                    game.load.image('turret', 'assets/tankTurret.png');
+                    game.load.image('tank', 'assets/tankBaseWhite.png');
+                    game.load.image('turret', 'assets/tankTurretWhite.png');
                     game.load.image('wall', 'assets/tile_backwall.png');
                 }
 
@@ -72,6 +72,15 @@ ieTanksVisualization.controller('GameCtrl', ['$scope', '$interval',
                         scale = (gameBorder / map["border"]) / tileSize;
                         scaledGrid = tileSize * scale;
                         game.state.start('animation');
+                    }
+                }
+
+                function sleep(milliseconds) {
+                    var start = new Date().getTime();
+                    for (var i = 0; i < 1e7; i++) {
+                        if ((new Date().getTime() - start) > milliseconds){
+                            break;
+                        }
                     }
                 }
 
