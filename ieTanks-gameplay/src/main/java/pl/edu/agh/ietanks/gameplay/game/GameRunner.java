@@ -48,7 +48,7 @@ class GameRunner implements Runnable, Game {
             List<Event> roundEvents = rResults.roundEvents();
             gameEvents.addAll(roundEvents);
 
-            LOGGER.nextRoundResults(rResults);
+            LOGGER.nextRoundResults(rResults, gameEngine.currentBoard());
         }
 
         this.gameId = historyStorage.storeFinishedGame(this);

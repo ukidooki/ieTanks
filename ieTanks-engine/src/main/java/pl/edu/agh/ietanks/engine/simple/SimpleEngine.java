@@ -11,6 +11,7 @@ import pl.edu.agh.ietanks.engine.api.events.Event;
 import pl.edu.agh.ietanks.engine.api.events.RoundResults;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,10 @@ public class SimpleEngine implements Engine {
     private GameLogic gameLogic;
     private Map<Bot, Integer> botIds = new HashMap<>();
     private Queue<Bot> turns = new ArrayDeque<>();
+    private int turnCounter = 0;
+
+    // TODO: extract Configuration object
+    int MAX_TURNS = 10;
 
     @Override
     public void setup(BoardDefinition initialBoard, List<? extends Bot> bots) {
@@ -43,8 +48,14 @@ public class SimpleEngine implements Engine {
         List<Event> tankEvents = gameLogic.tryApplyAction(proposedAction, botId);
 
         turns.add(currentBot);
+        final List<Event> turnEvents = Lists.newArrayList(Iterables.concat(missileEvents, tankEvents));
 
-        return RoundResults.Continue(Lists.newArrayList(Iterables.concat(missileEvents, tankEvents)));
+        turnCounter++;
+        if(turnCounter == MAX_TURNS) {
+            return RoundResults.Finished(turnEvents);
+        } else {
+            return RoundResults.Continue(turnEvents);
+        }
     }
 
     @Override
