@@ -33,14 +33,14 @@ public class SimpleEngineTest {
         engine.setup(startingBoard, Lists.newArrayList(bot1, bot2));
 
         // when
-        final List<Event> events1 = engine.nextMove().roundEvents();
+        final List<Event> events1 = engine.nextMove().getRoundEvents();
 
         // then
         assertThat(engine.currentBoard()).isEqualTo(startingBoard);
         assertThat(events1).isEmpty();
 
         // when
-        final List<Event> events2 = engine.nextMove().roundEvents();
+        final List<Event> events2 = engine.nextMove().getRoundEvents();
 
         // then
         assertThat(engine.currentBoard()).isEqualTo(BoardBuilder.fromASCII(

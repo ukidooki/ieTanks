@@ -45,7 +45,7 @@ class GameRunner implements Runnable, Game {
 
         RoundResults rResults;
         while(( rResults = gameEngine.nextMove()) != null && !rResults.isGameFinished()){
-            List<Event> roundEvents = rResults.roundEvents();
+            List<Event> roundEvents = rResults.getRoundEvents();
             gameEvents.addAll(roundEvents);
 
             LOGGER.nextRoundResults(rResults, gameEngine.currentBoard());
