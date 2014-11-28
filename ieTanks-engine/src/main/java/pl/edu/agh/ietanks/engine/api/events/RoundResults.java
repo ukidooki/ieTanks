@@ -1,5 +1,6 @@
 package pl.edu.agh.ietanks.engine.api.events;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public final class RoundResults {
     }
 
     public static RoundResults Finished() {
-        return new RoundResults(null, true);
+        return new RoundResults(new ArrayList<Event>(), true);
     }
 
     public static RoundResults Finished(List<Event> roundEvents) {
