@@ -1,12 +1,13 @@
 package pl.edu.agh.ietanks.gameplay.game;
 
-import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import pl.edu.agh.ietanks.boards.model.Board;
+import pl.edu.agh.ietanks.engine.api.BoardDefinition;
 import pl.edu.agh.ietanks.engine.api.Engine;
 import pl.edu.agh.ietanks.engine.api.events.Event;
 import pl.edu.agh.ietanks.engine.api.events.RoundResults;
 import pl.edu.agh.ietanks.engine.simple.SimpleEngine;
+import pl.edu.agh.ietanks.gameplay.board.BoardDefinitionAdapter;
 import pl.edu.agh.ietanks.gameplay.bot.BotExecutor;
 import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
 import pl.edu.agh.ietanks.gameplay.game.api.Game;
@@ -23,7 +24,7 @@ class GameRunner implements Runnable, Game {
     private GameLogger LOGGER = new StandardOutputGameLogger();
 
     private Integer gameId;
-    private final Board gameBoard;
+    private final BoardDefinition gameBoard;
     private final List<BotAlgorithm> bots;
     private final Engine gameEngine;
     private final GameHistoryStorage historyStorage;
@@ -31,12 +32,7 @@ class GameRunner implements Runnable, Game {
 
     private void setupEngineParams(){
         gameEngine.setup(gameBoard,
-                Lists.transform(bots, new Function<BotAlgorithm, BotExecutor>() {
-                    @Override
-                    public BotExecutor apply(BotAlgorithm botAlgorithm) {
-                        return new BotExecutor(botAlgorithm.getId(), botAlgorithm.getPythonCode());
-                    }
-                })
+                Lists.transform(bots, botAlgorithm -> new BotExecutor(botAlgorithm.getId(), botAlgorithm.getPythonCode()))
         );
 
         LOGGER.startGame();
@@ -49,7 +45,7 @@ class GameRunner implements Runnable, Game {
 
         RoundResults rResults;
         while(( rResults = gameEngine.nextMove()) != null && !rResults.isGameFinished()){
-            List<Event> roundEvents = rResults.getRoundEvents();
+            List<Event> roundEvents = rResults.roundEvents();
             gameEvents.addAll(roundEvents);
 
             LOGGER.nextRoundResults(rResults);
@@ -61,19 +57,14 @@ class GameRunner implements Runnable, Game {
     public GameRunner(GameHistoryStorage historyStorage, Board gameBoard, List<BotAlgorithm> gameBots){
         this.historyStorage = historyStorage;
         this.gameEngine = new SimpleEngine();
-        this.gameEvents = new ArrayList<Event>();
-        this.gameBoard = gameBoard;
+        this.gameEvents = new ArrayList<>();
+        this.gameBoard = new BoardDefinitionAdapter(gameBoard);
         this.bots = gameBots;
     }
 
     @Override
     public Integer getId() {
         return gameId;
-    }
-
-    @Override
-    public Board getInitialBoard() {
-        return gameBoard;
     }
 
     @Override

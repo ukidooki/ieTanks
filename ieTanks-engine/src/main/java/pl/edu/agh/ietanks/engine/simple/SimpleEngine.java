@@ -21,20 +21,6 @@ public class SimpleEngine implements Engine {
     private Map<Bot, Integer> botIds = new HashMap<>();
     private Queue<Bot> turns = new ArrayDeque<>();
 
-    public List<Event> nextMoveOld() {
-        Bot currentBot = turns.poll();
-        int botId = botIds.get(currentBot);
-
-        List<Event> missileEvents = gameLogic.moveMissiles();
-
-        Action proposedAction = currentBot.performAction(gameLogic.board());
-        List<Event> tankEvents = gameLogic.tryApplyAction(proposedAction, botId);
-
-        turns.add(currentBot);
-
-        return Lists.newArrayList(Iterables.concat(missileEvents, tankEvents));
-    }
-
     @Override
     public void setup(BoardDefinition initialBoard, List<? extends Bot> bots) {
         this.gameLogic = new GameLogic(initialBoard);
@@ -48,8 +34,17 @@ public class SimpleEngine implements Engine {
 
     @Override
     public RoundResults nextMove() {
-        //TODO rewrite implementation
-        return null;
+        Bot currentBot = turns.poll();
+        int botId = botIds.get(currentBot);
+
+        List<Event> missileEvents = gameLogic.moveMissiles();
+
+        Action proposedAction = currentBot.performAction(gameLogic.board());
+        List<Event> tankEvents = gameLogic.tryApplyAction(proposedAction, botId);
+
+        turns.add(currentBot);
+
+        return RoundResults.Continue(Lists.newArrayList(Iterables.concat(missileEvents, tankEvents)));
     }
 
     @Override
