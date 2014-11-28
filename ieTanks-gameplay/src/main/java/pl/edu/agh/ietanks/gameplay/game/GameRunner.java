@@ -1,5 +1,6 @@
 package pl.edu.agh.ietanks.gameplay.game;
 
+import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import pl.edu.agh.ietanks.boards.model.Board;
 import pl.edu.agh.ietanks.engine.api.BoardDefinition;
@@ -40,7 +41,6 @@ class GameRunner implements Runnable, Game {
 
     @Override
     public void run() {
-
         setupEngineParams();
 
         RoundResults rResults;
@@ -58,7 +58,9 @@ class GameRunner implements Runnable, Game {
         this.historyStorage = historyStorage;
         this.gameEngine = new SimpleEngine();
         this.gameEvents = new ArrayList<>();
-        this.gameBoard = new BoardDefinitionAdapter(gameBoard);
+
+        List<Integer> botIds = Lists.transform(gameBots, bot -> bot.getId());
+        this.gameBoard = new BoardDefinitionAdapter(gameBoard, botIds);
         this.bots = gameBots;
     }
 

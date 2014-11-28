@@ -4,13 +4,11 @@ import org.junit.Test;
 import pl.edu.agh.ietanks.engine.api.Action;
 import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
 import pl.edu.agh.ietanks.engine.api.Position;
-import pl.edu.agh.ietanks.engine.simple.BoardState;
 import pl.edu.agh.ietanks.engine.simple.actions.Move;
 import pl.edu.agh.ietanks.gameplay.bot.BotExecutor;
+import pl.edu.agh.ietanks.gameplay.testutils.ResourceUtils;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -23,7 +21,7 @@ public class BotExecutorTest {
         String filename = "TestBot.py";
 
         //when
-        String result = loadResourceFromFile(filename);
+        String result = ResourceUtils.loadResourceFromFile(filename);
 
         //then
         assertThat(result).isNotEmpty();
@@ -32,7 +30,7 @@ public class BotExecutorTest {
     @Test
     public void should_return_simple_up_move() throws IOException {
         //given
-        String pythonAlgorithm = loadResourceFromFile("TestBot.py");
+        String pythonAlgorithm = ResourceUtils.loadResourceFromFile("TestBot.py");
         Integer botId = 1;
         BotExecutor underTest = new BotExecutor(botId, pythonAlgorithm);
         HashMap map = new HashMap<Integer, Position>();
@@ -47,17 +45,6 @@ public class BotExecutorTest {
         //then
         assertThat(resultAction).isInstanceOf(Action.class);
         assertThat((Action) resultAction).isEqualTo(new Move(GameplayBoardView.Direction.Right, 1));
-    }
-
-    private String loadResourceFromFile(String filename) throws IOException {
-        StringBuffer sb = new StringBuffer();
-        BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/" + filename)));
-        String line;
-        while ((line = br.readLine()) != null) {
-            sb.append(line).append("\n");
-        }
-        br.close();
-        return sb.toString();
     }
 
 }

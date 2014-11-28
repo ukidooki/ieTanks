@@ -1,6 +1,8 @@
 package pl.edu.agh.ietanks.gameplay.game;
 
+import org.springframework.stereotype.Service;
 import pl.edu.agh.ietanks.boards.model.Board;
+import pl.edu.agh.ietanks.engine.util.LogExceptionRunnable;
 import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
 import pl.edu.agh.ietanks.gameplay.game.api.GamePlay;
 import pl.edu.agh.ietanks.gameplay.game.innerapi.GameHistoryStorage;
@@ -9,7 +11,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
+@Service
 public class SimpleGamePlay implements GamePlay {
     private static final int THREADS_IN_POOL = 5;
 
@@ -30,6 +32,7 @@ public class SimpleGamePlay implements GamePlay {
 
     @Override
     public void startGame(Board gameBoard, List<BotAlgorithm> bots) {
-        executionService.execute(new GameRunner(historyStorage, gameBoard, bots));
+        final GameRunner gameRunner = new GameRunner(historyStorage, gameBoard, bots);
+        executionService.execute(new LogExceptionRunnable(gameRunner));
     }
 }
