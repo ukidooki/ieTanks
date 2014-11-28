@@ -1,26 +1,35 @@
 package pl.edu.agh.ietanks.engine.api.events;
 
+import java.util.Collections;
 import java.util.List;
 
-public class RoundResults {
+public final class RoundResults {
 
-    private boolean gameFinished;
-    private List<Event> eventsList;
+    private final boolean gameFinished;
+    private final List<Event> eventsList;
 
-    public boolean isGameFinished(){
+    public boolean isGameFinished() {
         return gameFinished;
     }
-    
-    public List<Event> getRoundEvents(){
-        return eventsList; 
+
+    public List<Event> getRoundEvents() {
+        return Collections.unmodifiableList(eventsList);
     }
 
-    public RoundResults(List<Event> roundEvents){
+    private RoundResults(List<Event> roundEvents, boolean gameFinished) {
         this.eventsList = roundEvents;
-        this.gameFinished = false;
+        this.gameFinished = gameFinished;
     }
 
-    public RoundResults(){
-        this.gameFinished = true;
+    public static RoundResults Finished() {
+        return new RoundResults(null, true);
+    }
+
+    public static RoundResults Finished(List<Event> roundEvents) {
+        return new RoundResults(roundEvents, true);
+    }
+
+    public static RoundResults Continue(List<Event> roundEvents) {
+        return new RoundResults(roundEvents, false);
     }
 }
