@@ -3,10 +3,10 @@ package pl.edu.agh.ietanks.engine.simple;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import pl.edu.agh.ietanks.engine.api.Action;
-import pl.edu.agh.ietanks.engine.api.Board;
+import pl.edu.agh.ietanks.engine.api.BoardDefinition;
 import pl.edu.agh.ietanks.engine.api.Bot;
 import pl.edu.agh.ietanks.engine.api.Engine;
-import pl.edu.agh.ietanks.engine.api.MutableBoard;
+import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
 import pl.edu.agh.ietanks.engine.api.events.Event;
 import pl.edu.agh.ietanks.engine.api.events.RoundResults;
 
@@ -20,16 +20,6 @@ public class SimpleEngine implements Engine {
     private GameLogic gameLogic;
     private Map<Bot, Integer> botIds = new HashMap<>();
     private Queue<Bot> turns = new ArrayDeque<>();
-
-    public void setupOld(MutableBoard initialBoard, List<Bot> bots) {
-        this.gameLogic = new GameLogic(initialBoard);
-
-        int id = 0;
-        for(Bot bot : bots) {
-            turns.add(bot);
-            botIds.put(bot, id++);
-        }
-    }
 
     public List<Event> nextMoveOld() {
         Bot currentBot = turns.poll();
@@ -46,8 +36,14 @@ public class SimpleEngine implements Engine {
     }
 
     @Override
-    public void setup(pl.edu.agh.ietanks.boards.model.Board initialBoard, List<? extends Bot> bots) {
-        //TODO rewrite implementation
+    public void setup(BoardDefinition initialBoard, List<? extends Bot> bots) {
+        this.gameLogic = new GameLogic(initialBoard);
+
+        int id = 0;
+        for(Bot bot : bots) {
+            turns.add(bot);
+            botIds.put(bot, id++);
+        }
     }
 
     @Override
@@ -57,7 +53,7 @@ public class SimpleEngine implements Engine {
     }
 
     @Override
-    public Board currentBoard() {
+    public GameplayBoardView currentBoard() {
         return gameLogic.board();
     }
 }

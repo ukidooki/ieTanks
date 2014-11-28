@@ -15,7 +15,7 @@ public interface Engine {
      * @param initialBoard a board model we are starting with
      * @param bots list of bot definitions, capable of performing moves
      */
-    void setup(pl.edu.agh.ietanks.boards.model.Board initialBoard, List<? extends Bot> bots);
+    void setup(BoardDefinition initialBoard, List<? extends Bot> bots);
 
     /**
      * Performs next move.
@@ -27,5 +27,5 @@ public interface Engine {
     /**
      * Retrieves current state of the game board.
      */
-    Board currentBoard();
+    GameplayBoardView currentBoard();
 }

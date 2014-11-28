@@ -12,5 +12,5 @@ public interface Bot {
      * @param currentBoard current state of the board
      * @return Action which bot wants to perform
      */
-    Action performAction(Board currentBoard);
+    Action performAction(GameplayBoardView currentBoard);
 }

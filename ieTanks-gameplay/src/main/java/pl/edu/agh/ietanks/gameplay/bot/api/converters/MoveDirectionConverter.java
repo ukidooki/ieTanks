@@ -1,20 +1,20 @@
 package pl.edu.agh.ietanks.gameplay.bot.api.converters;
 
-import pl.edu.agh.ietanks.engine.api.Board;
+import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
 import pl.edu.agh.ietanks.gameplay.bot.api.MoveDirection;
 
 public class MoveDirectionConverter {
 
-    public Board.Direction convertToEngineDirection(MoveDirection moveDirection) {
+    public GameplayBoardView.Direction convertToEngineDirection(MoveDirection moveDirection) {
         switch (moveDirection) {
             case North:
-                return Board.Direction.Up;
+                return GameplayBoardView.Direction.Up;
             case East:
-                return Board.Direction.Right;
+                return GameplayBoardView.Direction.Right;
             case South:
-                return Board.Direction.Down;
+                return GameplayBoardView.Direction.Down;
             case West:
-                return Board.Direction.Left;
+                return GameplayBoardView.Direction.Left;
         }
         return null;
     }

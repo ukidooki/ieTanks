@@ -1,6 +1,7 @@
 package pl.edu.agh.ietanks.gameplay.bot.api.adapters;
 
 import com.google.common.base.Optional;
+import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
 import pl.edu.agh.ietanks.gameplay.bot.api.Board;
 import pl.edu.agh.ietanks.gameplay.bot.api.Missile;
 import pl.edu.agh.ietanks.gameplay.bot.api.Position;
@@ -10,9 +11,9 @@ import java.util.List;
 
 public class BoardAdapter implements Board {
 
-    private pl.edu.agh.ietanks.engine.api.Board engineBoard;
+    private GameplayBoardView engineBoard;
 
-    public BoardAdapter(pl.edu.agh.ietanks.engine.api.Board engineBoard) {
+    public BoardAdapter(GameplayBoardView engineBoard) {
         this.engineBoard = engineBoard;
     }
 

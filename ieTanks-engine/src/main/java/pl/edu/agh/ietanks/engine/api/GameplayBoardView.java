@@ -6,9 +6,9 @@ import java.util.List;
 import com.google.common.base.Optional;
 
 /**
- * Board state interface for engine purposes.
+ * Board view visible by bots during gameplay.
  */
-public interface Board {
+public interface GameplayBoardView {
     /**
      * Returns all tanks (their identifiers) that are still on board.
      */
