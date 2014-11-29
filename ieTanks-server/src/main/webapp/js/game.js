@@ -1,7 +1,7 @@
 var ieTanksVisualization = angular.module('ieTanksVisualization', []);
 
-ieTanksVisualization.controller('GameCtrl', ['$scope', '$interval',
-    function ($scope, $interval) {
+ieTanksVisualization.controller('GameCtrl', ['$scope', '$interval', 'REST',
+    function ($scope, $interval, REST) {
         $scope.map = {border: 20, obstacles:[{type:'', x:5, y:10}]};
 
         var states = [{players:[{id:'blabla', action:'move', x:'10', y:'5'}, {id:'blabla2', action:'move', x:'3', y:'2'}], missiles:[]},

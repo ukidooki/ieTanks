@@ -4,7 +4,9 @@
 
 var ieTanksApp = angular.module('ieTanksApp', [
     'ieTanksVisualization',
-    'ngRoute'
+    'ieTanksServices',
+    'ngRoute',
+    'ngResource'
 ]); // add other modules if dependant here
 
 ieTanksApp.config(['$routeProvider',
