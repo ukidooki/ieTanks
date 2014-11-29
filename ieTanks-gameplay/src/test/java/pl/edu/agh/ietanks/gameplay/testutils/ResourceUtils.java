@@ -1,23 +1,22 @@
 package pl.edu.agh.ietanks.gameplay.testutils;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URL;
 
 public class ResourceUtils {
     public static String loadResourceFromFile(String filename) {
         try {
-            StringBuffer sb = new StringBuffer();
-            BufferedReader br = new BufferedReader(new InputStreamReader(ResourceUtils.class.getClassLoader().getResourceAsStream(filename)));
-            String line;
-            while ((line = br.readLine()) != null) {
-            sb.append(line).append("\n");
-            }
-            br.close();
-            return sb.toString();
+            final URL url = Resources.getResource(filename);
+            return Resources.toString(url, Charsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
             return "Exception!";
         }
+
     }
 }
