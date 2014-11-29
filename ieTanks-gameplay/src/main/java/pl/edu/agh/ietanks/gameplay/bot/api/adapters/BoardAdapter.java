@@ -37,7 +37,7 @@ public class BoardAdapter implements Board {
     }
 
     @Override
-    public Integer findTank(Position position) {
+    public Integer findTankOnPosition(Position position) {
         return engineBoard.findTank(convertToEnginePosition(position));
     }
 
@@ -48,7 +48,7 @@ public class BoardAdapter implements Board {
     }
 
     @Override
-    public Missile[] findMissiles(Position position) {
+    public Missile[] findMissilesOnPosition(Position position) {
         Collection<pl.edu.agh.ietanks.engine.api.Missile> missiles = engineBoard.findMissiles(convertToEnginePosition(position));
         return convertEngineMissiles(missiles);
     }

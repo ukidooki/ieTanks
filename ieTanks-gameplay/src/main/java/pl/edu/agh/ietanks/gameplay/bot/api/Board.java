@@ -11,11 +11,11 @@ public interface Board {
 
     Position findTank(int tankId);
 
-    Integer findTank(Position position);
+    Integer findTankOnPosition(Position position);
 
     Missile[] findMissiles();
 
-    Missile[] findMissiles(Position position);
+    Missile[] findMissilesOnPosition(Position position);
 
     boolean isWithin(Position position);
 
