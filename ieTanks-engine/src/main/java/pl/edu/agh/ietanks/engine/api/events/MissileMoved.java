@@ -1,15 +1,15 @@
 package pl.edu.agh.ietanks.engine.api.events;
 
-import pl.edu.agh.ietanks.engine.api.Board;
+import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
 import pl.edu.agh.ietanks.engine.api.Position;
-import pl.edu.agh.ietanks.engine.api.Board.Direction;
+import pl.edu.agh.ietanks.engine.api.GameplayBoardView.Direction;
 
 /**
  * Indicates that a missile has moved.
  */
 public class MissileMoved implements Event {
 	
-    private final Board.Direction direction;
+    private final GameplayBoardView.Direction direction;
     private final int speed;
     private final Position position;
     
@@ -23,7 +23,7 @@ public class MissileMoved implements Event {
 		return position;
 	}
 
-	public Board.Direction direction() {
+	public GameplayBoardView.Direction direction() {
 		return direction;
 	}
 

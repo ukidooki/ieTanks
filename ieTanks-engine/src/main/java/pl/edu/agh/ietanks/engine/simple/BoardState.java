@@ -1,5 +1,13 @@
 package pl.edu.agh.ietanks.engine.simple;
 
+import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
+import pl.edu.agh.ietanks.engine.api.BoardDefinition;
+import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
+import pl.edu.agh.ietanks.engine.api.Missile;
+import pl.edu.agh.ietanks.engine.api.Position;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -9,15 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import pl.edu.agh.ietanks.engine.api.Missile;
-import pl.edu.agh.ietanks.engine.api.MutableBoard;
-import pl.edu.agh.ietanks.engine.api.Position;
-
-import com.google.common.base.Optional;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
-
-public class SimpleBoard implements MutableBoard {
+public class BoardState implements GameplayBoardView {
     final Set<Position> taken = new HashSet<>();
     final Map<Integer, Position> tanks;
     final List<Missile> missiles;
@@ -25,11 +25,11 @@ public class SimpleBoard implements MutableBoard {
     private final int width;
     private final int height;
 
-    public SimpleBoard(int width, int height, Map<Integer, Position> initialTankPositions) {
-        this.width = width;
-        this.height = height;
+    public BoardState(BoardDefinition definition) {
+        this.width = definition.width();
+        this.height = definition.height();
 
-        tanks = new HashMap<>(initialTankPositions);
+        tanks = new HashMap<>(definition.initialTankPositions());
         missiles = new ArrayList<>();
         taken.addAll(tanks.values());
     }
@@ -83,7 +83,6 @@ public class SimpleBoard implements MutableBoard {
         return !taken.contains(position);
     }
 
-    @Override
     public void replaceTank(int tankId, Position destination) {
         Preconditions.checkArgument(isAccessibleForTank(destination), "invalid destination");
         Preconditions.checkArgument(isWithin(destination), "invalid destination");
@@ -93,20 +92,17 @@ public class SimpleBoard implements MutableBoard {
         taken.add(destination);
     }
     
-	@Override
 	public void removeTank(int tankId) {
 		taken.remove(tanks.get(tankId));
 		tanks.remove(tankId);
 	}
     
-	@Override
 	public void createMissile(Missile missile) {
 		if (isWithin(missile.position())) {
 			missiles.add(missile);
 		}
 	}
 
-	@Override
 	public void replaceMissile(Missile missile, Position destination) {
 		if (isWithin(destination)) {
 			missile.changePosition(destination);
@@ -116,10 +112,8 @@ public class SimpleBoard implements MutableBoard {
 		}
 	}
 	
-	@Override
 	public void removeMissile(Missile missile) {
 		missiles.remove(missile);
-		
 	}
 
     @Override
@@ -150,9 +144,9 @@ public class SimpleBoard implements MutableBoard {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SimpleBoard)) return false;
+        if (!(o instanceof BoardState)) return false;
 
-        SimpleBoard board = (SimpleBoard) o;
+        BoardState board = (BoardState) o;
 
         if (height != board.height) return false;
         if (width != board.width) return false;

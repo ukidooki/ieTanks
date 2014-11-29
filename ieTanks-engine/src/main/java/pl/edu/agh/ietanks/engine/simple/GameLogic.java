@@ -1,15 +1,11 @@
 package pl.edu.agh.ietanks.engine.simple;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 import pl.edu.agh.ietanks.engine.api.Action;
-import pl.edu.agh.ietanks.engine.api.Board;
+import pl.edu.agh.ietanks.engine.api.BoardDefinition;
+import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
 import pl.edu.agh.ietanks.engine.api.Missile;
-import pl.edu.agh.ietanks.engine.api.MutableBoard;
 import pl.edu.agh.ietanks.engine.api.Position;
 import pl.edu.agh.ietanks.engine.api.events.Event;
 import pl.edu.agh.ietanks.engine.api.events.MissileCreated;
@@ -20,14 +16,17 @@ import pl.edu.agh.ietanks.engine.api.events.TankMoved;
 import pl.edu.agh.ietanks.engine.simple.actions.Move;
 import pl.edu.agh.ietanks.engine.simple.actions.Shot;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Preconditions;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GameLogic {
-    private MutableBoard board;
+    private BoardState board;
 
-    public GameLogic(MutableBoard board) {
-        this.board = board;
+    public GameLogic(BoardDefinition initialBoard) {
+        this.board = new BoardState(initialBoard);
     }
 
     public List<Event> moveMissiles() {
@@ -93,7 +92,7 @@ public class GameLogic {
 
 
 
-    public Board board() {
+    public GameplayBoardView board() {
         return board;
     }
 
@@ -160,30 +159,30 @@ public class GameLogic {
         return events;
     }
     
-	private Position findMissileDestination(Board.Direction direction, Position position, int speed) {
+	private Position findMissileDestination(GameplayBoardView.Direction direction, Position position, int speed) {
 		Position destination = null;
-		if (direction == Board.Direction.Right) {
+		if (direction == GameplayBoardView.Direction.Right) {
 			destination = position.toRight(speed);
 		}
-		else if (direction == Board.Direction.Left) {
+		else if (direction == GameplayBoardView.Direction.Left) {
 			destination = position.toLeft(speed);
 		}
-		else if (direction == Board.Direction.Up) {
+		else if (direction == GameplayBoardView.Direction.Up) {
 			destination = position.toUp(speed);
 		}
-		else if (direction == Board.Direction.Down) {
+		else if (direction == GameplayBoardView.Direction.Down) {
 			destination = position.toDown(speed);
 		}
-		else if (direction == Board.Direction.Up_Left) {
+		else if (direction == GameplayBoardView.Direction.Up_Left) {
 			destination = position.toUpLeft(speed);
 		}
-		else if (direction == Board.Direction.Up_Right) {
+		else if (direction == GameplayBoardView.Direction.Up_Right) {
 			destination = position.toUpRight(speed);
 		}
-		else if (direction == Board.Direction.Down_Left) {
+		else if (direction == GameplayBoardView.Direction.Down_Left) {
 			destination = position.toDownLeft(speed);
 		}
-		else if (direction == Board.Direction.Down_Right) {
+		else if (direction == GameplayBoardView.Direction.Down_Right) {
 			destination = position.toDownRight(speed);
 		}
 		return destination;
@@ -193,16 +192,16 @@ public class GameLogic {
 			Move move) {
 		Position destination = null;
 		
-		if (move.getDirection() == Board.Direction.Right) {
+		if (move.getDirection() == GameplayBoardView.Direction.Right) {
 			destination = botPosition.get().toRight(move.getStep());
 		}
-		else if (move.getDirection() == Board.Direction.Left) {
+		else if (move.getDirection() == GameplayBoardView.Direction.Left) {
 			destination = botPosition.get().toLeft(move.getStep());
 		}
-		else if (move.getDirection() == Board.Direction.Up) {
+		else if (move.getDirection() == GameplayBoardView.Direction.Up) {
 			destination = botPosition.get().toUp(move.getStep());
 		}
-		else if (move.getDirection() == Board.Direction.Down){
+		else if (move.getDirection() == GameplayBoardView.Direction.Down){
 			destination = botPosition.get().toDown(move.getStep());
 		}
 		return destination;

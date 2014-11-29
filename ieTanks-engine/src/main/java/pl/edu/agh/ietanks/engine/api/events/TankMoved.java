@@ -1,16 +1,16 @@
 package pl.edu.agh.ietanks.engine.api.events;
 
-import pl.edu.agh.ietanks.engine.api.Board;
+import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
 
 /**
  * Indicates that a tank has moved.
  */
 public class TankMoved implements Event {
     private final int tankId;
-    private final Board.Direction direction;
+    private final GameplayBoardView.Direction direction;
     private final int step;
 
-    public TankMoved(int tankId, Board.Direction direction, int step) {
+    public TankMoved(int tankId, GameplayBoardView.Direction direction, int step) {
         this.tankId = tankId;
         this.direction = direction;
         this.step = step;
@@ -20,7 +20,7 @@ public class TankMoved implements Event {
         return tankId;
     }
 
-    public Board.Direction direction() {
+    public GameplayBoardView.Direction direction() {
         return direction;
     }
     

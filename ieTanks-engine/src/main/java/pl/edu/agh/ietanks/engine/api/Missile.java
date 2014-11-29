@@ -3,10 +3,10 @@ package pl.edu.agh.ietanks.engine.api;
 public class Missile {
 	
 	private int speed;
-	private final Board.Direction direction;
+	private final GameplayBoardView.Direction direction;
 	private Position position;
 
-	public Missile(int speed, Board.Direction direction, Position position) {
+	public Missile(int speed, GameplayBoardView.Direction direction, Position position) {
 		this.speed = speed;
 		this.direction = direction;
 		this.position = position;
@@ -16,7 +16,7 @@ public class Missile {
 		return speed;
 	}
 
-	public Board.Direction direction() {
+	public GameplayBoardView.Direction direction() {
 		return direction;
 	}
 	

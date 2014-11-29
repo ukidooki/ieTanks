@@ -3,14 +3,15 @@ package pl.edu.agh.ietanks.engine.simple;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import pl.edu.agh.ietanks.engine.api.Action;
-import pl.edu.agh.ietanks.engine.api.Board;
+import pl.edu.agh.ietanks.engine.api.BoardDefinition;
 import pl.edu.agh.ietanks.engine.api.Bot;
 import pl.edu.agh.ietanks.engine.api.Engine;
-import pl.edu.agh.ietanks.engine.api.MutableBoard;
+import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
 import pl.edu.agh.ietanks.engine.api.events.Event;
 import pl.edu.agh.ietanks.engine.api.events.RoundResults;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +21,13 @@ public class SimpleEngine implements Engine {
     private GameLogic gameLogic;
     private Map<Bot, Integer> botIds = new HashMap<>();
     private Queue<Bot> turns = new ArrayDeque<>();
+    private int turnCounter = 0;
 
-    public void setupOld(MutableBoard initialBoard, List<Bot> bots) {
+    // TODO: extract Configuration object
+    int MAX_TURNS = 10;
+
+    @Override
+    public void setup(BoardDefinition initialBoard, List<? extends Bot> bots) {
         this.gameLogic = new GameLogic(initialBoard);
 
         int id = 0;
@@ -31,7 +37,8 @@ public class SimpleEngine implements Engine {
         }
     }
 
-    public List<Event> nextMoveOld() {
+    @Override
+    public RoundResults nextMove() {
         Bot currentBot = turns.poll();
         int botId = botIds.get(currentBot);
 
@@ -41,23 +48,18 @@ public class SimpleEngine implements Engine {
         List<Event> tankEvents = gameLogic.tryApplyAction(proposedAction, botId);
 
         turns.add(currentBot);
+        final List<Event> turnEvents = Lists.newArrayList(Iterables.concat(missileEvents, tankEvents));
 
-        return Lists.newArrayList(Iterables.concat(missileEvents, tankEvents));
+        turnCounter++;
+        if(turnCounter == MAX_TURNS) {
+            return RoundResults.Finished(turnEvents);
+        } else {
+            return RoundResults.Continue(turnEvents);
+        }
     }
 
     @Override
-    public void setup(pl.edu.agh.ietanks.boards.model.Board initialBoard, List<? extends Bot> bots) {
-        //TODO rewrite implementation
-    }
-
-    @Override
-    public RoundResults nextMove() {
-        //TODO rewrite implementation
-        return null;
-    }
-
-    @Override
-    public Board currentBoard() {
+    public GameplayBoardView currentBoard() {
         return gameLogic.board();
     }
 }

@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface Game {
     public Integer getId();
-    public Board getInitialBoard();
     public List<Event> getGameEvents();
     public List<BotAlgorithm> getGameParticipants();
 }

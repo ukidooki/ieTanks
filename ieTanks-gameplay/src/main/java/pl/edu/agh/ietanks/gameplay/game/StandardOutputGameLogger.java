@@ -1,5 +1,6 @@
 package pl.edu.agh.ietanks.gameplay.game;
 
+import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
 import pl.edu.agh.ietanks.engine.api.events.Event;
 import pl.edu.agh.ietanks.engine.api.events.RoundResults;
 import pl.edu.agh.ietanks.gameplay.game.innerapi.GameLogger;
@@ -14,7 +15,7 @@ public class StandardOutputGameLogger implements GameLogger{
     }
 
     @Override
-    public void nextRoundResults(RoundResults results) {
+    public void nextRoundResults(RoundResults results, GameplayBoardView gameplayBoardView) {
         StringBuilder roundEvents = new StringBuilder();
 
         roundEvents
@@ -36,5 +37,6 @@ public class StandardOutputGameLogger implements GameLogger{
         }
 
         System.out.println(roundEvents.toString());
+        System.out.println(gameplayBoardView.toString());
     }
 }
