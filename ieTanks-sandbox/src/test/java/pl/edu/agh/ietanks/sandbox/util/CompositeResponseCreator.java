@@ -7,11 +7,11 @@ import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Queue;
 
-public class CompositeResponseCreator implements MockLowLevelHttpResponseCreator{
+public class CompositeResponseCreator implements MockLowLevelHttpResponseCreator {
 
     private Queue<MockLowLevelHttpResponseCreator> creators;
 
-    public CompositeResponseCreator(MockLowLevelHttpResponseCreator ...creators) {
+    public CompositeResponseCreator(MockLowLevelHttpResponseCreator... creators) {
         this.creators = new ArrayDeque<>(Arrays.asList(creators));
     }
 

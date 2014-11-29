@@ -28,7 +28,7 @@ public class HttpBotServiceTest {
         HttpTransport httpTransport = transportBuilder.create(responseCreator);
         HttpRequestFactory requestFactory = httpTransport.createRequestFactory();
 
-        return new HttpBotService(apiAddress,requestFactory, objectMapper);
+        return new HttpBotService(apiAddress, requestFactory, objectMapper);
     }
 
     private String loadResource(String name) throws IOException {
@@ -55,7 +55,7 @@ public class HttpBotServiceTest {
     public void shouldFetchBotById() throws IOException {
         // given
         String botCode = "some-code";
-        BotId botId= new BotId("some-bot");
+        BotId botId = new BotId("some-bot");
         MockLowLevelHttpResponseCreator responseCreator = new StringBodyResponseCreator(botCode, "text/plain");
         HttpBotService botService = createBotService(responseCreator);
 
@@ -71,8 +71,8 @@ public class HttpBotServiceTest {
         // given
         String firstBotCode = "first-code";
         String secondBotCode = "second-code";
-        BotId firstBotId= new BotId("first-bot");
-        BotId secondBotId= new BotId("second-bot");
+        BotId firstBotId = new BotId("first-bot");
+        BotId secondBotId = new BotId("second-bot");
 
         MockLowLevelHttpResponseCreator firstBotResponseCreator = new StringBodyResponseCreator(firstBotCode, "text/plain");
         MockLowLevelHttpResponseCreator secondBotResponseCreator = new StringBodyResponseCreator(secondBotCode, "text/plain");
