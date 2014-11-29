@@ -5,6 +5,7 @@ import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpResponse;
+import com.google.common.collect.Lists;
 import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
 import pl.edu.agh.ietanks.gameplay.game.api.BotId;
 
@@ -45,9 +46,11 @@ public class HttpBotService implements BotService {
     public List<BotId> listAvailableBots() {
         try {
             HttpRequest request = httpRequestFactory.buildGetRequest(getBotsUrl);
-            BotId[] botIds = handleResponse(request.execute(), BotId[].class);
+            BotIdJson[] botIds = handleResponse(request.execute(), BotIdJson[].class);
+            List<BotId> result = Lists.transform(Arrays.asList(botIds), botJson -> new BotId(botJson.id()));
 
-            return Arrays.asList(botIds);
+
+            return result;
         } catch (IOException e) {
             throw new BotServiceUnavailableException(e);
         }
