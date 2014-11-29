@@ -3,10 +3,7 @@ package pl.edu.agh.ietanks.engine.simple;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import pl.edu.agh.ietanks.engine.api.BoardDefinition;
-import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
-import pl.edu.agh.ietanks.engine.api.Missile;
-import pl.edu.agh.ietanks.engine.api.Position;
+import pl.edu.agh.ietanks.engine.api.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,7 +16,7 @@ import java.util.Set;
 
 public class BoardState implements GameplayBoardView {
     final Set<Position> taken = new HashSet<>();
-    final Map<Integer, Position> tanks;
+    final Map<String, Position> tanks;
     final List<Missile> missiles;
 
     private final int width;
@@ -35,12 +32,12 @@ public class BoardState implements GameplayBoardView {
     }
 
     @Override
-    public List<Integer> tankIds() {
+    public List<String> tankIds() {
         return Lists.newArrayList(tanks.keySet());
     }
 
     @Override
-    public Optional<Position> findTank(int tankId) {
+    public Optional<Position> findTank(String tankId) {
         return Optional.fromNullable(tanks.get(tankId));
     }
     
@@ -50,8 +47,8 @@ public class BoardState implements GameplayBoardView {
 	}
 	
 	@Override
-	public Integer findTank(Position position) {
-		for (int tankId : tanks.keySet()) {
+	public String findTank(Position position) {
+		for (String tankId : tanks.keySet()) {
 			if (tanks.get(tankId).equals(position)) {
 				return tankId; 
 			}
@@ -83,7 +80,7 @@ public class BoardState implements GameplayBoardView {
         return !taken.contains(position);
     }
 
-    public void replaceTank(int tankId, Position destination) {
+    public void replaceTank(String tankId, Position destination) {
         Preconditions.checkArgument(isAccessibleForTank(destination), "invalid destination");
         Preconditions.checkArgument(isWithin(destination), "invalid destination");
 
@@ -92,7 +89,7 @@ public class BoardState implements GameplayBoardView {
         taken.add(destination);
     }
     
-	public void removeTank(int tankId) {
+	public void removeTank(String tankId) {
 		taken.remove(tanks.get(tankId));
 		tanks.remove(tankId);
 	}
@@ -124,7 +121,7 @@ public class BoardState implements GameplayBoardView {
         for(int i=0; i<width; ++i) {
             for (int j = 0; j < height; ++j) {
                 if (taken.contains(new Position(i, j))) {
-                    for (Map.Entry<Integer, Position> entry : tanks.entrySet()) {
+                    for (Map.Entry<String, Position> entry : tanks.entrySet()) {
                         if (entry.getValue().equals(new Position(i, j))) {
                             representation.append(entry.getKey());
                             break;
@@ -144,25 +141,26 @@ public class BoardState implements GameplayBoardView {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BoardState)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        BoardState board = (BoardState) o;
+        BoardState that = (BoardState) o;
 
-        if (height != board.height) return false;
-        if (width != board.width) return false;
-        if (!taken.containsAll(board.taken) || !board.taken.containsAll(taken)) return false;
-        if (!tanks.entrySet().containsAll(board.tanks.entrySet()) || !board.tanks.entrySet().containsAll(tanks.entrySet())) return false;
+        if (height != that.height) return false;
+        if (width != that.width) return false;
+        if (missiles != null ? !missiles.equals(that.missiles) : that.missiles != null) return false;
+        if (taken != null ? !taken.equals(that.taken) : that.taken != null) return false;
+        if (tanks != null ? !tanks.equals(that.tanks) : that.tanks != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = taken.hashCode();
-        result = 31 * result + (tanks.hashCode());
+        int result = taken != null ? taken.hashCode() : 0;
+        result = 31 * result + (tanks != null ? tanks.hashCode() : 0);
+        result = 31 * result + (missiles != null ? missiles.hashCode() : 0);
         result = 31 * result + width;
         result = 31 * result + height;
         return result;
     }
-
 }

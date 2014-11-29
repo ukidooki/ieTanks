@@ -30,16 +30,16 @@ public class GameLogicTest {
         GameLogic logic = new GameLogic(board);
 
         // when
-        final List<Event> events = logic.tryApplyAction(new Move(GameplayBoardView.Direction.Right, 1), 0);
+        final List<Event> events = logic.tryApplyAction(new Move(GameplayBoardView.Direction.Right, 1), "0");
 
         // then
-        assertThat(logic.board()).isEqualTo(BoardBuilder.fromASCII(
+        BoardState expectedState = new BoardState(BoardBuilder.fromASCII(
                 "....",
                 "..0.",
                 "....",
                 "...."));
-
-        assertThat(events).containsExactly(new TankMoved(0, GameplayBoardView.Direction.Right, 1));
+        assertThat(logic.board()).isEqualTo(expectedState);
+        assertThat(events).containsExactly(new TankMoved("0", GameplayBoardView.Direction.Right, 1));
     }
     
     @Test
@@ -54,7 +54,7 @@ public class GameLogicTest {
         GameLogic logic = new GameLogic(board);
 
         // when
-        final List<Event> events = logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Down, 1), 0);
+        final List<Event> events = logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Down, 1), "0");
 
         // then
         assertThat(logic.board().findMissiles()).hasSize(1);
@@ -75,7 +75,7 @@ public class GameLogicTest {
         GameLogic logic = new GameLogic(board);
         
         // when
-        logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Down_Right, 1), 0);
+        logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Down_Right, 1), "0");
         logic.moveMissiles();
         
         // then
@@ -98,8 +98,8 @@ public class GameLogicTest {
         GameLogic logic = new GameLogic(board);
         
         // when
-        logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Down_Right, 1), 0);
-        logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Up_Left, 1), 1);
+        logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Down_Right, 1), "0");
+        logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Up_Left, 1), "1");
         logic.moveMissiles();
         
         // then
@@ -120,9 +120,9 @@ public class GameLogicTest {
         GameLogic logic = new GameLogic(board);
         
         // when
-        logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Down_Right, 1), 0);
+        logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Down_Right, 1), "0");
         logic.moveMissiles();
-        logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Up_Left, 1), 1);
+        logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Up_Left, 1), "1");
         
         // then
         assertThat(logic.board().findMissiles()).hasSize(0);
@@ -142,7 +142,7 @@ public class GameLogicTest {
         GameLogic logic = new GameLogic(board);
         
         // when
-        logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Left, 1), 0);
+        logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Left, 1), "0");
         logic.moveMissiles();
         
         // then
@@ -163,12 +163,12 @@ public class GameLogicTest {
         GameLogic logic = new GameLogic(board);
         
         // when
-        logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Down, 1), 0);
-        logic.tryApplyAction(new Move(GameplayBoardView.Direction.Up, 1), 1);
+        logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Down, 1), "0");
+        logic.tryApplyAction(new Move(GameplayBoardView.Direction.Up, 1), "1");
         
         // then
         assertThat(logic.board().findMissiles()).hasSize(0);
-        assertThat(logic.board().findTank(1)).isEqualTo(Optional.absent());
+        assertThat(logic.board().findTank("1")).isEqualTo(Optional.absent());
     }
     
     @Test
@@ -184,12 +184,12 @@ public class GameLogicTest {
         GameLogic logic = new GameLogic(board);
         
         // when
-        logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Down, 1), 0);
+        logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Down, 1), "0");
         logic.moveMissiles();
         
         // then
         assertThat(logic.board().findMissiles()).hasSize(0);
-        assertThat(logic.board().findTank(1)).isEqualTo(Optional.absent());
+        assertThat(logic.board().findTank("1")).isEqualTo(Optional.absent());
     }
     
     @Test
@@ -205,10 +205,10 @@ public class GameLogicTest {
         GameLogic logic = new GameLogic(board);
         
         // when
-        logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Down, 1), 0);
+        logic.tryApplyAction(new Shot(GameplayBoardView.Direction.Down, 1), "0");
         
         // then
         assertThat(logic.board().findMissiles()).hasSize(0);
-        assertThat(logic.board().findTank(1)).isEqualTo(Optional.absent());
+        assertThat(logic.board().findTank("1")).isEqualTo(Optional.absent());
     }
 }

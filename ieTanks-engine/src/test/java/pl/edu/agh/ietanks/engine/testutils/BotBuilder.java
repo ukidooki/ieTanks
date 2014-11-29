@@ -11,7 +11,7 @@ import pl.edu.agh.ietanks.engine.simple.actions.NoOperation;
 import com.google.common.collect.Lists;
 
 public class BotBuilder {
-    public static Bot fromSequence(final Action... actions) {
+    public static Bot fromSequence(final String id, final Action... actions) {
         return new Bot() {
             final Queue<Action> actionQueue = new ArrayDeque<>(Lists.newArrayList(actions));
 
@@ -23,6 +23,11 @@ public class BotBuilder {
                 else {
                     return actionQueue.poll();
                 }
+            }
+
+            @Override
+            public String id() {
+                return id;
             }
         };
     }

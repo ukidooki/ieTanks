@@ -18,17 +18,17 @@ public class BoardAdapter implements Board {
     }
 
     @Override
-    public Integer[] tankIds() {
-        List<Integer> tankIds = engineBoard.tankIds();
-        Integer[] convertedTankIds = new Integer[tankIds.size()];
+    public String[] tankIds() {
+        List<String> tankIds = engineBoard.tankIds();
+        String[] convertedTankIds = new String[tankIds.size()];
         int i = 0;
-        for (Integer tankId : tankIds)
-            convertedTankIds[i++] = tankId.intValue();
+        for (String tankId : tankIds)
+            convertedTankIds[i++] = tankId;
         return convertedTankIds;
     }
 
     @Override
-    public Position findTank(int tankId) {
+    public Position findTank(String tankId) {
         Optional<pl.edu.agh.ietanks.engine.api.Position> position = engineBoard.findTank(tankId);
         if (position.isPresent()) {
             return new PositionAdapter(position.get());
@@ -38,7 +38,7 @@ public class BoardAdapter implements Board {
     }
 
     @Override
-    public Integer findTankOnPosition(Position position) {
+    public String findTankOnPosition(Position position) {
         return engineBoard.findTank(convertToEnginePosition(position));
     }
 

@@ -2,11 +2,7 @@ package pl.edu.agh.ietanks.engine.simple;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import pl.edu.agh.ietanks.engine.api.Action;
-import pl.edu.agh.ietanks.engine.api.BoardDefinition;
-import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
-import pl.edu.agh.ietanks.engine.api.Missile;
-import pl.edu.agh.ietanks.engine.api.Position;
+import pl.edu.agh.ietanks.engine.api.*;
 import pl.edu.agh.ietanks.engine.api.events.Event;
 import pl.edu.agh.ietanks.engine.api.events.MissileCreated;
 import pl.edu.agh.ietanks.engine.api.events.MissileDestroyed;
@@ -75,8 +71,8 @@ public class GameLogic {
     	// then remove missiles and tanks at the same position
     	for (Position position : missilePositions.keySet()) {
     		if (board.findTank(position) != null) {
-    			
-    			int tankId = board.findTank(position);
+
+				String tankId = board.findTank(position);
     			board.removeTank(tankId);
     			events.add(new TankDestroyed(tankId));
     			
@@ -96,7 +92,7 @@ public class GameLogic {
         return board;
     }
 
-    public List<Event> tryApplyAction(Action proposedAction, int botId) {
+    public List<Event> tryApplyAction(Action proposedAction, String botId) {
         List<Event> events = new ArrayList<>();
 
         Optional<Position> botPosition = board.findTank(botId);
@@ -147,7 +143,7 @@ public class GameLogic {
             
             // remove tank at the same position
             if (board.findTank(destination) != null) {
-    			int tankId = board.findTank(destination);
+				String tankId = board.findTank(destination);
     			board.removeTank(tankId);
     			events.add(new TankDestroyed(tankId));
     			

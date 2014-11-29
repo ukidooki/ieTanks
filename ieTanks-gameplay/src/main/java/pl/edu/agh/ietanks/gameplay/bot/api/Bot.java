@@ -2,13 +2,13 @@ package pl.edu.agh.ietanks.gameplay.bot.api;
 
 public abstract class Bot {
 
-    private Integer id;
+    private String id;
 
-    protected Bot(Integer id) {
+    protected Bot(String id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 

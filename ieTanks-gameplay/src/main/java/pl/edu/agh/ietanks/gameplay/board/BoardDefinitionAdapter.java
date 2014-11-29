@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import pl.edu.agh.ietanks.boards.model.Board;
 import pl.edu.agh.ietanks.engine.api.BoardDefinition;
 import pl.edu.agh.ietanks.engine.api.Position;
+import pl.edu.agh.ietanks.gameplay.game.api.BotId;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,10 +14,10 @@ import java.util.Map;
 
 public class BoardDefinitionAdapter implements BoardDefinition {
     private final Board board;
-    private final Map<Integer, Position> tanks = new HashMap<>();
+    private final Map<String, Position> tanks = new HashMap<>();
 
-    public BoardDefinitionAdapter(Board board, List<Integer> tankIds) {
-        Preconditions.checkArgument(tankIds.size() <= 5, "More than 5 tanks not supported yet.");
+    public BoardDefinitionAdapter(Board board, List<BotId> botIds) {
+        Preconditions.checkArgument(botIds.size() <= 5, "More than 5 tanks not supported yet.");
 
         this.board = board;
 
@@ -28,8 +29,8 @@ public class BoardDefinitionAdapter implements BoardDefinition {
         goodPositions.add(Position.topLeft().toRight((width() - 1) / 2).toDown((height() - 1)/2));
 
         int i = 0;
-        for(Integer id : tankIds) {
-            tanks.put(id, goodPositions.get(i));
+        for(BotId id : botIds) {
+            tanks.put(id.id(), goodPositions.get(i));
             i++;
         }
     }
@@ -45,7 +46,7 @@ public class BoardDefinitionAdapter implements BoardDefinition {
     }
 
     @Override
-    public Map<Integer, Position> initialTankPositions() {
+    public Map<String, Position> initialTankPositions() {
         return Collections.unmodifiableMap(tanks);
     }
 }

@@ -1,11 +1,14 @@
 package pl.edu.agh.ietanks.sandbox.simple;
 
+import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
+import pl.edu.agh.ietanks.gameplay.game.api.BotId;
+
 import java.util.List;
 
 public interface BotService {
     public List<BotId> listAvailableBots();
 
-    public StringBotRepresentation fetch(BotId botId);
+    public BotAlgorithm fetch(BotId botId);
 
-    public List<StringBotRepresentation> fetch(List<BotId> botIds);
+    public List<BotAlgorithm> fetch(List<BotId> botIds);
 }

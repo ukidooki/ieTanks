@@ -21,5 +21,5 @@ public interface BoardDefinition {
     /**
      * Defines the tanks (players): number and their initial positions.
      */
-    Map<Integer, Position> initialTankPositions();
+    Map<String, Position> initialTankPositions();
 }

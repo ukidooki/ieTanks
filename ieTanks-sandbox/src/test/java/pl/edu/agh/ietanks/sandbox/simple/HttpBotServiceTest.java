@@ -8,9 +8,10 @@ import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.google.common.io.Resources;
 import org.junit.Test;
+import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
+import pl.edu.agh.ietanks.gameplay.game.api.BotId;
 import pl.edu.agh.ietanks.sandbox.util.*;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -59,10 +60,10 @@ public class HttpBotServiceTest {
         HttpBotService botService = createBotService(responseCreator);
 
         // when
-        StringBotRepresentation botRepresentation = botService.fetch(botId);
+        BotAlgorithm botRepresentation = botService.fetch(botId);
 
         // then
-        assertThat(botRepresentation).isEqualTo(new StringBotRepresentation(botId, botCode));
+        assertThat(botRepresentation).isEqualTo(new BotAlgorithm(botId, botCode));
     }
 
     @Test
@@ -79,10 +80,10 @@ public class HttpBotServiceTest {
         HttpBotService botService = createBotService(compositeResponseCreator);
 
         // when
-        List<StringBotRepresentation> bots = botService.fetch(Lists.newArrayList(firstBotId, secondBotId));
+        List<BotAlgorithm> bots = botService.fetch(Lists.newArrayList(firstBotId, secondBotId));
 
         // then
-        assertThat(bots).containsExactly(new StringBotRepresentation(firstBotId, firstBotCode), new StringBotRepresentation(secondBotId, secondBotCode));
+        assertThat(bots).containsExactly(new BotAlgorithm(firstBotId, firstBotCode), new BotAlgorithm(secondBotId, secondBotCode));
     }
 
     @Test(expected = BotServiceUnavailableException.class)

@@ -1,19 +1,10 @@
-package pl.edu.agh.ietanks.sandbox.simple;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+package pl.edu.agh.ietanks.gameplay.game.api;
 
 public class BotId {
+    private String id;
 
-    private final String id;
-
-    @JsonCreator
-    public BotId(@JsonProperty("id") String id) {
+    public BotId(String id) {
         this.id = id;
-    }
-
-    public String id() {
-        return id;
     }
 
     @Override
@@ -28,6 +19,10 @@ public class BotId {
         return true;
     }
 
+    public String id() {
+        return id;
+    }
+
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
@@ -35,7 +30,7 @@ public class BotId {
 
     @Override
     public String toString() {
-        return "Bot{" +
+        return "BotId{" +
                 "id='" + id + '\'' +
                 '}';
     }

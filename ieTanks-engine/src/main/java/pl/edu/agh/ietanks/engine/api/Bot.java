@@ -13,4 +13,6 @@ public interface Bot {
      * @return Action which bot wants to perform
      */
     Action performAction(GameplayBoardView currentBoard);
+
+    String id();
 }

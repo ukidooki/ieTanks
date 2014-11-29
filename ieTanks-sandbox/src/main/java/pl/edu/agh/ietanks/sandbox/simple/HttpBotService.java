@@ -5,6 +5,8 @@ import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpResponse;
+import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
+import pl.edu.agh.ietanks.gameplay.game.api.BotId;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -51,11 +53,11 @@ public class HttpBotService implements BotService {
     }
 
     @Override
-    public StringBotRepresentation fetch(BotId botId) {
+    public BotAlgorithm fetch(BotId botId) {
         try {
             HttpRequest request = httpRequestFactory.buildGetRequest(getBotUrl(botId.id()));
             String botCode = request.execute().parseAsString();
-            StringBotRepresentation result = new StringBotRepresentation(botId, botCode);
+            BotAlgorithm result = new BotAlgorithm(botId, botCode);
 
             return result;
         } catch (IOException e) {
@@ -64,7 +66,7 @@ public class HttpBotService implements BotService {
     }
 
     @Override
-    public List<StringBotRepresentation> fetch(List<BotId> botIds) {
+    public List<BotAlgorithm> fetch(List<BotId> botIds) {
         return botIds.stream().map(id -> fetch(id)).collect(Collectors.toList());
     }
 }
