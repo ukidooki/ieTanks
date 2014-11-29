@@ -12,7 +12,6 @@ import java.util.UUID;
 public class SimpleSandbox {
 
     private final BotService botService;
-
     private final BoardsReader boardsReader;
     private GamePlay gamePlay;
 
@@ -22,7 +21,7 @@ public class SimpleSandbox {
         this.gamePlay = gamePlay;
     }
 
-    //
+    //TODO - add some exception handling
     public UUID startNewGameplay(int boardId, List<BotId> botIds) {
         Board board = boardsReader.getBoard(boardId);
         List<BotAlgorithm> bots = botService.fetch(botIds);

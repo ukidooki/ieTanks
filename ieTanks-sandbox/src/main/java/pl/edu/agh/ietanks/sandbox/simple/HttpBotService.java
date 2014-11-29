@@ -29,6 +29,7 @@ public class HttpBotService implements BotService {
         this.getBotsUrl = new GenericUrl(apiAddress + "/rest/bots");
     }
 
+    // TODO - improve URL handling - do not concatenate manually
     private GenericUrl getBotUrl(String id) {
         return new GenericUrl(apiAddress + "/rest/bots/" + id);
     }
