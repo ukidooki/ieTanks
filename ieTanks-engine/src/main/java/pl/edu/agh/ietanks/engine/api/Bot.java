@@ -6,7 +6,7 @@ package pl.edu.agh.ietanks.engine.api;
 public interface Bot {
     /**
      * Decides what move should be performed when the bot has its turn.
-     *
+     * <p/>
      * The chosen action may be rejected if it is not valid. Bot looses his turn in this case.
      *
      * @param currentBoard current state of the board

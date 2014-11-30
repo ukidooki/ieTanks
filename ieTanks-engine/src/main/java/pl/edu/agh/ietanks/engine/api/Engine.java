@@ -13,7 +13,7 @@ public interface Engine {
      * Initializes the engine. Needs board and bots definition.
      *
      * @param initialBoard a board model we are starting with
-     * @param bots list of bot definitions, capable of performing moves
+     * @param bots         list of bot definitions, capable of performing moves
      */
     void setup(BoardDefinition initialBoard, List<? extends Bot> bots);
 

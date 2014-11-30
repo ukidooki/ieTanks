@@ -1,30 +1,33 @@
 package pl.edu.agh.ietanks.engine.simple.actions;
 
 import pl.edu.agh.ietanks.engine.api.Action;
-import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
-import pl.edu.agh.ietanks.engine.api.GameplayBoardView.Direction;
+import pl.edu.agh.ietanks.engine.api.Direction;
 
 /**
  * Represents move request from the bot to the game engine.
  */
-public class Move implements Action{
-	
-	private GameplayBoardView.Direction direction;
-	private int step;
-	
-	public Move(Direction direction, int step) {
-		super();
-		this.direction = direction;
-		this.step = step;
-	}
+public class Move implements Action {
 
-	public GameplayBoardView.Direction getDirection() {
-		return direction;
-	}
+    private Direction direction;
+    private int step;
 
-	public int getStep() {
-		return step;
-	}
+    public Move(Direction direction, int step) {
+        super();
+        this.direction = direction;
+        this.step = step;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public int getStep() {
+        return step;
+    }
+
+    public void setStep(int step) {
+        this.step = step;
+    }
 
     @Override
     public boolean equals(Object o) {

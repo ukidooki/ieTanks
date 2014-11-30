@@ -1,9 +1,9 @@
 package pl.edu.agh.ietanks.engine.api;
 
+import com.google.common.base.Optional;
+
 import java.util.Collection;
 import java.util.List;
-
-import com.google.common.base.Optional;
 
 /**
  * Board view visible by bots during gameplay.
@@ -18,17 +18,17 @@ public interface GameplayBoardView {
      * Finds tank on map by its id.
      */
     Optional<Position> findTank(int tankId);
-    
+
     /**
      * Finds tank on given position on map.
      */
     Integer findTank(Position position);
-    
+
     /**
      * Finds all missiles.
      */
     Collection<Missile> findMissiles();
-    
+
     /**
      * Finds missiles on given position on map.
      */
@@ -44,7 +44,4 @@ public interface GameplayBoardView {
      */
     boolean isAccessibleForTank(Position position);
 
-    enum Direction {
-        Right, Left, Up, Down, Up_Right, Up_Left, Down_Right, Down_Left
-    }
 }

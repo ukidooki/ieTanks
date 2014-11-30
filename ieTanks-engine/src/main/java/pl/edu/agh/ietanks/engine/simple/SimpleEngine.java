@@ -2,20 +2,11 @@ package pl.edu.agh.ietanks.engine.simple;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import pl.edu.agh.ietanks.engine.api.Action;
-import pl.edu.agh.ietanks.engine.api.BoardDefinition;
-import pl.edu.agh.ietanks.engine.api.Bot;
-import pl.edu.agh.ietanks.engine.api.Engine;
-import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
+import pl.edu.agh.ietanks.engine.api.*;
 import pl.edu.agh.ietanks.engine.api.events.Event;
 import pl.edu.agh.ietanks.engine.api.events.RoundResults;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 public class SimpleEngine implements Engine {
     private GameLogic gameLogic;
@@ -31,7 +22,7 @@ public class SimpleEngine implements Engine {
         this.gameLogic = new GameLogic(initialBoard);
 
         int id = 0;
-        for(Bot bot : bots) {
+        for (Bot bot : bots) {
             turns.add(bot);
             botIds.put(bot, id++);
         }
@@ -51,7 +42,7 @@ public class SimpleEngine implements Engine {
         final List<Event> turnEvents = Lists.newArrayList(Iterables.concat(missileEvents, tankEvents));
 
         turnCounter++;
-        if(turnCounter == MAX_TURNS) {
+        if (turnCounter == MAX_TURNS) {
             return RoundResults.Finished(turnEvents);
         } else {
             return RoundResults.Continue(turnEvents);
