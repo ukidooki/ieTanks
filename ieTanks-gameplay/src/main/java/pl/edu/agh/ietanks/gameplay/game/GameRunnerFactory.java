@@ -6,7 +6,7 @@ import pl.edu.agh.ietanks.engine.api.BoardDefinition;
 import pl.edu.agh.ietanks.engine.api.Engine;
 import pl.edu.agh.ietanks.engine.api.Position;
 import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
-import pl.edu.agh.ietanks.gameplay.game.innerapi.GameHistoryStorage;
+import pl.edu.agh.ietanks.gameplay.game.api.GameHistory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,9 +15,9 @@ import java.util.Map;
 
 public class GameRunnerFactory {
 
-    private final GameHistoryStorage storage;
+    private final GameHistory storage;
 
-    public GameRunnerFactory(GameHistoryStorage storage) {
+    public GameRunnerFactory(GameHistory storage) {
         this.storage = storage;
     }
 

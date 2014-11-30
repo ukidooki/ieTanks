@@ -9,7 +9,7 @@ import pl.edu.agh.ietanks.engine.api.events.RoundResults;
 import pl.edu.agh.ietanks.gameplay.bot.BotExecutor;
 import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
 import pl.edu.agh.ietanks.gameplay.game.api.Game;
-import pl.edu.agh.ietanks.gameplay.game.innerapi.GameHistoryStorage;
+import pl.edu.agh.ietanks.gameplay.game.api.GameHistory;
 import pl.edu.agh.ietanks.gameplay.game.innerapi.GameLogger;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ class GameRunner implements Runnable, Game {
     private final BoardDefinition gameBoard;
     private final List<BotAlgorithm> bots;
     private final Engine gameEngine;
-    private final GameHistoryStorage historyStorage;
+    private final GameHistory historyStorage;
     private final List<Event> gameEvents;
 
     private void setupEngineParams() {
@@ -53,7 +53,7 @@ class GameRunner implements Runnable, Game {
         historyStorage.storeFinishedGame(this);
     }
 
-    public GameRunner(GameHistoryStorage historyStorage,
+    public GameRunner(GameHistory historyStorage,
                       Engine gameEngine,
                       BoardDefinition gameBoard,
                       List<BotAlgorithm> gameBots) {
