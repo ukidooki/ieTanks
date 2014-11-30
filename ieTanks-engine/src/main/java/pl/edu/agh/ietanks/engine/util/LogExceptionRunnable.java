@@ -18,8 +18,7 @@ public class LogExceptionRunnable implements Runnable {
     public void run() {
         try {
             runnable.run();
-        }
-        catch(Throwable e) {
+        } catch (Throwable e) {
             LOGGER.severe(e.toString());
             e.printStackTrace();
         }

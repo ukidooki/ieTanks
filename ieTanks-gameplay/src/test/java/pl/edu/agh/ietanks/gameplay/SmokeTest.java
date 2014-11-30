@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.edu.agh.ietanks.boards.api.BoardsReader;
 import pl.edu.agh.ietanks.boards.model.Board;
 import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
+import pl.edu.agh.ietanks.gameplay.game.api.BotId;
 import pl.edu.agh.ietanks.gameplay.game.api.GamePlay;
 import pl.edu.agh.ietanks.gameplay.testutils.ResourceUtils;
 
@@ -23,31 +24,13 @@ public class SmokeTest {
     @Autowired
     private BoardsReader boardsReader;
 
-    static class SimpleBotAlgorithm implements BotAlgorithm {
-        private final int id;
-
-        SimpleBotAlgorithm(int id) {
-            this.id = id;
-        }
-
-        @Override
-        public int getId() {
-            return id;
-        }
-
-        @Override
-        public String getPythonCode() {
-            return ResourceUtils.loadResourceFromFile("TestBot.py");
-        }
-    }
-
     @Test
     public void runSimpleGame() throws InterruptedException {
         final Board board = boardsReader.getBoards().iterator().next();
         final List<BotAlgorithm> bots = new ArrayList<>();
 
-        bots.add(new SimpleBotAlgorithm(1));
-        bots.add(new SimpleBotAlgorithm(2));
+        bots.add(new BotAlgorithm(new BotId("first-bot"), ResourceUtils.loadResourceFromFile("TestBot.py")));
+        bots.add(new BotAlgorithm(new BotId("second-bot"), ResourceUtils.loadResourceFromFile("TestBot.py")));
 
         gameService.startGame(board, bots);
 
