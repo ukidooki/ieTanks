@@ -1,9 +1,35 @@
+angular.module('ieTanksHistory', ['ieTanksServices'])
+    .controller('GameHistory', ['$scope', '$interval', 'REST',
+        function ($scope, $interval, REST) {
+            var gameHistory = REST.finishedGames.query(function () {
+                $scope.gameHistory = gameHistory;
+            }, function () {
+                console.log('Failed to retrieve finished games list.');
+            });
+        }
+    ]);
+
 var ieTanksVisualization = angular.module('ieTanksVisualization', []);
 
-ieTanksVisualization.controller('GameCtrl', ['$scope', '$interval', 'REST',
-    function ($scope, $interval, REST) {
+ieTanksVisualization.controller('GameCtrl', ['$scope', '$interval', '$routeParams', 'REST',
+    function ($scope, $interval, $routeParams, REST) {
         $scope.map = {border: 20, obstacles:[{type:'', x:5, y:10}]};
 
+        /* TODO uncomment when REST interface is ready
+        var step = 0;
+        $interval(function () {
+            var events = REST.events.query({ gameId: $routeParams.gameId }, function() {
+                if (step < events.length) {
+                    $scope.state = events[step];
+                    ++step;
+                } else {
+                    console.log('No more events to display.');
+                }
+            }, function () {
+                console.log('Failed to load game events.');
+            });
+        }, 3000);
+        */
         var states = [{players:[{id:'blabla', action:'move', x:'10', y:'5'}, {id:'blabla2', action:'move', x:'3', y:'2'}], missiles:[]},
             {players:[{id:'blabla', action:'move', x:'6', y:'2'}, {id:'blabla2', action:'move', x:'11', y:'2'}], missiles:[]},
             {players:[{id:'blabla', action:'move', x:'15', y:'19'}, {id:'blabla2', action:'move', x:'5', y:'5'}], missiles:[]},
@@ -66,7 +92,7 @@ ieTanksVisualization.controller('GameCtrl', ['$scope', '$interval', 'REST',
                 load_game();
 
                 function load_game(map) {
-                    if(map) {
+                    if (map) {
                         isInit = true;
                         players = {};
                         scale = (gameBorder / map["border"]) / tileSize;
@@ -85,11 +111,11 @@ ieTanksVisualization.controller('GameCtrl', ['$scope', '$interval', 'REST',
                 }
 
                 function load_state(state) {
-                    if(state) {
+                    if (state) {
                         var players_states = state["players"];
                         console.log(state);
                         console.log(players);
-                        if(isInit) {
+                        if (isInit) {
                             console.log("init");
                             players_states.forEach(function (state) {
                                 var tank = game.add.sprite(state.x * scaledGrid, state.y * scaledGrid, 'tank');
@@ -102,7 +128,7 @@ ieTanksVisualization.controller('GameCtrl', ['$scope', '$interval', 'REST',
                                 turret.tint = col;
                                 players[state.id] = new Player(state.id, tank, turret, 0);
                             });
-                            isInit=false;
+                            isInit = false;
                         } else {
                             console.log("update");
                             players_states.forEach(function (state) {
