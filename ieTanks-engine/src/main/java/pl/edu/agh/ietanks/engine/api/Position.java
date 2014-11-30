@@ -14,35 +14,35 @@ public class Position {
     }
 
     public Position toRight(int step) {
-        return new Position(fromTop, fromLeft+step);
+        return new Position(fromTop, fromLeft + step);
     }
-    
+
     public Position toLeft(int step) {
-        return new Position(fromTop, fromLeft-step);
+        return new Position(fromTop, fromLeft - step);
     }
-    
+
     public Position toUp(int step) {
-        return new Position(fromTop-step, fromLeft);
+        return new Position(fromTop - step, fromLeft);
     }
-    
+
     public Position toDown(int step) {
-        return new Position(fromTop+step, fromLeft);
+        return new Position(fromTop + step, fromLeft);
     }
-    
+
     public Position toUpLeft(int step) {
-        return new Position(fromTop-step, fromLeft-step);
+        return new Position(fromTop - step, fromLeft - step);
     }
-    
+
     public Position toDownLeft(int step) {
-        return new Position(fromTop+step, fromLeft-step);
+        return new Position(fromTop + step, fromLeft - step);
     }
-    
+
     public Position toUpRight(int step) {
-        return new Position(fromTop-step, fromLeft+step);
+        return new Position(fromTop - step, fromLeft + step);
     }
-    
+
     public Position toDownRight(int step) {
-        return new Position(fromTop+step, fromLeft+step);
+        return new Position(fromTop + step, fromLeft + step);
     }
 
     public int fromLeft() {

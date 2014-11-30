@@ -3,16 +3,12 @@ package pl.edu.agh.ietanks.engine.simple;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import pl.edu.agh.ietanks.engine.api.*;
+import pl.edu.agh.ietanks.engine.api.BoardDefinition;
+import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
+import pl.edu.agh.ietanks.engine.api.Missile;
+import pl.edu.agh.ietanks.engine.api.Position;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class BoardState implements GameplayBoardView {
     final Set<Position> taken = new HashSet<>();
@@ -40,32 +36,32 @@ public class BoardState implements GameplayBoardView {
     public Optional<Position> findTank(String tankId) {
         return Optional.fromNullable(tanks.get(tankId));
     }
-    
-	@Override
-	public Collection<Missile> findMissiles() {
-		return Collections.unmodifiableCollection(missiles);
-	}
-	
-	@Override
-	public String findTank(Position position) {
-		for (String tankId : tanks.keySet()) {
-			if (tanks.get(tankId).equals(position)) {
-				return tankId; 
-			}
-		}
-		return null;
-	}
 
-	@Override
-	public Collection<Missile> findMissiles(Position position) {
-		Collection<Missile> missilesHere = new ArrayList<>();
-		for (Missile missile : missiles) {
-			if (missile.position().equals(position)) {
-				missilesHere.add(missile);
-			}
-		}
-		return Collections.unmodifiableCollection(missilesHere);
-	}
+    @Override
+    public Collection<Missile> findMissiles() {
+        return Collections.unmodifiableCollection(missiles);
+    }
+
+    @Override
+    public String findTank(Position position) {
+        for (String tankId : tanks.keySet()) {
+            if (tanks.get(tankId).equals(position)) {
+                return tankId;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Collection<Missile> findMissiles(Position position) {
+        Collection<Missile> missilesHere = new ArrayList<>();
+        for (Missile missile : missiles) {
+            if (missile.position().equals(position)) {
+                missilesHere.add(missile);
+            }
+        }
+        return Collections.unmodifiableCollection(missilesHere);
+    }
 
     @Override
     public boolean isWithin(Position position) {
@@ -88,37 +84,36 @@ public class BoardState implements GameplayBoardView {
         tanks.put(tankId, destination);
         taken.add(destination);
     }
-    
-	public void removeTank(String tankId) {
-		taken.remove(tanks.get(tankId));
-		tanks.remove(tankId);
-	}
-    
-	public void createMissile(Missile missile) {
-		if (isWithin(missile.position())) {
-			missiles.add(missile);
-		}
-	}
 
-	public void replaceMissile(Missile missile, Position destination) {
-		if (isWithin(destination)) {
-			missile.changePosition(destination);
-		}
-		else {
-			missiles.remove(missile);
-		}
-	}
-	
-	public void removeMissile(Missile missile) {
-		missiles.remove(missile);
-	}
+    public void removeTank(String tankId) {
+        taken.remove(tanks.get(tankId));
+        tanks.remove(tankId);
+    }
+
+    public void createMissile(Missile missile) {
+        if (isWithin(missile.position())) {
+            missiles.add(missile);
+        }
+    }
+
+    public void replaceMissile(Missile missile, Position destination) {
+        if (isWithin(destination)) {
+            missile.changePosition(destination);
+        } else {
+            missiles.remove(missile);
+        }
+    }
+
+    public void removeMissile(Missile missile) {
+        missiles.remove(missile);
+    }
 
     @Override
     public String toString() {
         StringBuilder representation = new StringBuilder();
         representation.append("Board{\n");
 
-        for(int i=0; i<width; ++i) {
+        for (int i = 0; i < width; ++i) {
             for (int j = 0; j < height; ++j) {
                 if (taken.contains(new Position(i, j))) {
                     for (Map.Entry<String, Position> entry : tanks.entrySet()) {
@@ -127,8 +122,7 @@ public class BoardState implements GameplayBoardView {
                             break;
                         }
                     }
-                }
-                else {
+                } else {
                     representation.append('.');
                 }
             }

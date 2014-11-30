@@ -23,9 +23,9 @@ public class TankMoved implements Event {
     public GameplayBoardView.Direction direction() {
         return direction;
     }
-    
+
     public int step() {
-    	return step;
+        return step;
     }
 
     @Override

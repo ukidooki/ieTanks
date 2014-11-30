@@ -13,17 +13,15 @@ public class BoardBuilder {
 
         final HashMap<String, Position> tanks = new HashMap<>();
 
-        for(int i=0; i<height; ++i) {
-            for(int j=0; j<width; ++j) {
+        for (int i = 0; i < height; ++i) {
+            for (int j = 0; j < width; ++j) {
                 char element = asciiRepresentation[i].charAt(j);
 
-                if(element == '.') {
+                if (element == '.') {
                     // nothing to do
-                }
-                else if('0' <= element && element <= '9') {
+                } else if ('0' <= element && element <= '9') {
                     tanks.put(String.valueOf(element), new Position(i, j));
-                }
-                else {
+                } else {
                     throw new IllegalArgumentException();
                 }
             }

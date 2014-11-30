@@ -4,38 +4,38 @@ package pl.edu.agh.ietanks.engine.api.events;
  * Indicates that a tank has been destroyed.
  */
 public class TankDestroyed implements Event {
-	
-	private final String tankId;
 
-	public TankDestroyed(String tankId) {
-		super();
-		this.tankId = tankId;
-	}
+    private final String tankId;
 
-	public String tankId() {
-		return tankId;
-	}
+    public TankDestroyed(String tankId) {
+        super();
+        this.tankId = tankId;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+    public String tankId() {
+        return tankId;
+    }
 
-		TankDestroyed that = (TankDestroyed) o;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-		if (tankId != null ? !tankId.equals(that.tankId) : that.tankId != null) return false;
+        TankDestroyed that = (TankDestroyed) o;
 
-		return true;
-	}
+        if (tankId != null ? !tankId.equals(that.tankId) : that.tankId != null) return false;
 
-	@Override
-	public int hashCode() {
-		return tankId != null ? tankId.hashCode() : 0;
-	}
+        return true;
+    }
 
-	@Override
-	public String toString() {
-		return "TankDestroyed {tankId=" + tankId + "}";
-	}
+    @Override
+    public int hashCode() {
+        return tankId != null ? tankId.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "TankDestroyed {tankId=" + tankId + "}";
+    }
 
 }

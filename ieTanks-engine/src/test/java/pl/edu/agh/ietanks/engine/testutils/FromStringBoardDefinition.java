@@ -5,7 +5,7 @@ import pl.edu.agh.ietanks.engine.api.Position;
 
 import java.util.Map;
 
-public class FromStringBoardDefinition implements BoardDefinition{
+public class FromStringBoardDefinition implements BoardDefinition {
     private final int width;
     private final int height;
     private final Map<String, Position> tanks;
