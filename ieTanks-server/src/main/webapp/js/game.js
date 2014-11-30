@@ -1,14 +1,3 @@
-angular.module('ieTanksHistory', [])
-    .controller('GameHistory', ['$scope', '$interval', 'REST',
-        function ($scope, $interval, REST) {
-            var gameHistory = REST.finishedGames.query(function () {
-                $scope.gameHistory = gameHistory;
-            }, function () {
-                console.log('Failed to retrieve finished games list.');
-            });
-        }
-    ]);
-
 var ieTanksVisualization = angular.module('ieTanksVisualization', []);
 
 ieTanksVisualization.controller('GameCtrl', ['$scope', '$interval', '$routeParams', 'REST',
@@ -47,6 +36,15 @@ ieTanksVisualization.controller('GameCtrl', ['$scope', '$interval', '$routeParam
 
     }
 ])
+    .controller('GameHistory', ['$scope', '$interval', 'REST',
+        function ($scope, $interval, REST) {
+            var gameHistory = REST.finishedGames.query(function () {
+                $scope.gameHistory = gameHistory;
+            }, function () {
+                console.log('Failed to retrieve finished games list.');
+            });
+        }
+    ])
     .directive('tankGame', function () {
         return {
             scope: {

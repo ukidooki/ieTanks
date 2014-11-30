@@ -4,7 +4,6 @@
 
 var ieTanksApp = angular.module('ieTanksApp', [
     'ieTanksVisualization',
-    'ieTanksHistory',
     'ieTanksServices',
     'ngRoute',
     'ngResource'
