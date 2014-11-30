@@ -13,6 +13,7 @@ public class BotAlgorithm {
     public BotId id() {
         return id;
     }
+
     public String pythonCode() {
         return pythonCode;
     }

@@ -32,7 +32,7 @@ class GameRunner implements Runnable, Game {
     private final GameHistoryStorage historyStorage;
     private final List<Event> gameEvents;
 
-    private void setupEngineParams(){
+    private void setupEngineParams() {
         gameEngine.setup(gameBoard,
                 Lists.transform(bots, botAlgorithm -> new BotExecutor(botAlgorithm.id(), botAlgorithm.pythonCode()))
         );
@@ -45,7 +45,7 @@ class GameRunner implements Runnable, Game {
         setupEngineParams();
 
         RoundResults rResults;
-        while(( rResults = gameEngine.nextMove()) != null && !rResults.isGameFinished()){
+        while ((rResults = gameEngine.nextMove()) != null && !rResults.isGameFinished()) {
             List<Event> roundEvents = rResults.getRoundEvents();
             gameEvents.addAll(roundEvents);
 
@@ -55,7 +55,7 @@ class GameRunner implements Runnable, Game {
         historyStorage.storeFinishedGame(this);
     }
 
-    public GameRunner(GameHistoryStorage historyStorage, Board gameBoard, List<BotAlgorithm> gameBots){
+    public GameRunner(GameHistoryStorage historyStorage, Board gameBoard, List<BotAlgorithm> gameBots) {
         this.gameId = UUID.randomUUID();
         this.historyStorage = historyStorage;
         this.gameEngine = new SimpleEngine();

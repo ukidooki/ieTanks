@@ -6,11 +6,7 @@ import pl.edu.agh.ietanks.engine.api.BoardDefinition;
 import pl.edu.agh.ietanks.engine.api.Position;
 import pl.edu.agh.ietanks.gameplay.game.api.BotId;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BoardDefinitionAdapter implements BoardDefinition {
     private final Board board;
@@ -26,10 +22,10 @@ public class BoardDefinitionAdapter implements BoardDefinition {
         goodPositions.add(Position.topLeft().toRight(width() - 1).toDown(height() - 1));
         goodPositions.add(Position.topLeft().toRight(width() - 1));
         goodPositions.add(Position.topLeft().toDown(height() - 1));
-        goodPositions.add(Position.topLeft().toRight((width() - 1) / 2).toDown((height() - 1)/2));
+        goodPositions.add(Position.topLeft().toRight((width() - 1) / 2).toDown((height() - 1) / 2));
 
         int i = 0;
-        for(BotId id : botIds) {
+        for (BotId id : botIds) {
             tanks.put(id.id(), goodPositions.get(i));
             i++;
         }

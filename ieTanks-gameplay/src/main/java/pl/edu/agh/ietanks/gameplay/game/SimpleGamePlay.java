@@ -20,10 +20,10 @@ public class SimpleGamePlay implements GamePlay {
 
     private final ExecutorService executionService;
 
-    public SimpleGamePlay(){
+    public SimpleGamePlay() {
         executionService = Executors.newFixedThreadPool(THREADS_IN_POOL);
 
-        Runtime.getRuntime().addShutdownHook(new Thread(){
+        Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
                 executionService.shutdown();

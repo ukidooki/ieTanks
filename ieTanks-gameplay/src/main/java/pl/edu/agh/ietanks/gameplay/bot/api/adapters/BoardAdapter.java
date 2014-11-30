@@ -67,7 +67,7 @@ public class BoardAdapter implements Board {
     private Missile[] convertEngineMissiles(Collection<pl.edu.agh.ietanks.engine.api.Missile> missiles) {
         Missile[] convertedMissiles = new Missile[missiles.size()];
         int i = 0;
-        for(pl.edu.agh.ietanks.engine.api.Missile missile : missiles) {
+        for (pl.edu.agh.ietanks.engine.api.Missile missile : missiles) {
             convertedMissiles[i] = new MissileAdapter(missile);
             ++i;
         }

@@ -5,7 +5,7 @@ import pl.edu.agh.ietanks.engine.api.events.Event;
 import pl.edu.agh.ietanks.engine.api.events.RoundResults;
 import pl.edu.agh.ietanks.gameplay.game.innerapi.GameLogger;
 
-public class StandardOutputGameLogger implements GameLogger{
+public class StandardOutputGameLogger implements GameLogger {
     private int roundIdx;
 
     @Override
@@ -19,20 +19,20 @@ public class StandardOutputGameLogger implements GameLogger{
         StringBuilder roundEvents = new StringBuilder();
 
         roundEvents
-                    .append("ROUND ")
-                    .append(roundIdx++)
-                    .append(" :\n")
-                    ;
+                .append("ROUND ")
+                .append(roundIdx++)
+                .append(" :\n")
+        ;
 
-        if(results.isGameFinished()){
+        if (results.isGameFinished()) {
             roundEvents.append("--------GAME FINISHED--------\n");
-        }else{
-            for(Event e : results.getRoundEvents()){
+        } else {
+            for (Event e : results.getRoundEvents()) {
                 roundEvents
-                            .append("\t")
-                            .append(e)
-                            .append("\n")
-                            ;
+                        .append("\t")
+                        .append(e)
+                        .append("\n")
+                ;
             }
         }
 
