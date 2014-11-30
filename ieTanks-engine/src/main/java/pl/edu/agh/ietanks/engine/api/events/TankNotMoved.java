@@ -2,6 +2,9 @@ package pl.edu.agh.ietanks.engine.api.events;
 
 import pl.edu.agh.ietanks.engine.api.Direction;
 
+/**
+ * Indicates that a tank tried to move but did not succeed .
+ */
 public class TankNotMoved implements Event {
 
     private final int tankId;
