@@ -24,8 +24,8 @@ public class SimpleEngineTest {
                 "....",
                 "....");
 
-        Bot bot1 = BotBuilder.fromSequence(new Move(Direction.Right, 1));
-        Bot bot2 = BotBuilder.fromSequence(new Move(Direction.Right, 1));
+        Bot bot1 = BotBuilder.fromSequence(String.valueOf(0), new Move(Direction.Right, 1));
+        Bot bot2 = BotBuilder.fromSequence(String.valueOf(1), new Move(Direction.Right, 1));
 
         Engine engine = new SimpleEngine();
         engine.setup(startingBoard, Lists.newArrayList(bot1, bot2));
@@ -34,16 +34,16 @@ public class SimpleEngineTest {
         final List<Event> events1 = engine.nextMove().getRoundEvents();
 
         // then
-        assertThat(engine.currentBoard().findTank(0).get().equals(new Position(1, 0)));
-        assertThat(engine.currentBoard().findTank(0).get().equals(new Position(1, 1)));
-        assertThat(events1).contains(new TankNotMoved(0, Direction.Right, 1));
+        assertThat(engine.currentBoard().findTank(String.valueOf(0)).get().equals(new Position(1, 0)));
+        assertThat(engine.currentBoard().findTank(String.valueOf(0)).get().equals(new Position(1, 1)));
+        assertThat(events1).contains(new TankNotMoved(String.valueOf(0), Direction.Right, 1));
 
         // when
         final List<Event> events2 = engine.nextMove().getRoundEvents();
 
         // then
-        assertThat(engine.currentBoard().findTank(0).get().equals(new Position(1, 0)));
-        assertThat(engine.currentBoard().findTank(0).get().equals(new Position(1, 2)));
-        assertThat(events2).containsExactly(new TankMoved(1, Direction.Right, 1));
+        assertThat(engine.currentBoard().findTank(String.valueOf(0)).get().equals(new Position(1, 0)));
+        assertThat(engine.currentBoard().findTank(String.valueOf(0)).get().equals(new Position(1, 2)));
+        assertThat(events2).containsExactly(new TankMoved(String.valueOf(1), Direction.Right, 1));
     }
 }

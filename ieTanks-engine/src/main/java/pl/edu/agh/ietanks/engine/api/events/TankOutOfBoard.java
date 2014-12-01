@@ -7,17 +7,17 @@ import pl.edu.agh.ietanks.engine.api.Direction;
  */
 public class TankOutOfBoard implements Event {
 
-    private final int tankId;
+    private final String tankId;
     private final Direction direction;
     private final int step;
 
-    public TankOutOfBoard(int tankId, Direction direction, int step) {
+    public TankOutOfBoard(String tankId, Direction direction, int step) {
         this.tankId = tankId;
         this.direction = direction;
         this.step = step;
     }
 
-    public int tankId() {
+    public String tankId() {
         return tankId;
     }
 
@@ -37,15 +37,15 @@ public class TankOutOfBoard implements Event {
         TankOutOfBoard that = (TankOutOfBoard) o;
 
         if (step != that.step) return false;
-        if (tankId != that.tankId) return false;
         if (direction != that.direction) return false;
+        if (tankId != null ? !tankId.equals(that.tankId) : that.tankId != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = tankId;
+        int result = tankId != null ? tankId.hashCode() : 0;
         result = 31 * result + (direction != null ? direction.hashCode() : 0);
         result = 31 * result + step;
         return result;

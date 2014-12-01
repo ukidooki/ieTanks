@@ -3,8 +3,8 @@ package pl.edu.agh.ietanks.engine.api;
 public class Missile {
 
     private int speed;
-    private final Direction direction;
     private Position position;
+    private final Direction direction;
 
     public Missile(int speed, Direction direction, Position position) {
         this.speed = speed;

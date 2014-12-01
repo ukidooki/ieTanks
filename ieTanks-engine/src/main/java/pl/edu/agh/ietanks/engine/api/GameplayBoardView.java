@@ -12,17 +12,17 @@ public interface GameplayBoardView {
     /**
      * Returns all tanks (their identifiers) that are still on board.
      */
-    List<Integer> tankIds();
+    List<String> tankIds();
 
     /**
      * Finds tank on map by its id.
      */
-    Optional<Position> findTank(int tankId);
+    Optional<Position> findTank(String id);
 
     /**
      * Finds tank on given position on map.
      */
-    Integer findTank(Position position);
+    String findTank(Position position);
 
     /**
      * Finds all missiles.
@@ -43,5 +43,4 @@ public interface GameplayBoardView {
      * Checks whether the tank may take a given position
      */
     boolean isAccessibleForTank(Position position);
-
 }

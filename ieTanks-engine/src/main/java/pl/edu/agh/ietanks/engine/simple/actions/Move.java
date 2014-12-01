@@ -17,6 +17,7 @@ public class Move implements Action {
         this.step = step;
     }
 
+
     public Direction getDirection() {
         return direction;
     }

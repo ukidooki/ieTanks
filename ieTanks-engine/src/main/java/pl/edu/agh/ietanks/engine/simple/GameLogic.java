@@ -72,7 +72,7 @@ public class GameLogic {
 
                 missilePositions.remove(position);
 
-                int tankId = board.findTank(position);
+                String tankId = board.findTank(position);
                 board.removeTank(tankId);
                 events.add(new TankDestroyed(tankId));
 
@@ -97,7 +97,7 @@ public class GameLogic {
         return board;
     }
 
-    public List<Event> tryApplyAction(Action proposedAction, int botId) {
+    public List<Event> tryApplyAction(Action proposedAction, String botId) {
         List<Event> events = new ArrayList<>();
 
         Optional<Position> botPosition = board.findTank(botId);
@@ -117,7 +117,7 @@ public class GameLogic {
         return events;
     }
 
-    private void tryToMove(int botId, List<Event> events, Optional<Position> botPosition, Move move) {
+    private void tryToMove(String botId, List<Event> events, Optional<Position> botPosition, Move move) {
         Position destination = findMoveDestination(botPosition, move);
         Preconditions.checkNotNull(destination, "invalid movement");
         if (!board.isWithin(destination)) {
@@ -167,7 +167,7 @@ public class GameLogic {
 
         // remove tank at the same position
         if (board.findTank(destination) != null) {
-            int tankId = board.findTank(destination);
+            String tankId = board.findTank(destination);
             board.removeTank(tankId);
             events.add(new TankDestroyed(tankId));
 

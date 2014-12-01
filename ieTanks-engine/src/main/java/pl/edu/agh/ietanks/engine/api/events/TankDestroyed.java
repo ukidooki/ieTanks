@@ -5,37 +5,32 @@ package pl.edu.agh.ietanks.engine.api.events;
  */
 public class TankDestroyed implements Event {
 
-    private final int tankId;
+    private final String tankId;
 
-    public TankDestroyed(int tankId) {
+    public TankDestroyed(String tankId) {
         super();
         this.tankId = tankId;
     }
 
-    public int tankId() {
+    public String tankId() {
         return tankId;
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + tankId;
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TankDestroyed that = (TankDestroyed) o;
+
+        if (tankId != null ? !tankId.equals(that.tankId) : that.tankId != null) return false;
+
+        return true;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        TankDestroyed other = (TankDestroyed) obj;
-        if (tankId != other.tankId)
-            return false;
-        return true;
+    public int hashCode() {
+        return tankId != null ? tankId.hashCode() : 0;
     }
 
     @Override
