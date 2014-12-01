@@ -10,7 +10,12 @@ from tornado.web import RequestHandler, Application, url
 
 class BotsListHandler(RequestHandler):
     def get(self):
-        bots = [{'id': path.splitext(f)[0]} for f in listdir('bots')]
+        bots = []
+        for dirpath, _, filenames in os.walk('bots'):
+            for filename in filenames:
+                bots.append({'bot_id': path.splitext(filename)[0],
+                             'user_id': path.split(dirpath)[1]})
+            #bots = [{'id': path.splitext(f)[0]} for f in listdir('bots')]
         self.write(json.dumps(bots))
 
     def post(self):
