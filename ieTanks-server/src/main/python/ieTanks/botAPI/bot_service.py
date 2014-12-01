@@ -20,7 +20,10 @@ class BotsListHandler(RequestHandler):
 
     def post(self):
         bot_data = json.loads(self.request.body)
-        f = open('bots/%s/%s.py' % (bot_data['user_id'], bot_data['bot_id']), 'w')
+        directory = 'bots/%s' % bot_data['user_id']
+        if not path.exists(directory):
+            os.makedirs(directory)
+        f = open('%s/%s.py' % (directory, bot_data['bot_id']), 'w')
         f.write(bot_data['code'])
         print self.request.body
 
