@@ -1,7 +1,7 @@
 package pl.edu.agh.ietanks.gameplay.bot.api.converters;
 
 import pl.edu.agh.ietanks.engine.api.Action;
-import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
+import pl.edu.agh.ietanks.engine.api.Direction;
 import pl.edu.agh.ietanks.engine.simple.actions.Move;
 import pl.edu.agh.ietanks.engine.simple.actions.NoOperation;
 import pl.edu.agh.ietanks.engine.simple.actions.Shot;
@@ -22,12 +22,12 @@ public class ActionConverter {
         }
         if (action instanceof pl.edu.agh.ietanks.gameplay.bot.api.Move) {
             pl.edu.agh.ietanks.gameplay.bot.api.Move moveAction = (pl.edu.agh.ietanks.gameplay.bot.api.Move) action;
-            GameplayBoardView.Direction direction = moveDirectionConverter.convertToEngineDirection(moveAction.direction());
+            Direction direction = moveDirectionConverter.convertToEngineDirection(moveAction.direction());
             return new Move(direction, 1);
         }
         if (action instanceof pl.edu.agh.ietanks.gameplay.bot.api.Shot) {
             pl.edu.agh.ietanks.gameplay.bot.api.Shot shotAction = (pl.edu.agh.ietanks.gameplay.bot.api.Shot) action;
-            GameplayBoardView.Direction direction = shotDirectionConverter.convertToEngineDirection(shotAction.direction());
+            Direction direction = shotDirectionConverter.convertToEngineDirection(shotAction.direction());
             return new Shot(direction, 1);
         }
         return null;

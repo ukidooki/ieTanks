@@ -1,15 +1,14 @@
 package pl.edu.agh.ietanks.engine.simple.actions;
 
 import pl.edu.agh.ietanks.engine.api.Action;
-import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
-import pl.edu.agh.ietanks.engine.api.GameplayBoardView.Direction;
+import pl.edu.agh.ietanks.engine.api.Direction;
 
 /**
  * Represents shot request from the bot to the game engine.
  */
 public class Shot implements Action {
 
-    private GameplayBoardView.Direction direction;
+    private Direction direction;
     private int speed;
 
     public Shot(Direction direction, int speed) {
@@ -18,7 +17,7 @@ public class Shot implements Action {
         this.speed = speed;
     }
 
-    public GameplayBoardView.Direction getDirection() {
+    public Direction getDirection() {
         return direction;
     }
 

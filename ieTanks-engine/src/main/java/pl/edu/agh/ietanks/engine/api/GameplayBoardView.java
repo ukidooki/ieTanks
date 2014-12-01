@@ -43,8 +43,4 @@ public interface GameplayBoardView {
      * Checks whether the tank may take a given position
      */
     boolean isAccessibleForTank(Position position);
-
-    enum Direction {
-        Right, Left, Up, Down, Up_Right, Up_Left, Down_Right, Down_Left
-    }
 }

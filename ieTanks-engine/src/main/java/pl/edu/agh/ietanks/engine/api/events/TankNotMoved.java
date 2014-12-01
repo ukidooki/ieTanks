@@ -1,17 +1,17 @@
 package pl.edu.agh.ietanks.engine.api.events;
 
-
 import pl.edu.agh.ietanks.engine.api.Direction;
 
 /**
- * Indicates that a tank has moved.
+ * Indicates that a tank tried to move but did not succeed .
  */
-public class TankMoved implements Event {
+public class TankNotMoved implements Event {
+
     private final String tankId;
     private final Direction direction;
     private final int step;
 
-    public TankMoved(String tankId, Direction direction, int step) {
+    public TankNotMoved(String tankId, Direction direction, int step) {
         this.tankId = tankId;
         this.direction = direction;
         this.step = step;
@@ -31,7 +31,7 @@ public class TankMoved implements Event {
 
     @Override
     public String toString() {
-        return "TankMoved{" +
+        return "TankNotMoved{" +
                 "tankId=" + tankId +
                 ", direction=" + direction +
                 ", step=" + step +
@@ -43,11 +43,11 @@ public class TankMoved implements Event {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TankMoved tankMoved = (TankMoved) o;
+        TankNotMoved that = (TankNotMoved) o;
 
-        if (step != tankMoved.step) return false;
-        if (direction != tankMoved.direction) return false;
-        if (tankId != null ? !tankId.equals(tankMoved.tankId) : tankMoved.tankId != null) return false;
+        if (step != that.step) return false;
+        if (direction != that.direction) return false;
+        if (tankId != null ? !tankId.equals(that.tankId) : that.tankId != null) return false;
 
         return true;
     }

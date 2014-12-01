@@ -1,15 +1,14 @@
 package pl.edu.agh.ietanks.engine.simple.actions;
 
 import pl.edu.agh.ietanks.engine.api.Action;
-import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
-import pl.edu.agh.ietanks.engine.api.GameplayBoardView.Direction;
+import pl.edu.agh.ietanks.engine.api.Direction;
 
 /**
  * Represents move request from the bot to the game engine.
  */
 public class Move implements Action {
 
-    private GameplayBoardView.Direction direction;
+    private Direction direction;
     private int step;
 
     public Move(Direction direction, int step) {
@@ -18,12 +17,17 @@ public class Move implements Action {
         this.step = step;
     }
 
-    public GameplayBoardView.Direction getDirection() {
+
+    public Direction getDirection() {
         return direction;
     }
 
     public int getStep() {
         return step;
+    }
+
+    public void setStep(int step) {
+        this.step = step;
     }
 
     @Override

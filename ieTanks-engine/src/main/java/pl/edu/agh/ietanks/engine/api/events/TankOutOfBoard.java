@@ -1,17 +1,17 @@
 package pl.edu.agh.ietanks.engine.api.events;
 
-
 import pl.edu.agh.ietanks.engine.api.Direction;
 
 /**
- * Indicates that a tank has moved.
+ * Indicates that a tank tried to move out of the board.
  */
-public class TankMoved implements Event {
+public class TankOutOfBoard implements Event {
+
     private final String tankId;
     private final Direction direction;
     private final int step;
 
-    public TankMoved(String tankId, Direction direction, int step) {
+    public TankOutOfBoard(String tankId, Direction direction, int step) {
         this.tankId = tankId;
         this.direction = direction;
         this.step = step;
@@ -30,24 +30,15 @@ public class TankMoved implements Event {
     }
 
     @Override
-    public String toString() {
-        return "TankMoved{" +
-                "tankId=" + tankId +
-                ", direction=" + direction +
-                ", step=" + step +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TankMoved tankMoved = (TankMoved) o;
+        TankOutOfBoard that = (TankOutOfBoard) o;
 
-        if (step != tankMoved.step) return false;
-        if (direction != tankMoved.direction) return false;
-        if (tankId != null ? !tankId.equals(tankMoved.tankId) : tankMoved.tankId != null) return false;
+        if (step != that.step) return false;
+        if (direction != that.direction) return false;
+        if (tankId != null ? !tankId.equals(that.tankId) : that.tankId != null) return false;
 
         return true;
     }
@@ -58,5 +49,14 @@ public class TankMoved implements Event {
         result = 31 * result + (direction != null ? direction.hashCode() : 0);
         result = 31 * result + step;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "TankOutOfBoard{" +
+                "tankId=" + tankId +
+                ", direction=" + direction +
+                ", step=" + step +
+                '}';
     }
 }
