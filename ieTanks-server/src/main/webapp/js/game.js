@@ -23,8 +23,8 @@ ieTanksVisualization.controller('GameCtrl', ['$scope', '$interval', '$routeParam
             {players:[{id:'blabla', action:'move', x:'6', y:'2'}, {id:'blabla2', action:'move', x:'11', y:'2'}], missiles:[]},
             {players:[{id:'blabla', action:'move', x:'15', y:'19'}, {id:'blabla2', action:'move', x:'5', y:'5'}], missiles:[]},
             {players:[{id:'blabla', action:'move', x:'0', y:'16'}, {id:'blabla2', action:'move', x:'7', y:'0'}], missiles:[]},
-            {players:[{id:'blabla', action:'move', x:'0', y:'14'}, {id:'blabla2', action:'shoot', x:'7', y:'0'}], missiles:[{id:'1',x:'5',y:'4'}]},
-            {players:[{id:'blabla', action:'move', x:'5', y:'12'}, {id:'blabla2', action:'move', x:'0', y:'10'}], missiles:[{id:'1',x:'5',y:'12'}]},
+            {players:[{id:'blabla', action:'move', x:'0', y:'14'}, {id:'blabla2', action:'shoot', x:'7', y:'0'}], missiles:[{player_id:'blabla2', id:'1',x:'5',y:'4'}]},
+            {players:[{id:'blabla', action:'move', x:'5', y:'12'}, {id:'blabla2', action:'move', x:'0', y:'10'}], missiles:[{player_id:'blabla2', id:'1',x:'5',y:'12'}]},
             {players:[{id:'blabla2', action:'move', x:'7', y:'12'}], missiles:[]},
             {players:[{id:'blabla2', action:'move', x:'0', y:'0'}], missiles:[]}];
         var ind = 0;
@@ -85,7 +85,7 @@ ieTanksVisualization.controller('GameCtrl', ['$scope', '$interval', '$routeParam
                 };
 
                 var createMissile = function(id, x, y) {
-                    var bullet = game.add.sprite(0, 0, 'bullet');
+                    var bullet = game.add.sprite(x * scaledGrid, y * scaledGrid, 'bullet');
                     bullet.scale.x = scale;
                     bullet.scale.y = scale;
                     bullet.tint = Phaser.Color.getRandomColor();
@@ -120,8 +120,8 @@ ieTanksVisualization.controller('GameCtrl', ['$scope', '$interval', '$routeParam
 
                 function preload() {
                     //load image which will be used as ground texture
-                    game.load.image('ground', 'assets/scorched_earth.png');
-                    game.load.image('bullet', 'assets/bullet.png');
+                    game.load.image('ground', 'assets/ice_land.png');
+                    game.load.image('bullet', 'assets/bulletWhite.png');
                     game.load.image('tank', 'assets/tankBaseWhite.png');
                     game.load.image('turret', 'assets/tankTurretWhite.png');
                     game.load.image('wall', 'assets/tile_backwall.png');
