@@ -2,6 +2,7 @@ package pl.edu.agh.ietanks.gameplay;
 
 import org.junit.Test;
 import pl.edu.agh.ietanks.engine.api.Action;
+import pl.edu.agh.ietanks.engine.api.Direction;
 import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
 import pl.edu.agh.ietanks.engine.api.Position;
 import pl.edu.agh.ietanks.engine.simple.actions.Move;
@@ -45,7 +46,7 @@ public class BotExecutorTest {
 
         //then
         assertThat(resultAction).isInstanceOf(Action.class);
-        assertThat((Action) resultAction).isEqualTo(new Move(GameplayBoardView.Direction.Right, 1));
+        assertThat((Action) resultAction).isEqualTo(new Move(Direction.Right, 1));
     }
 
 }

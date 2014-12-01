@@ -1,33 +1,33 @@
 package pl.edu.agh.ietanks.gameplay.bot.api.converters;
 
-import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
+import pl.edu.agh.ietanks.engine.api.Direction;
 import pl.edu.agh.ietanks.gameplay.bot.api.ShotDirection;
 
 public class ShotDirectionConverter {
 
-    public GameplayBoardView.Direction convertToEngineDirection(ShotDirection shotDirection) {
+    public Direction convertToEngineDirection(ShotDirection shotDirection) {
         switch (shotDirection) {
             case North:
-                return GameplayBoardView.Direction.Up;
+                return Direction.Up;
             case NorthEast:
-                return GameplayBoardView.Direction.Up_Right;
+                return Direction.Up_Right;
             case East:
-                return GameplayBoardView.Direction.Right;
+                return Direction.Right;
             case SouthEast:
-                return GameplayBoardView.Direction.Down_Right;
+                return Direction.Down_Right;
             case South:
-                return GameplayBoardView.Direction.Down;
+                return Direction.Down;
             case SouthWest:
-                return GameplayBoardView.Direction.Down_Left;
+                return Direction.Down_Left;
             case West:
-                return GameplayBoardView.Direction.Left;
+                return Direction.Left;
             case NorthWest:
-                return GameplayBoardView.Direction.Up_Left;
+                return Direction.Up_Left;
         }
         return null;
     }
 
-    public ShotDirection convertToGameplayDirection(GameplayBoardView.Direction direction) {
+    public ShotDirection convertToGameplayDirection(Direction direction) {
         switch (direction) {
             case Right:
                 return ShotDirection.East;
