@@ -1,16 +1,12 @@
 package pl.edu.agh.ietanks.gameplay.game;
 
 import com.google.common.collect.Lists;
-import pl.edu.agh.ietanks.boards.model.Board;
 import pl.edu.agh.ietanks.engine.api.BoardDefinition;
 import pl.edu.agh.ietanks.engine.api.Engine;
 import pl.edu.agh.ietanks.engine.api.events.Event;
 import pl.edu.agh.ietanks.engine.api.events.RoundResults;
-import pl.edu.agh.ietanks.engine.simple.SimpleEngine;
-import pl.edu.agh.ietanks.gameplay.board.BoardDefinitionAdapter;
 import pl.edu.agh.ietanks.gameplay.bot.BotExecutor;
 import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
-import pl.edu.agh.ietanks.gameplay.game.api.BotId;
 import pl.edu.agh.ietanks.gameplay.game.api.Game;
 import pl.edu.agh.ietanks.gameplay.game.innerapi.GameHistoryStorage;
 import pl.edu.agh.ietanks.gameplay.game.innerapi.GameLogger;
@@ -55,14 +51,15 @@ class GameRunner implements Runnable, Game {
         historyStorage.storeFinishedGame(this);
     }
 
-    public GameRunner(GameHistoryStorage historyStorage, Board gameBoard, List<BotAlgorithm> gameBots) {
+    public GameRunner(GameHistoryStorage historyStorage,
+                      Engine gameEngine,
+                      BoardDefinition gameBoard,
+                      List<BotAlgorithm> gameBots) {
         this.gameId = UUID.randomUUID();
         this.historyStorage = historyStorage;
-        this.gameEngine = new SimpleEngine();
+        this.gameEngine = gameEngine;
         this.gameEvents = new ArrayList<>();
-
-        List<BotId> botIds = Lists.transform(gameBots, bot -> bot.id());
-        this.gameBoard = new BoardDefinitionAdapter(gameBoard, botIds);
+        this.gameBoard = gameBoard;
         this.bots = gameBots;
     }
 
