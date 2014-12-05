@@ -31,7 +31,7 @@ public class BoardDefinition {
      */
     public int height() {
         return height;
-    };
+    }
 
     /**
      * Defines the tanks (players): number and their initial positions.

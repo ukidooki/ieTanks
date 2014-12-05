@@ -45,7 +45,7 @@ public class GameRunnerFactory {
         goodPositions.add(Position.topLeft().toRight((width - 1) / 2).toDown((height - 1) / 2));
 
         int i = 0;
-        for (BotAlgorithm algorithm: algorithms) {
+        for (BotAlgorithm algorithm : algorithms) {
             tanks.put(algorithm.id().id(), goodPositions.get(i));
             i++;
         }

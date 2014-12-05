@@ -10,8 +10,8 @@ import pl.edu.agh.ietanks.gameplay.game.innerapi.GameHistoryStorage;
 import java.util.Collections;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 public class GameRunnerFactoryTest {
 
