@@ -294,6 +294,33 @@ public class GameLogicTest {
     }
 
     @Test
+    public void shouldTankBeDestroyedWhileMoving() throws Exception {
+        //given
+        BoardDefinition board = BoardBuilder.fromASCII(
+                ".0..",
+                "....",
+                "....",
+                "....",
+                ".1..");
+
+        GameLogic logic = new GameLogic(board);
+
+        // when
+        logic.tryApplyAction(new Shot(Direction.Down, 3), String.valueOf(0));
+        final List<Event> events = logic.tryApplyAction(new Move(Direction.Up, 3), String.valueOf(1));
+
+        // then
+        assertThat(logic.board().findMissiles()).hasSize(0);
+        assertThat(logic.board().equals(new BoardState(BoardBuilder.fromASCII(
+                ".0..",
+                "....",
+                "....",
+                "....",
+                "...."))));
+        assertThat(events).contains(new TankMoved(String.valueOf(1), Direction.Up, 1));
+    }
+
+    @Test
     public void shouldTwoMissilesAndTankBeRemoved() throws Exception {
         //given
         BoardDefinition board = BoardBuilder.fromASCII(

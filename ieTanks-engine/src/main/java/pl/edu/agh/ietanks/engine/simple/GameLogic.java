@@ -135,6 +135,10 @@ public class GameLogic {
             }
             possiblePosition = Optional.of(destination);
             possibleStep++;
+            Collection<Missile> missiles = board.findMissiles(possiblePosition.get());
+            if (!missiles.isEmpty()) {
+                break;
+            }
         }
 
         if (possibleStep == 0) {
