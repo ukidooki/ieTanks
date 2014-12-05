@@ -11,6 +11,7 @@ import java.util.*;
 
 public class GameLogic {
     private BoardState board;
+    private int lastMissileId = 0;
 
     public GameLogic(BoardDefinition initialBoard) {
         this.board = new BoardState(initialBoard);
@@ -47,7 +48,7 @@ public class GameLogic {
             Preconditions.checkNotNull(destination, "invalid direction");
             if (board.isWithin(destination)) {
                 board.replaceMissile(missile, destination);
-                events.add(new MissileMoved(destination, missile.direction(), missile.speed()));
+                events.add(new MissileMoved(missile.id(), destination, missile.direction(), missile.speed()));
             } else {
                 missilesNotWithinBoard.put(missile, destination);
             }
@@ -57,7 +58,7 @@ public class GameLogic {
         // then remove missiles not within board
         for (Missile missile : missilesNotWithinBoard.keySet()) {
             board.removeMissile(missile);
-            events.add(new MissileDestroyed(missilesNotWithinBoard.get(missile), missile.direction(), missile.speed()));
+            events.add(new MissileDestroyed(missile.id(), missilesNotWithinBoard.get(missile), missile.direction(), missile.speed()));
         }
     }
 
@@ -67,7 +68,7 @@ public class GameLogic {
 
                 for (Missile missile : missilePositions.get(position)) {
                     board.removeMissile(missile);
-                    events.add(new MissileDestroyed(missile.position(), missile.direction(), missile.speed()));
+                    events.add(new MissileDestroyed(missile.id(), missile.position(), missile.direction(), missile.speed()));
                 }
 
                 missilePositions.remove(position);
@@ -85,7 +86,7 @@ public class GameLogic {
             if (missilePositions.get(position).size() > 1) {
                 for (Missile missile : missilePositions.get(position)) {
                     board.removeMissile(missile);
-                    events.add(new MissileDestroyed(missile.position(), missile.direction(), missile.speed()));
+                    events.add(new MissileDestroyed(missile.id(), missile.position(), missile.direction(), missile.speed()));
                 }
                 missilePositions.remove(position);
             }
@@ -118,30 +119,41 @@ public class GameLogic {
     }
 
     private void tryToMove(String botId, List<Event> events, Optional<Position> botPosition, Move move) {
-        Position destination = findMoveDestination(botPosition, move);
-        Preconditions.checkNotNull(destination, "invalid movement");
-        if (!board.isWithin(destination)) {
-            events.add(new TankOutOfBoard(botId, move.getDirection(), move.getStep()));
-        }
-        while (!board.isWithin(destination) && move.getStep() > 1) {
-            move.setStep(move.getStep() - 1);
-            destination = findMoveDestination(botPosition, move);
+        int possibleStep = 0;
+        boolean bumpedIntoWall = false;
+        Optional<Position> possiblePosition = botPosition;
+        Preconditions.checkNotNull(botPosition, "invalid movement");
+        for (int i = 1; i <= move.getStep(); ++i) {
+            Position destination = findMoveDestination(possiblePosition, new Move(move.getDirection(), 1));
             Preconditions.checkNotNull(destination, "invalid movement");
+            if (!board.isWithin(destination)) {
+                bumpedIntoWall = true;
+                break;
+            }
+            if (!board.isAccessibleForTank(destination)) {
+                break;
+            }
+            possiblePosition = Optional.of(destination);
+            possibleStep++;
         }
-        if (board.isAccessibleForTank(destination)) {
-            board.replaceTank(botId, destination);
-            events.add(new TankMoved(botId, move.getDirection(), move.getStep()));
-        } else {
+
+        if (possibleStep == 0) {
             events.add(new TankNotMoved(botId, move.getDirection(), move.getStep()));
+        } else {
+            events.add(new TankMoved(botId, move.getDirection(), possibleStep));
         }
+        if (bumpedIntoWall) {
+            events.add(new TankBumpedIntoWall(botId, move.getDirection(), move.getStep()));
+        }
+
         // check if there are missiles here
-        Collection<Missile> missiles = board.findMissiles(destination);
+        Collection<Missile> missiles = board.findMissiles(possiblePosition.get());
         if (!missiles.isEmpty()) {
             board.removeTank(botId);
             events.add(new TankDestroyed(botId));
             for (Missile missile : missiles) {
                 board.removeMissile(missile);
-                events.add(new MissileDestroyed(missile.position(), missile.direction(), missile.speed()));
+                events.add(new MissileDestroyed(missile.id(), missile.position(), missile.direction(), missile.speed()));
             }
         }
     }
@@ -150,9 +162,10 @@ public class GameLogic {
         Position destination = findMissileDestination(shot.getDirection(), botPosition.get(), shot.getSpeed());
 
         // create missile
-        Missile missile = new Missile(shot.getSpeed(), shot.getDirection(), destination);
+        int missileId = nextMissileId();
+        Missile missile = new Missile(missileId, shot.getSpeed(), shot.getDirection(), destination);
         board.createMissile(missile);
-        events.add(new MissileCreated(destination, shot.getDirection(), shot.getSpeed()));
+        events.add(new MissileCreated(missileId, destination, shot.getDirection(), shot.getSpeed()));
 
         // remove missiles at the same positions
         if (board.findMissiles(destination).size() > 1) {
@@ -160,7 +173,7 @@ public class GameLogic {
             Collection<Missile> missilesToDestroy = board.findMissiles(destination);
             for (Missile missileToDestroy : missilesToDestroy) {
                 board.removeMissile(missileToDestroy);
-                events.add(new MissileDestroyed(
+                events.add(new MissileDestroyed(missileToDestroy.id(),
                         missileToDestroy.position(), missileToDestroy.direction(), missileToDestroy.speed()));
             }
         }
@@ -172,7 +185,7 @@ public class GameLogic {
             events.add(new TankDestroyed(tankId));
 
             board.removeMissile(missile);
-            events.add(new MissileDestroyed(missile.position(), missile.direction(), missile.speed()));
+            events.add(new MissileDestroyed(missile.id(), missile.position(), missile.direction(), missile.speed()));
         }
     }
 
@@ -212,6 +225,10 @@ public class GameLogic {
             destination = botPosition.get().toDown(move.getStep());
         }
         return destination;
+    }
+
+    private int nextMissileId() {
+        return ++lastMissileId;
     }
 
 }

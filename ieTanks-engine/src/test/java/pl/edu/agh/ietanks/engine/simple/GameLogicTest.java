@@ -6,9 +6,9 @@ import pl.edu.agh.ietanks.engine.api.BoardDefinition;
 import pl.edu.agh.ietanks.engine.api.Direction;
 import pl.edu.agh.ietanks.engine.api.Position;
 import pl.edu.agh.ietanks.engine.api.events.Event;
+import pl.edu.agh.ietanks.engine.api.events.TankBumpedIntoWall;
 import pl.edu.agh.ietanks.engine.api.events.TankMoved;
 import pl.edu.agh.ietanks.engine.api.events.TankNotMoved;
-import pl.edu.agh.ietanks.engine.api.events.TankOutOfBoard;
 import pl.edu.agh.ietanks.engine.simple.actions.Move;
 import pl.edu.agh.ietanks.engine.simple.actions.Shot;
 import pl.edu.agh.ietanks.engine.testutils.BoardBuilder;
@@ -33,7 +33,11 @@ public class GameLogicTest {
         final List<Event> events = logic.tryApplyAction(new Move(Direction.Right, 1), String.valueOf(0));
 
         // then
-        assertThat(logic.board().findTank(String.valueOf(0)).get().equals(new Position(1, 2)));
+        assertThat(logic.board().equals(new BoardState(BoardBuilder.fromASCII(
+                "....",
+                "..0.",
+                "....",
+                "...."))));
 
         assertThat(events).containsExactly(new TankMoved(String.valueOf(0), Direction.Right, 1));
     }
@@ -53,8 +57,11 @@ public class GameLogicTest {
         final List<Event> events = logic.tryApplyAction(new Move(Direction.Right, 1), String.valueOf(0));
 
         // then
-        assertThat(logic.board().findTank(String.valueOf(0)).get().equals(new Position(1, 1)));
-        assertThat(logic.board().findTank(String.valueOf(1)).get().equals(new Position(1, 2)));
+        assertThat(logic.board().equals(new BoardState(BoardBuilder.fromASCII(
+                "....",
+                ".01.",
+                "....",
+                "...."))));
 
         assertThat(events).contains(new TankNotMoved(String.valueOf(0), Direction.Right, 1));
     }
@@ -74,19 +81,23 @@ public class GameLogicTest {
         final List<Event> events = logic.tryApplyAction(new Move(Direction.Right, 5), String.valueOf(0));
 
         // then
-        assertThat(logic.board().findTank(String.valueOf(0)).get().equals(new Position(1, 3)));
-        assertThat(events).contains(new TankOutOfBoard(String.valueOf(0), Direction.Right, 5));
+        assertThat(logic.board().equals(new BoardState(BoardBuilder.fromASCII(
+                "....",
+                "...0",
+                "....",
+                "...."))));
         assertThat(events).contains(new TankMoved(String.valueOf(0), Direction.Right, 2));
+        assertThat(events).contains(new TankBumpedIntoWall(String.valueOf(0), Direction.Right, 5));
     }
 
     @Test
-    public void shouldNotMoveTankToLastPlace() throws Exception {
+    public void shouldMoveTankToLastFreePlaceBeforeTank() throws Exception {
         //given
         BoardDefinition board = BoardBuilder.fromASCII(
-                "....",
-                ".0.1",
-                "....",
-                "....");
+                "......",
+                ".0.1..",
+                "......",
+                "......");
 
         GameLogic logic = new GameLogic(board);
 
@@ -94,9 +105,12 @@ public class GameLogicTest {
         final List<Event> events = logic.tryApplyAction(new Move(Direction.Right, 5), String.valueOf(0));
 
         // then
-        assertThat(logic.board().findTank(String.valueOf(0)).get().equals(new Position(1, 3)));
-        assertThat(events).contains(new TankNotMoved(String.valueOf(0), Direction.Right, 2));
-        assertThat(events).contains(new TankOutOfBoard(String.valueOf(0), Direction.Right, 5));
+        assertThat(logic.board().equals(new BoardState(BoardBuilder.fromASCII(
+                "......",
+                "..01..",
+                "......",
+                "......"))));
+        assertThat(events).contains(new TankMoved(String.valueOf(0), Direction.Right, 1));
     }
 
     @Test
@@ -246,7 +260,12 @@ public class GameLogicTest {
 
         // then
         assertThat(logic.board().findMissiles()).hasSize(0);
-        assertThat(logic.board().findTank(String.valueOf(1))).isEqualTo(Optional.absent());
+        assertThat(logic.board().equals(new BoardState(BoardBuilder.fromASCII(
+                "....",
+                ".0..",
+                "....",
+                "....",
+                "...."))));
     }
 
     @Test
@@ -266,7 +285,12 @@ public class GameLogicTest {
 
         // then
         assertThat(logic.board().findMissiles()).hasSize(0);
-        assertThat(logic.board().findTank(String.valueOf(1))).isEqualTo(Optional.absent());
+        assertThat(logic.board().equals(new BoardState(BoardBuilder.fromASCII(
+                "....",
+                ".0..",
+                "....",
+                "....",
+                "...."))));
     }
 
     @Test
@@ -289,6 +313,11 @@ public class GameLogicTest {
 
         // then
         assertThat(logic.board().findMissiles()).hasSize(0);
-        assertThat(logic.board().findTank(String.valueOf(2))).isEqualTo(Optional.absent());
+        assertThat(logic.board().equals(new BoardState(BoardBuilder.fromASCII(
+                "0...1",
+                ".....",
+                ".....",
+                ".....",
+                "....."))));
     }
 }

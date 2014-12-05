@@ -2,14 +2,20 @@ package pl.edu.agh.ietanks.engine.api;
 
 public class Missile {
 
+    private int missileId;
     private int speed;
     private Position position;
     private final Direction direction;
 
-    public Missile(int speed, Direction direction, Position position) {
+    public Missile(int missileId, int speed, Direction direction, Position position) {
+        this.missileId = missileId;
         this.speed = speed;
         this.direction = direction;
         this.position = position;
+    }
+
+    public int id() {
+        return missileId;
     }
 
     public int speed() {
@@ -29,42 +35,36 @@ public class Missile {
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result
-                + ((direction == null) ? 0 : direction.hashCode());
-        result = prime * result
-                + ((position == null) ? 0 : position.hashCode());
-        result = prime * result + speed;
-        return result;
-    }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Missile other = (Missile) obj;
-        if (direction != other.direction)
-            return false;
-        if (position == null) {
-            if (other.position != null)
-                return false;
-        } else if (!position.equals(other.position))
-            return false;
-        if (speed != other.speed)
-            return false;
+        Missile missile = (Missile) o;
+
+        if (missileId != missile.missileId) return false;
+        if (speed != missile.speed) return false;
+        if (direction != missile.direction) return false;
+        if (position != null ? !position.equals(missile.position) : missile.position != null) return false;
+
         return true;
     }
 
     @Override
-    public String toString() {
-        return "Missile {speed=" + speed + ", direction=" + direction
-                + ", position=" + position + "}";
+    public int hashCode() {
+        int result = missileId;
+        result = 31 * result + speed;
+        result = 31 * result + (position != null ? position.hashCode() : 0);
+        result = 31 * result + (direction != null ? direction.hashCode() : 0);
+        return result;
     }
 
+    @Override
+    public String toString() {
+        return "Missile{" +
+                "missileId=" + missileId +
+                ", speed=" + speed +
+                ", position=" + position +
+                ", direction=" + direction +
+                '}';
+    }
 }

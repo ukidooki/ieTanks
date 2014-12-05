@@ -5,13 +5,13 @@ import pl.edu.agh.ietanks.engine.api.Direction;
 /**
  * Indicates that a tank tried to move out of the board.
  */
-public class TankOutOfBoard implements Event {
+public class TankBumpedIntoWall implements Event {
 
     private final String tankId;
     private final Direction direction;
     private final int step;
 
-    public TankOutOfBoard(String tankId, Direction direction, int step) {
+    public TankBumpedIntoWall(String tankId, Direction direction, int step) {
         this.tankId = tankId;
         this.direction = direction;
         this.step = step;
@@ -34,7 +34,7 @@ public class TankOutOfBoard implements Event {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TankOutOfBoard that = (TankOutOfBoard) o;
+        TankBumpedIntoWall that = (TankBumpedIntoWall) o;
 
         if (step != that.step) return false;
         if (direction != that.direction) return false;
@@ -53,7 +53,7 @@ public class TankOutOfBoard implements Event {
 
     @Override
     public String toString() {
-        return "TankOutOfBoard{" +
+        return "TankBumpedIntoWall{" +
                 "tankId=" + tankId +
                 ", direction=" + direction +
                 ", step=" + step +
