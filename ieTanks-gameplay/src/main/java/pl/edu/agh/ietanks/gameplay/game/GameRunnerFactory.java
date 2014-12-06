@@ -25,13 +25,12 @@ public class GameRunnerFactory {
     }
 
     public GameRunner create(Board board, List<BotAlgorithm> algorithms) {
-        BoardDefinition boardDefinition = toBoardDefinition(board, algorithms);
-        GameRunner gameRunner = new GameRunner(storage, engineFactory, boardDefinition, algorithms);
+        GameRunner gameRunner = new GameRunner(storage, engineFactory, board, algorithms);
 
         return gameRunner;
     }
 
-    private BoardDefinition toBoardDefinition(Board board, List<BotAlgorithm> algorithms) {
+    public static BoardDefinition toBoardDefinition(Board board, List<BotAlgorithm> algorithms) {
         Preconditions.checkArgument(algorithms.size() <= board.getStartingPoints().size(), "More tanks than board supports!");
 
         int width = board.getWidth();

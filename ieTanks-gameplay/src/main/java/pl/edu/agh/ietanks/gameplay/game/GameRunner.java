@@ -1,6 +1,7 @@
 package pl.edu.agh.ietanks.gameplay.game;
 
 import com.google.common.collect.Lists;
+import pl.edu.agh.ietanks.boards.model.Board;
 import pl.edu.agh.ietanks.engine.api.BoardDefinition;
 import pl.edu.agh.ietanks.engine.api.Engine;
 import pl.edu.agh.ietanks.engine.api.EngineFactory;
@@ -23,17 +24,18 @@ import java.util.UUID;
 class GameRunner implements Runnable, Game {
 
     private final GameId gameId;
-    private final BoardDefinition gameBoard;
     private final List<BotAlgorithm> bots;
     private final EngineFactory gameEngineFactory;
     private final GameHistory historyStorage;
     private final List<Event> gameEvents;
     private GameLogger LOGGER = new StandardOutputGameLogger();
     private Engine gameEngine;
+    private final List<List<Event>> gameRoundsEvents;
+    private final Board gameBoard;
 
     public GameRunner(GameHistory historyStorage,
                       EngineFactory gameEngineFactory,
-                      BoardDefinition gameBoard,
+                      Board gameBoard,
                       List<BotAlgorithm> gameBots) {
         this.gameId = new GameId(UUID.randomUUID().toString());
         this.historyStorage = historyStorage;
@@ -41,10 +43,13 @@ class GameRunner implements Runnable, Game {
         this.gameEvents = new ArrayList<>();
         this.gameBoard = gameBoard;
         this.bots = gameBots;
+        this.gameRoundsEvents = new ArrayList<>();
     }
 
     private void setupEngineParams() {
-        gameEngine = gameEngineFactory.createEngineInstance(gameBoard,
+        BoardDefinition gameBoardDefinition = GameRunnerFactory.toBoardDefinition(gameBoard, bots);
+
+        gameEngine = gameEngineFactory.createEngineInstance(gameBoardDefinition,
                 Lists.transform(bots, botAlgorithm -> new BotExecutor(botAlgorithm.id(), botAlgorithm.pythonCode())),
                 GameConfig.newBuilder().withTurnsLimit(10).createGameConfig());
 
@@ -59,13 +64,14 @@ class GameRunner implements Runnable, Game {
         while ((rResults = gameEngine.nextMove()) != null && !rResults.isGameFinished()) {
             List<Event> roundEvents = rResults.getRoundEvents();
             gameEvents.addAll(roundEvents);
+            gameRoundsEvents.add(Collections.unmodifiableList(roundEvents));
 
             LOGGER.nextRoundResults(rResults, gameEngine.currentBoard());
         }
 
         historyStorage.storeFinishedGame(this);
     }
-
+    
     @Override
     public GameId getId() {
         return gameId;
@@ -79,5 +85,15 @@ class GameRunner implements Runnable, Game {
     @Override
     public List<BotAlgorithm> getGameParticipants() {
         return Collections.unmodifiableList(bots);
+    }
+
+    @Override
+    public Board getGameBoard() {
+        return gameBoard;
+    }
+
+    @Override
+    public List<List<Event>> getGameEventsByRound() {
+        return Collections.unmodifiableList(gameRoundsEvents);
     }
 }

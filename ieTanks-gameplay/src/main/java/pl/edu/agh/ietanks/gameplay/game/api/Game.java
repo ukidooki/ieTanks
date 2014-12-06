@@ -1,5 +1,6 @@
 package pl.edu.agh.ietanks.gameplay.game.api;
 
+import pl.edu.agh.ietanks.boards.model.Board;
 import pl.edu.agh.ietanks.engine.api.events.Event;
 
 import java.util.List;
@@ -11,4 +12,8 @@ public interface Game {
     public List<Event> getGameEvents();
 
     public List<BotAlgorithm> getGameParticipants();
+
+    public Board getGameBoard();
+
+    public List<List<Event>> getGameEventsByRound();
 }

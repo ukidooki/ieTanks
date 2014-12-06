@@ -8,7 +8,7 @@ public class GameId {
         this.id = id;
     }
 
-    public String getId() {
+    public String getGameId() {
         return id;
     }
 

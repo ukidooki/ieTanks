@@ -8,7 +8,6 @@ import pl.edu.agh.ietanks.gameplay.game.api.GameId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
