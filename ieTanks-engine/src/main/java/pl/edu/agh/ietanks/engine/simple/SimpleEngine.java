@@ -9,12 +9,13 @@ import pl.edu.agh.ietanks.engine.api.events.RoundResults;
 import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 /**
  * It's NOT thread safe. Do not share the same instance of SimpleEngine between different threads.
  */
 public class SimpleEngine implements Engine {
-    private TanksOrderPolicy orderPolicy = new RandomOrderPolicy();
+    private final TanksOrderPolicy orderPolicy = new RandomOrderPolicy();
 
     private GameLogic gameLogic;
     private GameConfig config;
@@ -24,7 +25,9 @@ public class SimpleEngine implements Engine {
 
     @Override
     public void setup(BoardDefinition initialBoard, List<? extends Bot> bots, GameConfig configuration) {
-        this.gameLogic = new GameLogic(initialBoard);
+        final List<String> botIds = bots.stream().map(Bot::id).collect(Collectors.toList());
+
+        this.gameLogic = new GameLogic(initialBoard, botIds);
         this.config = configuration;
 
         turns.addAll(orderPolicy.determineTurnsOrder(bots));

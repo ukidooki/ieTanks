@@ -3,6 +3,7 @@ package pl.edu.agh.ietanks.engine.testutils;
 import pl.edu.agh.ietanks.engine.api.BoardDefinition;
 import pl.edu.agh.ietanks.engine.api.Position;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 public class BoardBuilder {
@@ -27,6 +28,6 @@ public class BoardBuilder {
             }
         }
 
-        return new BoardDefinition(width, height, tanks);
+        return new BoardDefinition(width, height, Collections.emptyList());
     }
 }

@@ -13,6 +13,7 @@ import pl.edu.agh.ietanks.engine.simple.actions.Move;
 import pl.edu.agh.ietanks.engine.simple.actions.Shot;
 import pl.edu.agh.ietanks.engine.testutils.BoardBuilder;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -27,7 +28,7 @@ public class GameLogicTest {
                 "....",
                 "....");
 
-        GameLogic logic = new GameLogic(board);
+        GameLogic logic = new GameLogic(board, Arrays.asList("0"));
 
         // when
         final List<Event> events = logic.tryApplyAction(new Move(Direction.Right, 1), String.valueOf(0));
@@ -51,7 +52,7 @@ public class GameLogicTest {
                 "....",
                 "....");
 
-        GameLogic logic = new GameLogic(board);
+        GameLogic logic = new GameLogic(board, Arrays.asList("0", "1"));
 
         // when
         final List<Event> events = logic.tryApplyAction(new Move(Direction.Right, 1), String.valueOf(0));
@@ -75,7 +76,7 @@ public class GameLogicTest {
                 "....",
                 "....");
 
-        GameLogic logic = new GameLogic(board);
+        GameLogic logic = new GameLogic(board, Arrays.asList("0"));
 
         // when
         final List<Event> events = logic.tryApplyAction(new Move(Direction.Right, 5), String.valueOf(0));
@@ -99,7 +100,7 @@ public class GameLogicTest {
                 "......",
                 "......");
 
-        GameLogic logic = new GameLogic(board);
+        GameLogic logic = new GameLogic(board, Arrays.asList("0", "1"));
 
         // when
         final List<Event> events = logic.tryApplyAction(new Move(Direction.Right, 5), String.valueOf(0));
@@ -122,7 +123,7 @@ public class GameLogicTest {
                 "....",
                 "....");
 
-        GameLogic logic = new GameLogic(board);
+        GameLogic logic = new GameLogic(board, Arrays.asList("0"));
 
         // when
         final List<Event> events = logic.tryApplyAction(new Shot(Direction.Down, 1), String.valueOf(0));
@@ -143,7 +144,7 @@ public class GameLogicTest {
                 "....",
                 "....");
 
-        GameLogic logic = new GameLogic(board);
+        GameLogic logic = new GameLogic(board, Arrays.asList("0"));
 
         // when
         logic.tryApplyAction(new Shot(Direction.Down_Right, 1), String.valueOf(0));
@@ -166,7 +167,7 @@ public class GameLogicTest {
                 ".....",
                 "....1");
 
-        GameLogic logic = new GameLogic(board);
+        GameLogic logic = new GameLogic(board, Arrays.asList("0", "1"));
 
         // when
         logic.tryApplyAction(new Shot(Direction.Down_Right, 1), String.valueOf(0));
@@ -188,7 +189,7 @@ public class GameLogicTest {
                 "...1.",
                 ".....");
 
-        GameLogic logic = new GameLogic(board);
+        GameLogic logic = new GameLogic(board, Arrays.asList("0", "1"));
 
         // when
         logic.tryApplyAction(new Shot(Direction.Down_Right, 1), String.valueOf(0));
@@ -210,7 +211,7 @@ public class GameLogicTest {
                 "....",
                 "....");
 
-        GameLogic logic = new GameLogic(board);
+        GameLogic logic = new GameLogic(board, Arrays.asList("0"));
 
         // when
         logic.tryApplyAction(new Shot(Direction.Left, 1), String.valueOf(0));
@@ -231,7 +232,7 @@ public class GameLogicTest {
                 ".1..",
                 "....");
 
-        GameLogic logic = new GameLogic(board);
+        GameLogic logic = new GameLogic(board, Arrays.asList("0", "1"));
 
         // when
         logic.tryApplyAction(new Shot(Direction.Down, 1), String.valueOf(0));
@@ -252,7 +253,7 @@ public class GameLogicTest {
                 ".1..",
                 "....");
 
-        GameLogic logic = new GameLogic(board);
+        GameLogic logic = new GameLogic(board, Arrays.asList("0", "1"));
 
         // when
         logic.tryApplyAction(new Shot(Direction.Down, 1), String.valueOf(0));
@@ -278,7 +279,7 @@ public class GameLogicTest {
                 "....",
                 "....");
 
-        GameLogic logic = new GameLogic(board);
+        GameLogic logic = new GameLogic(board, Arrays.asList("0", "1"));
 
         // when
         logic.tryApplyAction(new Shot(Direction.Down, 1), String.valueOf(0));
@@ -303,7 +304,7 @@ public class GameLogicTest {
                 "....",
                 ".1..");
 
-        GameLogic logic = new GameLogic(board);
+        GameLogic logic = new GameLogic(board, Arrays.asList("0", "1"));
 
         // when
         logic.tryApplyAction(new Shot(Direction.Down, 3), String.valueOf(0));
@@ -330,7 +331,7 @@ public class GameLogicTest {
                 ".....",
                 ".....");
 
-        GameLogic logic = new GameLogic(board);
+        GameLogic logic = new GameLogic(board, Arrays.asList("0", "1", "2"));
 
         // when
         logic.tryApplyAction(new Shot(Direction.Right, 1), String.valueOf(0));

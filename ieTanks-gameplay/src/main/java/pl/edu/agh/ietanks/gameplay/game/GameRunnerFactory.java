@@ -8,9 +8,7 @@ import pl.edu.agh.ietanks.engine.api.Position;
 import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
 import pl.edu.agh.ietanks.gameplay.game.api.GameHistory;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameRunnerFactory {
@@ -30,7 +28,7 @@ public class GameRunnerFactory {
 
     private BoardDefinition toBoardDefinition(Board board, List<BotAlgorithm> algorithms) {
         Preconditions.checkArgument(algorithms.size() <= board.getStartingPoints().size(), "More tanks than board supports!");
-        Map<String, Position> tanks = new HashMap<>();
+
         int width = board.getWidth();
         int height = board.getHeight();
 
@@ -38,12 +36,6 @@ public class GameRunnerFactory {
                         Position.topLeft().toDown(startingPoint.getY()).toRight(startingPoint.getX())
         ).collect(Collectors.toList());
 
-        int i = 0;
-        for (BotAlgorithm algorithm : algorithms) {
-            tanks.put(algorithm.id().id(), goodPositions.get(i));
-            i++;
-        }
-
-        return new BoardDefinition(width, height, tanks);
+        return new BoardDefinition(width, height, goodPositions);
     }
 }

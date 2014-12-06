@@ -10,11 +10,19 @@ import pl.edu.agh.ietanks.engine.simple.actions.Shot;
 import java.util.*;
 
 public class GameLogic {
-    private BoardState board;
+    private final BoardState board;
+    private final TankPlacementPolicy placementPolicy = new RandomPlacementPolicy();
+
     private int lastMissileId = 0;
 
-    public GameLogic(BoardDefinition initialBoard) {
+    public GameLogic(BoardDefinition initialBoard, List<String> botIds) {
         this.board = new BoardState(initialBoard);
+
+        Map<String, Position> placements = placementPolicy.place(botIds, initialBoard.initialTankPositions());
+
+        for (Map.Entry<String, Position> placement : placements.entrySet()) {
+            board.placeTank(placement.getKey(), placement.getValue());
+        }
     }
 
     public List<Event> moveMissiles() {
