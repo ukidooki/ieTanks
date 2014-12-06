@@ -27,7 +27,7 @@ public class GameRunnerFactoryTest {
         BotAlgorithm secondBotAlgorithm = new BotAlgorithm(new BotId("second-bot"), "not-python");
         List<BotAlgorithm> algorithms = Lists.newArrayList(firstBotAlgorithm, secondBotAlgorithm);
 
-        Board board = new Board(1, "board", 3, 4, Collections.emptyList());
+        Board board = new Board(1, "board", 3, 4, Collections.emptyList(), Collections.emptyList());
 
         // when
         GameRunner runner = factory.create(board, algorithms, mock(Engine.class));

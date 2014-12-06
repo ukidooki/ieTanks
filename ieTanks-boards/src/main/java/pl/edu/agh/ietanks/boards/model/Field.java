@@ -1,11 +1,11 @@
 package pl.edu.agh.ietanks.boards.model;
 
 
-public class Obstacle {
+public class Field {
     private int x;
     private int y;
 
-    public Obstacle(int x, int y) {
+    public Field(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -23,10 +23,10 @@ public class Obstacle {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Obstacle obstacle = (Obstacle) o;
+        Field field = (Field) o;
 
-        if (x != obstacle.x) return false;
-        if (y != obstacle.y) return false;
+        if (x != field.x) return false;
+        if (y != field.y) return false;
 
         return true;
     }
@@ -40,7 +40,7 @@ public class Obstacle {
 
     @Override
     public String toString() {
-        return "Obstacle{" +
+        return "Field{" +
                 "x=" + x +
                 ", y=" + y +
                 '}';
