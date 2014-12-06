@@ -17,6 +17,10 @@ import java.util.List;
 import static org.fest.assertions.Assertions.assertThat;
 
 public class SimpleEngineTest {
+
+    private static final String TANK_0 = String.valueOf(0);
+    private static final String TANK_1 = String.valueOf(1);
+
     @Test
     public void shouldMoveTanksInTurns() throws Exception {
         // given
@@ -26,8 +30,8 @@ public class SimpleEngineTest {
                 "..x.",
                 "....");
 
-        Bot bot1 = BotBuilder.fromSequence(String.valueOf(0), new Move(Direction.Right, 1));
-        Bot bot2 = BotBuilder.fromSequence(String.valueOf(1), new Move(Direction.Right, 1));
+        Bot bot1 = BotBuilder.fromSequence(TANK_0, new Move(Direction.Right, 1));
+        Bot bot2 = BotBuilder.fromSequence(TANK_1, new Move(Direction.Right, 1));
 
         Engine engine = new SimpleEngine();
         engine.setup(startingBoard, Lists.newArrayList(bot1, bot2), GameConfig.defaults());
@@ -40,8 +44,8 @@ public class SimpleEngineTest {
         final ArrayList<Event> allEvents = Lists.newArrayList(Iterables.concat(events1, events2));
 
         assertThat(allEvents).containsExactly(
-                new TankMoved(String.valueOf(0), Direction.Right, 1),
-                new TankMoved(String.valueOf(1), Direction.Right, 1));
+                new TankMoved(TANK_0, Direction.Right, 1),
+                new TankMoved(TANK_1, Direction.Right, 1));
     }
 
     @Test
@@ -53,8 +57,8 @@ public class SimpleEngineTest {
                 "...x.",
                 ".....");
 
-        Bot bot1 = BotBuilder.fromSequence(String.valueOf(0), new Move(Direction.Right, 1), new Move(Direction.Left, 1));
-        Bot bot2 = BotBuilder.fromSequence(String.valueOf(1), new Move(Direction.Up, 1), new Move(Direction.Down, 1));
+        Bot bot1 = BotBuilder.fromSequence(TANK_0, new Move(Direction.Right, 1), new Move(Direction.Left, 1));
+        Bot bot2 = BotBuilder.fromSequence(TANK_1, new Move(Direction.Up, 1), new Move(Direction.Down, 1));
 
         Engine engine = new SimpleEngine();
         engine.setup(startingBoard, Lists.newArrayList(bot1, bot2),
