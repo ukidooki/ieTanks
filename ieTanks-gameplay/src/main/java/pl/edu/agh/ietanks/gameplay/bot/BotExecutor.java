@@ -12,7 +12,7 @@ import pl.edu.agh.ietanks.gameplay.game.api.BotId;
 
 public class BotExecutor implements Bot {
 
-    private static final String BOT_CLASS = "MyBot";
+    private static final String BOT_CLASS = "SampleBot";
 
     private BotId id;
     private PyObject botClass;
