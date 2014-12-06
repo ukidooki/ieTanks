@@ -5,14 +5,13 @@ import pl.edu.agh.ietanks.engine.api.Direction;
 /**
  * Indicates that a tank tried to move but did not succeed .
  */
-public class TankNotMoved implements Event {
+public class TankNotMoved extends AbstractTankEvent {
 
-    private final String tankId;
     private final Direction direction;
     private final int step;
 
     public TankNotMoved(String tankId, Direction direction, int step) {
-        this.tankId = tankId;
+        super(tankId);
         this.direction = direction;
         this.step = step;
     }

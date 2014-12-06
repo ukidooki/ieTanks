@@ -6,35 +6,13 @@ import pl.edu.agh.ietanks.engine.api.Position;
 /**
  * Indicates that a tank created a missile.
  */
-public class MissileCreated implements Event {
+public class MissileCreated extends AbstractMissileEvent {
 
-    private final int id;
-    private final Direction direction;
-    private final int speed;
-    private final Position position;
 
     public MissileCreated(int id, Position position, Direction direction, int speed) {
-        this.id = id;
-        this.position = position;
-        this.direction = direction;
-        this.speed = speed;
+        super(id, position, direction, speed);
     }
 
-    public int id() {
-        return id;
-    }
-
-    public Position position() {
-        return position;
-    }
-
-    public Direction direction() {
-        return direction;
-    }
-
-    public int speed() {
-        return speed;
-    }
 
     @Override
     public String toString() {

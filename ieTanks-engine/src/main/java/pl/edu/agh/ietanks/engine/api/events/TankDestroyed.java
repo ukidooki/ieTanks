@@ -3,17 +3,10 @@ package pl.edu.agh.ietanks.engine.api.events;
 /**
  * Indicates that a tank has been destroyed.
  */
-public class TankDestroyed implements Event {
-
-    private final String tankId;
+public class TankDestroyed extends AbstractTankEvent {
 
     public TankDestroyed(String tankId) {
-        super();
-        this.tankId = tankId;
-    }
-
-    public String tankId() {
-        return tankId;
+        super(tankId);
     }
 
     @Override
