@@ -43,7 +43,7 @@ public class SimpleEngineTest {
         // then
         final ArrayList<Event> allEvents = Lists.newArrayList(Iterables.concat(events1, events2));
 
-        assertThat(allEvents).containsExactly(
+        assertThat(allEvents).containsOnly(
                 new TankMoved(TANK_0, Direction.Right, 1),
                 new TankMoved(TANK_1, Direction.Right, 1));
     }
