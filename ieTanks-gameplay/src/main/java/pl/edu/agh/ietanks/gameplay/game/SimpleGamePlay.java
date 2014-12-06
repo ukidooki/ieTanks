@@ -7,6 +7,7 @@ import pl.edu.agh.ietanks.engine.simple.SimpleEngine;
 import pl.edu.agh.ietanks.engine.util.LogExceptionRunnable;
 import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
 import pl.edu.agh.ietanks.gameplay.game.api.GameHistory;
+import pl.edu.agh.ietanks.gameplay.game.api.GameId;
 import pl.edu.agh.ietanks.gameplay.game.api.GamePlay;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class SimpleGamePlay implements GamePlay {
     }
 
     @Override
-    public pl.edu.agh.ietanks.gameplay.game.api.GameId startGame(Board gameBoard, List<BotAlgorithm> bots) {
+    public GameId startGame(Board gameBoard, List<BotAlgorithm> bots) {
         final GameRunner gameRunner = gameRunnerFactory.create(gameBoard, bots, new SimpleEngine());
         executionService.execute(new LogExceptionRunnable(gameRunner));
         return gameRunner.getId();

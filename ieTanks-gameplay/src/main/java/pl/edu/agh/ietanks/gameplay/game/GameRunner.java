@@ -67,7 +67,7 @@ class GameRunner implements Runnable, Game {
     }
 
     @Override
-    public pl.edu.agh.ietanks.gameplay.game.api.GameId getId() {
+    public GameId getId() {
         return gameId;
     }
 
