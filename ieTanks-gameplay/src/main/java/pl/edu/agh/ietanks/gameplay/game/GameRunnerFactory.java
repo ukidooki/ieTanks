@@ -5,7 +5,6 @@ import pl.edu.agh.ietanks.boards.model.Board;
 import pl.edu.agh.ietanks.engine.api.BoardDefinition;
 import pl.edu.agh.ietanks.engine.api.Engine;
 import pl.edu.agh.ietanks.engine.api.Position;
-import pl.edu.agh.ietanks.engine.simple.SimpleEngine;
 import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
 import pl.edu.agh.ietanks.gameplay.game.innerapi.GameHistoryStorage;
 
@@ -22,9 +21,7 @@ public class GameRunnerFactory {
         this.storage = storage;
     }
 
-    public GameRunner create(Board board, List<BotAlgorithm> algorithms) {
-        //TODO - we are using class not from the ieTanks-engine API
-        Engine gameEngine = new SimpleEngine();
+    public GameRunner create(Board board, List<BotAlgorithm> algorithms, Engine gameEngine) {
         BoardDefinition boardDefinition = toBoardDefinition(board, algorithms);
         GameRunner gameRunner = new GameRunner(storage, gameEngine, boardDefinition, algorithms);
 

@@ -3,6 +3,7 @@ package pl.edu.agh.ietanks.gameplay.game;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 import pl.edu.agh.ietanks.boards.model.Board;
+import pl.edu.agh.ietanks.engine.api.Engine;
 import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
 import pl.edu.agh.ietanks.gameplay.game.api.BotId;
 import pl.edu.agh.ietanks.gameplay.game.innerapi.GameHistoryStorage;
@@ -29,7 +30,7 @@ public class GameRunnerFactoryTest {
         Board board = new Board(1, "board", 3, 4, Collections.emptyList());
 
         // when
-        GameRunner runner = factory.create(board, algorithms);
+        GameRunner runner = factory.create(board, algorithms, mock(Engine.class));
 
         // then
         assertThat(runner.getGameParticipants()).isEqualTo(algorithms);
