@@ -15,8 +15,12 @@ public class GameLogic {
 
     private int lastMissileId = 0;
 
+    GameLogic(BoardState board) {
+        this.board = board;
+    }
+
     public GameLogic(BoardDefinition initialBoard, List<String> botIds) {
-        this.board = new BoardState(initialBoard);
+        this(new BoardState(initialBoard));
 
         Map<String, Position> placements = placementPolicy.place(botIds, initialBoard.initialTankPositions());
 

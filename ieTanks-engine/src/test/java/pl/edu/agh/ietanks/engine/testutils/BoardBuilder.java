@@ -1,10 +1,10 @@
 package pl.edu.agh.ietanks.engine.testutils;
 
+import com.google.common.collect.Lists;
 import pl.edu.agh.ietanks.engine.api.BoardDefinition;
 import pl.edu.agh.ietanks.engine.api.Position;
 
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.List;
 
 public class BoardBuilder {
 
@@ -12,7 +12,7 @@ public class BoardBuilder {
         final int height = asciiRepresentation.length;
         final int width = asciiRepresentation[0].length();
 
-        final HashMap<String, Position> tanks = new HashMap<>();
+        final List<Position> startingPositions = Lists.newArrayList();
 
         for (int i = 0; i < height; ++i) {
             for (int j = 0; j < width; ++j) {
@@ -20,14 +20,14 @@ public class BoardBuilder {
 
                 if (element == '.') {
                     // nothing to do
-                } else if ('0' <= element && element <= '9') {
-                    tanks.put(String.valueOf(element), new Position(i, j));
+                } else if (element == 'x') {
+                    startingPositions.add(Position.topLeft().toDown(i).toRight(j));
                 } else {
-                    throw new IllegalArgumentException();
+                    throw new IllegalArgumentException("Got unexpected character: " + element);
                 }
             }
         }
 
-        return new BoardDefinition(width, height, Collections.emptyList());
+        return new BoardDefinition(width, height, startingPositions);
     }
 }
