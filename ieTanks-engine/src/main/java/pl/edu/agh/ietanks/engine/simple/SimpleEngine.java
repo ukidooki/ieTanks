@@ -14,6 +14,8 @@ import java.util.Queue;
  * It's NOT thread safe. Do not share the same instance of SimpleEngine between different threads.
  */
 public class SimpleEngine implements Engine {
+    private TanksOrderPolicy orderPolicy = new RandomOrderPolicy();
+
     private GameLogic gameLogic;
     private GameConfig config;
 
@@ -25,7 +27,7 @@ public class SimpleEngine implements Engine {
         this.gameLogic = new GameLogic(initialBoard);
         this.config = configuration;
 
-        turns.addAll(bots);
+        turns.addAll(orderPolicy.determineTurnsOrder(bots));
     }
 
     @Override
