@@ -3,6 +3,7 @@ package pl.edu.agh.ietanks.gameplay.game;
 import com.google.common.collect.Lists;
 import pl.edu.agh.ietanks.engine.api.BoardDefinition;
 import pl.edu.agh.ietanks.engine.api.Engine;
+import pl.edu.agh.ietanks.engine.api.GameConfig;
 import pl.edu.agh.ietanks.engine.api.events.Event;
 import pl.edu.agh.ietanks.engine.api.events.RoundResults;
 import pl.edu.agh.ietanks.gameplay.bot.BotExecutor;
@@ -30,7 +31,8 @@ class GameRunner implements Runnable, Game {
 
     private void setupEngineParams() {
         gameEngine.setup(gameBoard,
-                Lists.transform(bots, botAlgorithm -> new BotExecutor(botAlgorithm.id(), botAlgorithm.pythonCode()))
+                Lists.transform(bots, botAlgorithm -> new BotExecutor(botAlgorithm.id(), botAlgorithm.pythonCode())),
+                GameConfig.newBuilder().withTurnsLimit(10).createGameConfig()
         );
 
         LOGGER.startGame();

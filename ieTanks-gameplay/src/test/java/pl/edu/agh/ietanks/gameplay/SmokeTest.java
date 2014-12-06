@@ -29,8 +29,8 @@ public class SmokeTest {
         final Board board = boardsReader.getBoards().iterator().next();
         final List<BotAlgorithm> bots = new ArrayList<>();
 
-        bots.add(new BotAlgorithm(new BotId("first-bot"), ResourceUtils.loadResourceFromFile("TestBot.py")));
-        bots.add(new BotAlgorithm(new BotId("second-bot"), ResourceUtils.loadResourceFromFile("TestBot.py")));
+        bots.add(new BotAlgorithm(new BotId("1"), ResourceUtils.loadResourceFromFile("TestBot.py")));
+        bots.add(new BotAlgorithm(new BotId("2"), ResourceUtils.loadResourceFromFile("TestBot.py")));
 
         gameService.startGame(board, bots);
 

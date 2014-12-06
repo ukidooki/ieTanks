@@ -10,17 +10,20 @@ import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * It's NOT thread safe. Do not share the same instance of SimpleEngine between different threads.
+ */
 public class SimpleEngine implements Engine {
     private GameLogic gameLogic;
+    private GameConfig config;
+
     private Queue<Bot> turns = new ArrayDeque<>();
     private int turnCounter = 0;
 
-    // TODO: extract Configuration object
-    int MAX_TURNS = 10;
-
     @Override
-    public void setup(BoardDefinition initialBoard, List<? extends Bot> bots) {
+    public void setup(BoardDefinition initialBoard, List<? extends Bot> bots, GameConfig configuration) {
         this.gameLogic = new GameLogic(initialBoard);
+        this.config = configuration;
 
         turns.addAll(bots);
     }
@@ -38,7 +41,7 @@ public class SimpleEngine implements Engine {
         final List<Event> turnEvents = Lists.newArrayList(Iterables.concat(missileEvents, tankEvents));
 
         turnCounter++;
-        if (turnCounter == MAX_TURNS) {
+        if (turnCounter >= config.turnsLimit()) {
             return RoundResults.Finished(turnEvents);
         } else {
             return RoundResults.Continue(turnEvents);
