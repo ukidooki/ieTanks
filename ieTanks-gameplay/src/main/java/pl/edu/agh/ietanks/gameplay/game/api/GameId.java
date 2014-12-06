@@ -2,7 +2,7 @@ package pl.edu.agh.ietanks.gameplay.game.api;
 
 public class GameId {
 
-    private String id;
+    private final String id;
 
     public GameId(String id) {
         this.id = id;

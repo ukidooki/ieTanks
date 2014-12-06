@@ -12,7 +12,6 @@ import pl.edu.agh.ietanks.gameplay.testutils.ResourceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static org.fest.assertions.Assertions.assertThat;
 
