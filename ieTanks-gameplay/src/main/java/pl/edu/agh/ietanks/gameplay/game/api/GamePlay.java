@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface GamePlay {
-    public UUID startGame(Board gameBoard, List<BotAlgorithm> bots);
+    public GameId startGame(Board gameBoard, List<BotAlgorithm> bots);
 }

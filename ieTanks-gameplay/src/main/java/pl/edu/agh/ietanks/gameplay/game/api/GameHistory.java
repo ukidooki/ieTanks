@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface GameHistory {
-    public List<UUID> getFinishedGamesIds();
-
-    public Game getGame(int gameId);
+    public List<GameId> getFinishedGamesIds();
+    public void storeFinishedGame(Game game);
+    public Game getGame(GameId gameId);
 }

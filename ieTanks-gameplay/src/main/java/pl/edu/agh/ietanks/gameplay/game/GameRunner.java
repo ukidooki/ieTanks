@@ -9,7 +9,8 @@ import pl.edu.agh.ietanks.engine.api.events.RoundResults;
 import pl.edu.agh.ietanks.gameplay.bot.BotExecutor;
 import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
 import pl.edu.agh.ietanks.gameplay.game.api.Game;
-import pl.edu.agh.ietanks.gameplay.game.innerapi.GameHistoryStorage;
+import pl.edu.agh.ietanks.gameplay.game.api.GameHistory;
+import pl.edu.agh.ietanks.gameplay.game.api.GameId;
 import pl.edu.agh.ietanks.gameplay.game.innerapi.GameLogger;
 
 import java.util.ArrayList;
@@ -22,11 +23,11 @@ class GameRunner implements Runnable, Game {
 
     private GameLogger LOGGER = new StandardOutputGameLogger();
 
-    private final UUID gameId;
+    private final GameId gameId;
     private final BoardDefinition gameBoard;
     private final List<BotAlgorithm> bots;
     private final Engine gameEngine;
-    private final GameHistoryStorage historyStorage;
+    private final GameHistory historyStorage;
     private final List<Event> gameEvents;
 
     private void setupEngineParams() {
@@ -53,11 +54,11 @@ class GameRunner implements Runnable, Game {
         historyStorage.storeFinishedGame(this);
     }
 
-    public GameRunner(GameHistoryStorage historyStorage,
+    public GameRunner(GameHistory historyStorage,
                       Engine gameEngine,
                       BoardDefinition gameBoard,
                       List<BotAlgorithm> gameBots) {
-        this.gameId = UUID.randomUUID();
+        this.gameId = new GameId(UUID.randomUUID().toString());
         this.historyStorage = historyStorage;
         this.gameEngine = gameEngine;
         this.gameEvents = new ArrayList<>();
@@ -66,7 +67,7 @@ class GameRunner implements Runnable, Game {
     }
 
     @Override
-    public UUID getId() {
+    public GameId getId() {
         return gameId;
     }
 
