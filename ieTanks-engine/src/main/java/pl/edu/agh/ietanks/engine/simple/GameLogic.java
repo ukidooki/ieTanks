@@ -145,6 +145,7 @@ public class GameLogic {
             events.add(new TankNotMoved(botId, move.getDirection(), move.getStep()));
         } else {
             events.add(new TankMoved(botId, move.getDirection(), possibleStep));
+            board.replaceTank(botId, findMoveDestination(board.findTank(botId), new Move(move.getDirection(), possibleStep)));
         }
         if (bumpedIntoWall) {
             events.add(new TankBumpedIntoWall(botId, move.getDirection(), move.getStep()));
