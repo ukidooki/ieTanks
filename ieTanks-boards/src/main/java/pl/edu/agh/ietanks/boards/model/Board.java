@@ -43,6 +43,12 @@ public class Board {
         return Collections.unmodifiableList(obstacles);
     }
 
+    /**
+     * @return List of possible places where tanks are allowed to be placed when game starts.
+     * <p/>
+     * The order of places matters, if we have 3 tanks and 5 available starting places,
+     * the first three from the list should be chosen.
+     */
     public List<Field> getStartingPoints() {
         return Collections.unmodifiableList(startingPoints);
     }
