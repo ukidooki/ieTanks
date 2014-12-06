@@ -73,7 +73,7 @@ public class BoardState implements GameplayBoardView {
 
     @Override
     public boolean isAccessibleForTank(Position position) {
-        return !taken.contains(position);
+        return !taken.contains(position) && isWithin(position);
     }
 
     public void replaceTank(String tankId, Position destination) {
@@ -113,11 +113,11 @@ public class BoardState implements GameplayBoardView {
         StringBuilder representation = new StringBuilder();
         representation.append("Board{\n");
 
-        for (int i = 0; i < width; ++i) {
-            for (int j = 0; j < height; ++j) {
-                if (taken.contains(new Position(i, j))) {
+        for (int fromTop = 0; fromTop < height; ++fromTop) {
+            for (int fromLeft = 0; fromLeft < width; ++fromLeft) {
+                if (taken.contains(new Position(fromTop, fromLeft))) {
                     for (Map.Entry<String, Position> entry : tanks.entrySet()) {
-                        if (entry.getValue().equals(new Position(i, j))) {
+                        if (entry.getValue().equals(new Position(fromTop, fromLeft))) {
                             representation.append(entry.getKey());
                             break;
                         }

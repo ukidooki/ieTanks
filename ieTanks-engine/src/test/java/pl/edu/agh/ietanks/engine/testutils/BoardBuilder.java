@@ -27,6 +27,6 @@ public class BoardBuilder {
             }
         }
 
-        return new FromStringBoardDefinition(width, height, tanks);
+        return new BoardDefinition(width, height, tanks);
     }
 }
