@@ -10,6 +10,7 @@ import pl.edu.agh.ietanks.boards.api.BoardsReader;
 import pl.edu.agh.ietanks.boards.model.Board;
 import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
 import pl.edu.agh.ietanks.gameplay.game.api.BotId;
+import pl.edu.agh.ietanks.gameplay.game.api.GameId;
 import pl.edu.agh.ietanks.gameplay.game.api.GamePlay;
 import pl.edu.agh.ietanks.sandbox.simple.api.BotService;
 import pl.edu.agh.ietanks.sandbox.simple.api.Sandbox;
@@ -36,16 +37,16 @@ public class SimpleSandboxTest {
     private Sandbox sandbox;
 
     @Test
-    public void should_start_gameplay() {
+    public void shouldStartGameplay() {
         //given
-        UUID gameId = UUID.randomUUID();
+        GameId gameId = new GameId(UUID.randomUUID().toString());
         Board sampleBoard = provideBoard();
         List<BotAlgorithm> algorithms = provideBotAlgorithms();
         List<BotId> algorithmIds = algorithms.stream().map(BotAlgorithm::id).collect(Collectors.toList());
         when(gamePlay.startGame(sampleBoard, algorithms)).thenReturn(gameId);
 
         //when
-        UUID startedGameId = sandbox.startNewGameplay(sampleBoard.getId(),algorithmIds);
+        GameId startedGameId = sandbox.startNewGameplay(sampleBoard.getId(),algorithmIds);
 
         //then
         assertThat(startedGameId).isEqualTo(gameId);

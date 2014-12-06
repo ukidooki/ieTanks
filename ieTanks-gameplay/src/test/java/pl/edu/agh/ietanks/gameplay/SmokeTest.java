@@ -37,7 +37,7 @@ public class SmokeTest {
         bots.add(new BotAlgorithm(new BotId("2"), ResourceUtils.loadResourceFromFile("TestBot.py")));
 
         //when
-        UUID gameId = gameService.startGame(board, bots);
+        GameId gameId = gameService.startGame(board, bots);
         Thread.sleep(10000);
 
         //then

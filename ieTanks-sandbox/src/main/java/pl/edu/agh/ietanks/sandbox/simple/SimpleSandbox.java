@@ -6,14 +6,12 @@ import pl.edu.agh.ietanks.boards.api.BoardsReader;
 import pl.edu.agh.ietanks.boards.model.Board;
 import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
 import pl.edu.agh.ietanks.gameplay.game.api.BotId;
+import pl.edu.agh.ietanks.gameplay.game.api.GameId;
 import pl.edu.agh.ietanks.gameplay.game.api.GamePlay;
 import pl.edu.agh.ietanks.sandbox.simple.api.BotService;
 import pl.edu.agh.ietanks.sandbox.simple.api.Sandbox;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,7 +29,7 @@ public class SimpleSandbox implements Sandbox {
     }
 
     //TODO - add some exception handling
-    public UUID startNewGameplay(int boardId, List<BotId> botIds) {
+    public GameId startNewGameplay(int boardId, List<BotId> botIds) {
         Board board = boardsReader.getBoard(boardId);
         List<BotAlgorithm> bots = botService.fetch(botIds);
         return gamePlay.startGame(board, bots);

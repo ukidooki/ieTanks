@@ -6,7 +6,7 @@ import pl.edu.agh.ietanks.boards.model.Board;
 import pl.edu.agh.ietanks.engine.api.Engine;
 import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
 import pl.edu.agh.ietanks.gameplay.game.api.BotId;
-import pl.edu.agh.ietanks.gameplay.game.innerapi.GameHistoryStorage;
+import pl.edu.agh.ietanks.gameplay.game.api.GameHistory;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.mock;
 
 public class GameRunnerFactoryTest {
 
-    private GameHistoryStorage storage = mock(GameHistoryStorage.class);
+    private GameHistory storage = mock(GameHistory.class);
 
     private GameRunnerFactory factory = new GameRunnerFactory(storage);
 
