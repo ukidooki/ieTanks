@@ -14,11 +14,14 @@ public class BoardDefinition {
     private final int width;
     private final int height;
     private final List<Position> initialTankPositions;
+    private final List<Position> obstacles;
 
-    public BoardDefinition(int width, int height, List<Position> initialTankPositions) {
+    public BoardDefinition(int width, int height, List<Position> initialTankPositions,
+                           List<Position> obstacles) {
         this.width = width;
         this.height = height;
         this.initialTankPositions = Collections.unmodifiableList(Lists.newArrayList(initialTankPositions));
+        this.obstacles = obstacles;
     }
 
     /**
@@ -42,6 +45,13 @@ public class BoardDefinition {
         return initialTankPositions;
     }
 
+    /**
+     * Defines the positions of obstacles.
+     */
+    public List<Position> obstacles() {
+        return obstacles;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,6 +62,7 @@ public class BoardDefinition {
         if (height != that.height) return false;
         if (width != that.width) return false;
         if (!initialTankPositions.equals(that.initialTankPositions)) return false;
+        if (!obstacles.equals(that.obstacles)) return false;
 
         return true;
     }
@@ -61,6 +72,7 @@ public class BoardDefinition {
         int result = width;
         result = 31 * result + height;
         result = 31 * result + initialTankPositions.hashCode();
+        result = 31 * result + obstacles.hashCode();
         return result;
     }
 
@@ -70,6 +82,7 @@ public class BoardDefinition {
                 "width=" + width +
                 ", height=" + height +
                 ", initialTankPositions=" + initialTankPositions +
+                ", obstacles=" + obstacles +
                 '}';
     }
 }

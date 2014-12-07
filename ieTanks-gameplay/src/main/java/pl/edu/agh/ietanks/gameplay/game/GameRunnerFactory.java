@@ -41,6 +41,10 @@ public class GameRunnerFactory {
                         Position.topLeft().toDown(startingPoint.getY()).toRight(startingPoint.getX())
         ).collect(Collectors.toList());
 
-        return new BoardDefinition(width, height, goodPositions);
+        final List<Position> obstaclesPositions = board.getObstacles().stream().map(obstaclePoint ->
+                        Position.topLeft().toDown(obstaclePoint.getY()).toRight(obstaclePoint.getX())
+        ).collect(Collectors.toList());
+
+        return new BoardDefinition(width, height, goodPositions, obstaclesPositions);
     }
 }
