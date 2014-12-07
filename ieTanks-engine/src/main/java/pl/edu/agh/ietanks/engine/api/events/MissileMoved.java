@@ -10,7 +10,7 @@ public class MissileMoved extends AbstractMissileEvent {
 
 
     public MissileMoved(int id, Position position, Direction direction, int speed) {
-        super(id, position, direction, speed);
+        super(MissileAction.MOVED, id, position, direction, speed);
 
     }
 
@@ -45,6 +45,4 @@ public class MissileMoved extends AbstractMissileEvent {
 
         return true;
     }
-
-
 }

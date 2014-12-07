@@ -10,7 +10,7 @@ public class MissileDestroyed extends AbstractMissileEvent {
 
 
     public MissileDestroyed(int id, Position position, Direction direction, int speed) {
-        super(id, position, direction, speed);
+        super(MissileAction.DESTROYED, id, position, direction, speed);
 
     }
 
@@ -45,5 +45,8 @@ public class MissileDestroyed extends AbstractMissileEvent {
         return true;
     }
 
-
+    @Override
+    public MissileAction getAction() {
+        return MissileAction.DESTROYED;
+    }
 }

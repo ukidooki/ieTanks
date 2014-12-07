@@ -7,18 +7,11 @@ import pl.edu.agh.ietanks.engine.api.Direction;
  */
 public class TankBumpedIntoWall extends AbstractTankEvent {
 
-    private final Direction direction;
     private final int step;
 
     public TankBumpedIntoWall(String tankId, Direction direction, int step) {
-        super(tankId);
-        this.direction = direction;
+        super(TankAction.BUMPED_INTO_WALL, tankId, direction);
         this.step = step;
-    }
-
-
-    public Direction direction() {
-        return direction;
     }
 
     public int step() {

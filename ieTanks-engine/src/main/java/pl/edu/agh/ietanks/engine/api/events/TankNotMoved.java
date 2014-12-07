@@ -7,21 +7,15 @@ import pl.edu.agh.ietanks.engine.api.Direction;
  */
 public class TankNotMoved extends AbstractTankEvent {
 
-    private final Direction direction;
     private final int step;
 
     public TankNotMoved(String tankId, Direction direction, int step) {
-        super(tankId);
-        this.direction = direction;
+        super(TankAction.NOT_MOVED, tankId, direction);
         this.step = step;
     }
 
     public String tankId() {
         return tankId;
-    }
-
-    public Direction direction() {
-        return direction;
     }
 
     public int step() {

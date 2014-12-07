@@ -10,7 +10,7 @@ public class MissileCreated extends AbstractMissileEvent {
 
 
     public MissileCreated(int id, Position position, Direction direction, int speed) {
-        super(id, position, direction, speed);
+        super(MissileAction.CREATED, id, position, direction, speed);
     }
 
 

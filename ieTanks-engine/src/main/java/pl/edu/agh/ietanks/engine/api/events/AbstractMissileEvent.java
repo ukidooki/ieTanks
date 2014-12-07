@@ -1,6 +1,7 @@
 package pl.edu.agh.ietanks.engine.api.events;
 
 import pl.edu.agh.ietanks.engine.api.Direction;
+import pl.edu.agh.ietanks.engine.api.Missile;
 import pl.edu.agh.ietanks.engine.api.Position;
 
 public abstract class AbstractMissileEvent implements Event {
@@ -9,19 +10,20 @@ public abstract class AbstractMissileEvent implements Event {
     protected final Direction direction;
     protected final Position position;
     protected final int speed;
+    private final MissileAction action;
 
-    public AbstractMissileEvent(int id, Position position, Direction direction, int speed) {
+    public AbstractMissileEvent(MissileAction action, int id, Position position, Direction direction, int speed) {
         this.id = id;
         this.direction = direction;
         this.speed = speed;
         this.position = position;
+        this.action = action;
     }
 
     @Override
     public EventGroup getEventGroup() {
         return EventGroup.MISSILES;
     }
-
 
     public int id() {
         return id;
@@ -37,5 +39,27 @@ public abstract class AbstractMissileEvent implements Event {
 
     public int speed() {
         return speed;
+    }
+
+    public MissileAction getAction(){
+        return action;
+    }
+
+    public enum MissileAction{
+        CREATED("created"),
+        MOVED("moved"),
+        DESTROYED("destroyed"),
+
+
+        ;
+
+        private String actionName;
+        private MissileAction(String name){
+            this.actionName = name;
+        }
+
+        public String getActionName(){
+            return actionName;
+        }
     }
 }
