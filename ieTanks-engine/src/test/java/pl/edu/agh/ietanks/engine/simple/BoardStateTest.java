@@ -1,5 +1,6 @@
 package pl.edu.agh.ietanks.engine.simple;
 
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import pl.edu.agh.ietanks.engine.api.BoardDefinition;
@@ -20,7 +21,8 @@ public class BoardStateTest {
         firstTankPosition = Position.topLeft();
         secondTankPosition = Position.topLeft().toRight(1);
 
-        BoardDefinition boardDefinition = new BoardDefinition(3, 4, Arrays.asList(firstTankPosition, secondTankPosition));
+        BoardDefinition boardDefinition = new BoardDefinition(3, 4, Arrays.asList(firstTankPosition, secondTankPosition),
+                Lists.newArrayList());
         boardState = new BoardState(boardDefinition);
 
         boardState.placeTank("first-tank", firstTankPosition);

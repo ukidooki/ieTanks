@@ -13,6 +13,7 @@ public class BoardBuilder {
         final int width = asciiRepresentation[0].length();
 
         final List<Position> startingPositions = Lists.newArrayList();
+        final List<Position> obstaclesPositions = Lists.newArrayList();
 
         for (int i = 0; i < height; ++i) {
             for (int j = 0; j < width; ++j) {
@@ -28,6 +29,6 @@ public class BoardBuilder {
             }
         }
 
-        return new BoardDefinition(width, height, startingPositions);
+        return new BoardDefinition(width, height, startingPositions, obstaclesPositions);
     }
 }
