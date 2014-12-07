@@ -39,9 +39,9 @@ ieTanksApp.config(['$routeProvider',
 
 ieTanksApp.config(
     function($authProvider) {
-        $authProvider.github({
-            url: 'api/auth/github',
-            clientId: 'a8bdaeaa63c864ee885f'
+        $authProvider.google({
+            url: 'api/auth/google',
+            clientId: '989200984574-h79sl47vm75o4ffo1ccj4timmmtfn4oc.apps.googleusercontent.com'
         });
     }
 );
