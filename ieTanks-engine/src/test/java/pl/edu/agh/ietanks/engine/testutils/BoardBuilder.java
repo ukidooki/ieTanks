@@ -23,6 +23,8 @@ public class BoardBuilder {
                     // nothing to do
                 } else if (element == 'x') {
                     startingPositions.add(Position.topLeft().toDown(i).toRight(j));
+                } else if (element == '#') {
+                    obstaclesPositions.add(Position.topLeft().toDown(i).toRight(j));
                 } else {
                     throw new IllegalArgumentException("Got unexpected character: " + element);
                 }

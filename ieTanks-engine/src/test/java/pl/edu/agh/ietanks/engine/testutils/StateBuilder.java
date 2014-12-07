@@ -28,7 +28,7 @@ public class StateBuilder {
 
                 if ('0' <= element && element <= '9') {
                     state.placeTank(String.valueOf(element), position);
-                } else if (element == '.') {
+                } else if (element == '.' || element == '#') {
                     // nothing to do
                 } else {
                     throw new IllegalArgumentException();
