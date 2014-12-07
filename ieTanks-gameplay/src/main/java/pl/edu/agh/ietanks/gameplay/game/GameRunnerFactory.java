@@ -25,26 +25,7 @@ public class GameRunnerFactory {
     }
 
     public GameRunner create(Board board, List<BotAlgorithm> algorithms) {
-        BoardDefinition boardDefinition = toBoardDefinition(board, algorithms);
-        GameRunner gameRunner = new GameRunner(storage, engineFactory, boardDefinition, algorithms);
-
+        GameRunner gameRunner = new GameRunner(storage, engineFactory, board, algorithms);
         return gameRunner;
-    }
-
-    private BoardDefinition toBoardDefinition(Board board, List<BotAlgorithm> algorithms) {
-        Preconditions.checkArgument(algorithms.size() <= board.getStartingPoints().size(), "More tanks than board supports!");
-
-        int width = board.getWidth();
-        int height = board.getHeight();
-
-        final List<Position> goodPositions = board.getStartingPoints().stream().map(startingPoint ->
-                        Position.topLeft().toDown(startingPoint.getY()).toRight(startingPoint.getX())
-        ).collect(Collectors.toList());
-
-        final List<Position> obstaclesPositions = board.getObstacles().stream().map(obstaclePoint ->
-                        Position.topLeft().toDown(obstaclePoint.getY()).toRight(obstaclePoint.getX())
-        ).collect(Collectors.toList());
-
-        return new BoardDefinition(width, height, goodPositions, obstaclesPositions);
     }
 }

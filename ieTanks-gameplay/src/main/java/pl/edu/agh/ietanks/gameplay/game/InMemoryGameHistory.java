@@ -8,7 +8,7 @@ import pl.edu.agh.ietanks.gameplay.game.api.GameId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -25,8 +25,8 @@ public class InMemoryGameHistory implements GameHistory {
     }
 
     @Override
-    public Game getGame(GameId gameId) {
-        return historyGames.get(gameId);
+    public Optional<Game> getGame(GameId gameId) {
+        return Optional.of(historyGames.get(gameId));
     }
 
     @Override

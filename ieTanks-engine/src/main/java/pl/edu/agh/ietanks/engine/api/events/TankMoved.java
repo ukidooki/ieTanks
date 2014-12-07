@@ -6,23 +6,12 @@ import pl.edu.agh.ietanks.engine.api.Direction;
 /**
  * Indicates that a tank has moved.
  */
-public class TankMoved implements Event {
-    private final String tankId;
-    private final Direction direction;
+public class TankMoved extends AbstractTankEvent {
     private final int step;
 
     public TankMoved(String tankId, Direction direction, int step) {
-        this.tankId = tankId;
-        this.direction = direction;
+        super(TankAction.MOVED, tankId, direction);
         this.step = step;
-    }
-
-    public String tankId() {
-        return tankId;
-    }
-
-    public Direction direction() {
-        return direction;
     }
 
     public int step() {

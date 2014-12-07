@@ -1,17 +1,18 @@
 package pl.edu.agh.ietanks.gameplay;
 
 import org.junit.Test;
-import pl.edu.agh.ietanks.engine.api.Action;
-import pl.edu.agh.ietanks.engine.api.Direction;
-import pl.edu.agh.ietanks.engine.api.GameplayBoardView;
-import pl.edu.agh.ietanks.engine.api.Position;
-import pl.edu.agh.ietanks.engine.simple.actions.Move;
+import org.mockito.internal.util.collections.ArrayUtils;
+import pl.edu.agh.ietanks.engine.api.*;
+import pl.edu.agh.ietanks.engine.simple.BoardState;
+import pl.edu.agh.ietanks.engine.simple.actions.Shot;
 import pl.edu.agh.ietanks.gameplay.bot.BotExecutor;
 import pl.edu.agh.ietanks.gameplay.game.api.BotId;
 import pl.edu.agh.ietanks.gameplay.testutils.ResourceUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -20,7 +21,7 @@ public class BotExecutorTest {
     @Test
     public void should_load_resource_correctly() throws IOException {
         //given
-        String filename = "TestBot.py";
+        String filename = "SampleBot.py";
 
         //when
         String result = ResourceUtils.loadResourceFromFile(filename);
@@ -30,23 +31,24 @@ public class BotExecutorTest {
     }
 
     @Test
-    public void should_return_simple_up_move() throws IOException {
+    public void should_return_simple_up_left_move() throws IOException {
         //given
-        String pythonAlgorithm = ResourceUtils.loadResourceFromFile("TestBot.py");
+        String pythonAlgorithm = ResourceUtils.loadResourceFromFile("SampleBot.py");
         BotId id = new BotId("1");
         BotExecutor underTest = new BotExecutor(id, pythonAlgorithm);
         HashMap map = new HashMap<Integer, Position>();
-        map.put(id, new Position(2, 2));
-        // TODO: used class outside of API!
-        //GameplayBoardView board = new BoardState(3, 3, map);
-        GameplayBoardView board = null;
+
+        List<Position> positions = Arrays.asList(new Position(5, 5), new Position(4, 4));
+        List<Position> obstacles = Arrays.asList(new Position(1, 1));
+        BoardDefinition boardDefinition = new BoardDefinition(20, 20, positions, obstacles);
+        GameplayBoardView board = new BoardState(boardDefinition);
 
         //when
         Action resultAction = underTest.performAction(board);
 
         //then
         assertThat(resultAction).isInstanceOf(Action.class);
-        assertThat((Action) resultAction).isEqualTo(new Move(Direction.Right, 1));
+        assertThat(resultAction).isEqualTo(new Shot(Direction.Up_Left, 1));
     }
 
 }

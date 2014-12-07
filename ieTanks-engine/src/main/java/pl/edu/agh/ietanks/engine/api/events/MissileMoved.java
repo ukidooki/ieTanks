@@ -6,35 +6,14 @@ import pl.edu.agh.ietanks.engine.api.Position;
 /**
  * Indicates that a missile has moved.
  */
-public class MissileMoved implements Event {
+public class MissileMoved extends AbstractMissileEvent {
 
-    private final int id;
-    private final Direction direction;
-    private final int speed;
-    private final Position position;
 
     public MissileMoved(int id, Position position, Direction direction, int speed) {
-        this.id = id;
-        this.position = position;
-        this.direction = direction;
-        this.speed = speed;
+        super(MissileAction.MOVED, id, position, direction, speed);
+
     }
 
-    public int id() {
-        return id;
-    }
-
-    public Position position() {
-        return position;
-    }
-
-    public Direction direction() {
-        return direction;
-    }
-
-    public int speed() {
-        return speed;
-    }
 
     @Override
     public String toString() {
@@ -66,6 +45,4 @@ public class MissileMoved implements Event {
 
         return true;
     }
-
-
 }

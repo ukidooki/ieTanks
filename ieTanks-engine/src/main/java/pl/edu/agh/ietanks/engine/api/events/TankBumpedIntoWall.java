@@ -5,24 +5,13 @@ import pl.edu.agh.ietanks.engine.api.Direction;
 /**
  * Indicates that a tank tried to move out of the board.
  */
-public class TankBumpedIntoWall implements Event {
+public class TankBumpedIntoWall extends AbstractTankEvent {
 
-    private final String tankId;
-    private final Direction direction;
     private final int step;
 
     public TankBumpedIntoWall(String tankId, Direction direction, int step) {
-        this.tankId = tankId;
-        this.direction = direction;
+        super(TankAction.BUMPED_INTO_WALL, tankId, direction);
         this.step = step;
-    }
-
-    public String tankId() {
-        return tankId;
-    }
-
-    public Direction direction() {
-        return direction;
     }
 
     public int step() {

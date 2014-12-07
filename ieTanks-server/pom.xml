@@ -20,6 +20,21 @@
             <artifactId>ieTanks-boards</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>pl.edu.agh.ietanks</groupId>
+            <artifactId>ieTanks-engine</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>pl.edu.agh.ietanks</groupId>
+            <artifactId>ieTanks-gameplay</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>pl.edu.agh.ietanks</groupId>
+            <artifactId>ieTanks-sandbox</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -32,12 +47,10 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.4.3</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.4.3</version>
         </dependency>
     </dependencies>
 
@@ -55,7 +68,7 @@
                         <id>exec-bower-install</id>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <executable>bower</executable>
+                            <executable>${bower.executable}</executable>
                             <workingDirectory>src/main/webapp</workingDirectory>
                             <arguments>
                                 <argument>install</argument>
@@ -69,5 +82,58 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <properties>
+                <bower.executable>bower</bower.executable>
+                <python.executable>python</python.executable>
+            </properties>
+        </profile>
+        <profile>
+            <id>unix</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                </os>
+            </activation>
+            <properties>
+                <bower.executable>/usr/bin/bower</bower.executable>
+                <python.executable>/usr/bin/python</python.executable>
+            </properties>
+        </profile>
+        <profile>
+            <id>tornado</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>tornado-run-bot-service</id>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <executable>${python.executable}</executable>
+                            <workingDirectory>src/main/python</workingDirectory>
+                            <arguments>
+                                <argument>ieTanks/botAPI/bot_service.py</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
