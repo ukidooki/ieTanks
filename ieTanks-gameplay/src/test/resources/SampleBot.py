@@ -64,7 +64,7 @@ class SampleBot(Bot):
         directions = [MoveDirection.North, MoveDirection.East, MoveDirection.South, MoveDirection.West]
         for direction in directions:
             try_position = my_position.moveInMoveDirection(direction, self.bot_speed)
-            if board.isWithin(try_position):
+            if board.isWithin(try_position) and board.isAccessibleForTank(try_position):
                 will_be_attacked = False
                 for attacked_field in attacked_fields:
                     if attacked_field.equals(try_position):
