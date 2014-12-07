@@ -40,6 +40,7 @@ ieTanksApp.config(['$routeProvider',
 ieTanksApp.config(
     function($authProvider) {
         $authProvider.github({
+            url: 'api/auth/github',
             clientId: 'a8bdaeaa63c864ee885f'
         });
     }
