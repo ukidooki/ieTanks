@@ -2,6 +2,10 @@ package pl.edu.agh.ietanks.gameplay.game;
 
 import com.google.common.collect.Lists;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import pl.edu.agh.ietanks.boards.model.Board;
 import pl.edu.agh.ietanks.boards.model.Field;
 import pl.edu.agh.ietanks.engine.api.Engine;
@@ -15,11 +19,14 @@ import java.util.List;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
+@RunWith(MockitoJUnitRunner.class)
 public class GameRunnerFactoryTest {
 
-    private GameHistory storage = mock(GameHistory.class);
+    @Mock
+    private GameHistory storage;
 
-    private GameRunnerFactory factory = new GameRunnerFactory(storage);
+    @InjectMocks
+    private GameRunnerFactory factory;
 
     @Test
     public void shouldCreateGameRunner() {

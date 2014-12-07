@@ -1,6 +1,8 @@
 package pl.edu.agh.ietanks.gameplay.game;
 
 import com.google.common.base.Preconditions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import pl.edu.agh.ietanks.boards.model.Board;
 import pl.edu.agh.ietanks.engine.api.BoardDefinition;
 import pl.edu.agh.ietanks.engine.api.Engine;
@@ -11,13 +13,11 @@ import pl.edu.agh.ietanks.gameplay.game.api.GameHistory;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class GameRunnerFactory {
 
-    private final GameHistory storage;
-
-    public GameRunnerFactory(GameHistory storage) {
-        this.storage = storage;
-    }
+    @Autowired
+    private GameHistory storage;
 
     public GameRunner create(Board board, List<BotAlgorithm> algorithms, Engine gameEngine) {
         BoardDefinition boardDefinition = toBoardDefinition(board, algorithms);
