@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class StateBuilder {
     public static BoardState fromASCII(String... asciiRepresentation) {
         List<String> definitionAscii = Arrays.stream(asciiRepresentation).map(
-                line -> line.replaceAll("[0-9]", ".")
+                line -> line.replaceAll("[0-9]", "x")
                         .replaceAll("\\.", "x")
         ).collect(Collectors.toList());
 

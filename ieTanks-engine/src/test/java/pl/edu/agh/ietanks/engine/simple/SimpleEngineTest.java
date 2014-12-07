@@ -18,8 +18,8 @@ import static org.fest.assertions.Assertions.assertThat;
 
 public class SimpleEngineTest {
 
-    private static final String TANK_0 = String.valueOf(0);
-    private static final String TANK_1 = String.valueOf(1);
+    private static final String TANK_0 = "0";
+    private static final String TANK_1 = "1";
 
     @Test
     public void shouldMoveTanksInTurns() throws Exception {

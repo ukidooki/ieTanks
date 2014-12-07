@@ -20,9 +20,9 @@ import java.util.List;
 import static org.fest.assertions.Assertions.assertThat;
 
 public class GameLogicTest {
-    private String TANK_0 = String.valueOf("0");
-    private String TANK_1 = String.valueOf("1");
-    private String TANK_2 = String.valueOf("2");
+    private String TANK_0 = "0";
+    private String TANK_1 = "1";
+    private String TANK_2 = "2";
 
     private GameLogic logic;
     private List<Event> events;
