@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import pl.edu.agh.ietanks.boards.model.Board;
 import pl.edu.agh.ietanks.boards.model.Field;
-import pl.edu.agh.ietanks.engine.api.Engine;
+import pl.edu.agh.ietanks.engine.api.EngineFactory;
 import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
 import pl.edu.agh.ietanks.gameplay.game.api.BotId;
 import pl.edu.agh.ietanks.gameplay.game.api.GameHistory;
@@ -17,10 +17,12 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GameRunnerFactoryTest {
+
+    @Mock
+    private EngineFactory engineFactory;
 
     @Mock
     private GameHistory storage;
@@ -39,7 +41,7 @@ public class GameRunnerFactoryTest {
         Board board = new Board(1, "board", 3, 4, Collections.emptyList(), startingPoints);
 
         // when
-        GameRunner runner = factory.create(board, algorithms, mock(Engine.class));
+        GameRunner runner = factory.create(board, algorithms);
 
         // then
         assertThat(runner.getGameParticipants()).isEqualTo(algorithms);

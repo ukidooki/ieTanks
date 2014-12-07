@@ -3,6 +3,7 @@ package pl.edu.agh.ietanks.gameplay.game;
 import com.google.common.collect.Lists;
 import pl.edu.agh.ietanks.engine.api.BoardDefinition;
 import pl.edu.agh.ietanks.engine.api.Engine;
+import pl.edu.agh.ietanks.engine.api.EngineFactory;
 import pl.edu.agh.ietanks.engine.api.GameConfig;
 import pl.edu.agh.ietanks.engine.api.events.Event;
 import pl.edu.agh.ietanks.engine.api.events.RoundResults;
@@ -21,20 +22,31 @@ import java.util.UUID;
 
 class GameRunner implements Runnable, Game {
 
-    private GameLogger LOGGER = new StandardOutputGameLogger();
-
     private final GameId gameId;
     private final BoardDefinition gameBoard;
     private final List<BotAlgorithm> bots;
-    private final Engine gameEngine;
+    private final EngineFactory gameEngineFactory;
     private final GameHistory historyStorage;
     private final List<Event> gameEvents;
+    private GameLogger LOGGER = new StandardOutputGameLogger();
+    private Engine gameEngine;
+
+    public GameRunner(GameHistory historyStorage,
+                      EngineFactory gameEngineFactory,
+                      BoardDefinition gameBoard,
+                      List<BotAlgorithm> gameBots) {
+        this.gameId = new GameId(UUID.randomUUID().toString());
+        this.historyStorage = historyStorage;
+        this.gameEngineFactory = gameEngineFactory;
+        this.gameEvents = new ArrayList<>();
+        this.gameBoard = gameBoard;
+        this.bots = gameBots;
+    }
 
     private void setupEngineParams() {
-        gameEngine.setup(gameBoard,
+        gameEngine = gameEngineFactory.createEngineInstance(gameBoard,
                 Lists.transform(bots, botAlgorithm -> new BotExecutor(botAlgorithm.id(), botAlgorithm.pythonCode())),
-                GameConfig.newBuilder().withTurnsLimit(10).createGameConfig()
-        );
+                GameConfig.newBuilder().withTurnsLimit(10).createGameConfig());
 
         LOGGER.startGame();
     }
@@ -52,18 +64,6 @@ class GameRunner implements Runnable, Game {
         }
 
         historyStorage.storeFinishedGame(this);
-    }
-
-    public GameRunner(GameHistory historyStorage,
-                      Engine gameEngine,
-                      BoardDefinition gameBoard,
-                      List<BotAlgorithm> gameBots) {
-        this.gameId = new GameId(UUID.randomUUID().toString());
-        this.historyStorage = historyStorage;
-        this.gameEngine = gameEngine;
-        this.gameEvents = new ArrayList<>();
-        this.gameBoard = gameBoard;
-        this.bots = gameBots;
     }
 
     @Override
