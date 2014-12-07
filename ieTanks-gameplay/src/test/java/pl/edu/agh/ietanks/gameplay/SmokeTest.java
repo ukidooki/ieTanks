@@ -19,9 +19,10 @@ import static org.fest.assertions.Assertions.assertThat;
 @ContextConfiguration({"classpath:test-context.xml"})
 public class SmokeTest {
     @Autowired
-    private GamePlay gameService;
-    @Autowired
     private GameHistory gameHistory;
+
+    @Autowired
+    private GamePlay gameService;
 
     @Autowired
     private BoardsReader boardsReader;

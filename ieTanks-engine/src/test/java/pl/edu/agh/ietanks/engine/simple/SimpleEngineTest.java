@@ -1,54 +1,51 @@
 package pl.edu.agh.ietanks.engine.simple;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 import pl.edu.agh.ietanks.engine.api.*;
 import pl.edu.agh.ietanks.engine.api.events.Event;
 import pl.edu.agh.ietanks.engine.api.events.RoundResults;
 import pl.edu.agh.ietanks.engine.api.events.TankMoved;
-import pl.edu.agh.ietanks.engine.api.events.TankNotMoved;
 import pl.edu.agh.ietanks.engine.simple.actions.Move;
 import pl.edu.agh.ietanks.engine.testutils.BoardBuilder;
 import pl.edu.agh.ietanks.engine.testutils.BotBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
 
 public class SimpleEngineTest {
+
+    private static final String TANK_0 = "0";
+    private static final String TANK_1 = "1";
+
     @Test
     public void shouldMoveTanksInTurns() throws Exception {
         // given
         BoardDefinition startingBoard = BoardBuilder.fromASCII(
                 "....",
-                "01..",
-                "....",
+                "x...",
+                "..x.",
                 "....");
 
-        Bot bot1 = BotBuilder.fromSequence(String.valueOf(0), new Move(Direction.Right, 1));
-        Bot bot2 = BotBuilder.fromSequence(String.valueOf(1), new Move(Direction.Right, 1));
+        Bot bot1 = BotBuilder.fromSequence(TANK_0, new Move(Direction.Right, 1));
+        Bot bot2 = BotBuilder.fromSequence(TANK_1, new Move(Direction.Right, 1));
 
         Engine engine = new SimpleEngine();
         engine.setup(startingBoard, Lists.newArrayList(bot1, bot2), GameConfig.defaults());
 
         // when
         final List<Event> events1 = engine.nextMove().getRoundEvents();
-
-        // then
-        assertThat(engine.currentBoard()).isEqualTo(new BoardState(startingBoard));
-        assertThat(events1).containsExactly(new TankNotMoved(String.valueOf(0), Direction.Right, 1));
-
-        // when
         final List<Event> events2 = engine.nextMove().getRoundEvents();
 
         // then
-        assertThat(engine.currentBoard()).isEqualTo(new BoardState(BoardBuilder.fromASCII(
-                "....",
-                "0.1.",
-                "....",
-                "...."
-        )));
-        assertThat(events2).containsExactly(new TankMoved(String.valueOf(1), Direction.Right, 1));
+        final ArrayList<Event> allEvents = Lists.newArrayList(Iterables.concat(events1, events2));
+
+        assertThat(allEvents).containsOnly(
+                new TankMoved(TANK_0, Direction.Right, 1),
+                new TankMoved(TANK_1, Direction.Right, 1));
     }
 
     @Test
@@ -56,12 +53,12 @@ public class SimpleEngineTest {
         // given
         BoardDefinition startingBoard = BoardBuilder.fromASCII(
                 ".....",
-                ".0...",
-                "...1.",
+                ".x...",
+                "...x.",
                 ".....");
 
-        Bot bot1 = BotBuilder.fromSequence(String.valueOf(0), new Move(Direction.Right, 1), new Move(Direction.Left, 1));
-        Bot bot2 = BotBuilder.fromSequence(String.valueOf(1), new Move(Direction.Up, 1), new Move(Direction.Down, 1));
+        Bot bot1 = BotBuilder.fromSequence(TANK_0, new Move(Direction.Right, 1), new Move(Direction.Left, 1));
+        Bot bot2 = BotBuilder.fromSequence(TANK_1, new Move(Direction.Up, 1), new Move(Direction.Down, 1));
 
         Engine engine = new SimpleEngine();
         engine.setup(startingBoard, Lists.newArrayList(bot1, bot2),

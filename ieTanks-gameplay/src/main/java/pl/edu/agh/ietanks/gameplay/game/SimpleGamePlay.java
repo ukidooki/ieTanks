@@ -6,7 +6,6 @@ import pl.edu.agh.ietanks.boards.model.Board;
 import pl.edu.agh.ietanks.engine.simple.SimpleEngine;
 import pl.edu.agh.ietanks.engine.util.LogExceptionRunnable;
 import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
-import pl.edu.agh.ietanks.gameplay.game.api.GameHistory;
 import pl.edu.agh.ietanks.gameplay.game.api.GameId;
 import pl.edu.agh.ietanks.gameplay.game.api.GamePlay;
 
@@ -18,12 +17,10 @@ import java.util.concurrent.Executors;
 public class SimpleGamePlay implements GamePlay {
     private static final int THREADS_IN_POOL = 5;
 
-    @Autowired
-    private GameHistory historyStorage;
-
     private final ExecutorService executionService;
 
-    private final GameRunnerFactory gameRunnerFactory = new GameRunnerFactory(historyStorage);
+    @Autowired
+    private GameRunnerFactory gameRunnerFactory;
 
     public SimpleGamePlay() {
         executionService = Executors.newFixedThreadPool(THREADS_IN_POOL);

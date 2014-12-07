@@ -1,7 +1,9 @@
 package pl.edu.agh.ietanks.engine.api;
 
+import com.google.common.collect.Lists;
+
 import java.util.Collections;
-import java.util.Map;
+import java.util.List;
 
 /**
  * Defines the board for the game. Provides basic, static info about the board.
@@ -11,12 +13,12 @@ public class BoardDefinition {
 
     private final int width;
     private final int height;
-    private final Map<String, Position> initialTankPositions;
+    private final List<Position> initialTankPositions;
 
-    public BoardDefinition(int width, int height, Map<String, Position> initialTankPositions) {
+    public BoardDefinition(int width, int height, List<Position> initialTankPositions) {
         this.width = width;
         this.height = height;
-        this.initialTankPositions = Collections.unmodifiableMap(initialTankPositions);
+        this.initialTankPositions = Collections.unmodifiableList(Lists.newArrayList(initialTankPositions));
     }
 
     /**
@@ -34,23 +36,22 @@ public class BoardDefinition {
     }
 
     /**
-     * Defines the tanks (players): number and their initial positions.
+     * Defines the places where tanks may start the game.
      */
-    public Map<String, Position> initialTankPositions() {
+    public List<Position> initialTankPositions() {
         return initialTankPositions;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof BoardDefinition)) return false;
 
         BoardDefinition that = (BoardDefinition) o;
 
         if (height != that.height) return false;
         if (width != that.width) return false;
-        if (initialTankPositions != null ? !initialTankPositions.equals(that.initialTankPositions) : that.initialTankPositions != null)
-            return false;
+        if (!initialTankPositions.equals(that.initialTankPositions)) return false;
 
         return true;
     }
@@ -59,7 +60,7 @@ public class BoardDefinition {
     public int hashCode() {
         int result = width;
         result = 31 * result + height;
-        result = 31 * result + (initialTankPositions != null ? initialTankPositions.hashCode() : 0);
+        result = 31 * result + initialTankPositions.hashCode();
         return result;
     }
 

@@ -22,7 +22,7 @@ public class BoardState implements GameplayBoardView {
         this.width = definition.width();
         this.height = definition.height();
 
-        tanks = new HashMap<>(definition.initialTankPositions());
+        tanks = new HashMap<>();
         missiles = new ArrayList<>();
         taken.addAll(tanks.values());
     }
@@ -83,6 +83,10 @@ public class BoardState implements GameplayBoardView {
         taken.remove(tanks.get(tankId));
         tanks.put(tankId, destination);
         taken.add(destination);
+    }
+
+    public void placeTank(String tankId, Position place) {
+        replaceTank(tankId, place);
     }
 
     public void removeTank(String tankId) {
