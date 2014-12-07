@@ -6,34 +6,12 @@ import pl.edu.agh.ietanks.engine.api.Position;
 /**
  * Indicates that a missile has been destroyed.
  */
-public class MissileDestroyed implements Event {
+public class MissileDestroyed extends AbstractMissileEvent {
 
-    private final int id;
-    private final Direction direction;
-    private final int speed;
-    private final Position position;
 
     public MissileDestroyed(int id, Position position, Direction direction, int speed) {
-        this.id = id;
-        this.position = position;
-        this.direction = direction;
-        this.speed = speed;
-    }
+        super(MissileAction.DESTROYED, id, position, direction, speed);
 
-    public int id() {
-        return id;
-    }
-
-    public Position position() {
-        return position;
-    }
-
-    public Direction direction() {
-        return direction;
-    }
-
-    public int speed() {
-        return speed;
     }
 
     @Override
@@ -66,6 +44,4 @@ public class MissileDestroyed implements Event {
 
         return true;
     }
-
-
 }

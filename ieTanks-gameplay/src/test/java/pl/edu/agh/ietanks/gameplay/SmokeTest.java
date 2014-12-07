@@ -12,6 +12,7 @@ import pl.edu.agh.ietanks.gameplay.testutils.ResourceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -41,8 +42,8 @@ public class SmokeTest {
         Thread.sleep(10000);
 
         //then
-        Game finishedGame = gameHistory.getGame(gameId);
-        assertThat(finishedGame.getGameParticipants()).isEqualTo(bots);
+        Optional<Game> finishedGame = gameHistory.getGame(gameId);
+        assertThat(finishedGame.get().getGameParticipants()).isEqualTo(bots);
         //TODO: we should set some test scenarios according to more advanced bot algorithm
     }
 }

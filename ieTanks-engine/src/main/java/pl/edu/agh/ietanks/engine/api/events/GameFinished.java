@@ -36,4 +36,9 @@ public class GameFinished implements Event {
                 "winner=" + winner +
                 '}';
     }
+
+    @Override
+    public EventGroup getEventGroup() {
+        return EventGroup.FINISH;
+    }
 }
