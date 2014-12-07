@@ -15,12 +15,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class GameRunnerFactory {
+    private final GameHistory storage;
+    private final EngineFactory engineFactory;
 
     @Autowired
-    private GameHistory storage;
-
-    @Autowired
-    private EngineFactory engineFactory;
+    public GameRunnerFactory(GameHistory storage, EngineFactory engineFactory) {
+        this.storage = storage;
+        this.engineFactory = engineFactory;
+    }
 
     public GameRunner create(Board board, List<BotAlgorithm> algorithms) {
         BoardDefinition boardDefinition = toBoardDefinition(board, algorithms);
