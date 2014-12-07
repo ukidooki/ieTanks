@@ -1,14 +1,14 @@
 package pl.edu.agh.ietanks.gameplay.game.rest;
 
 import pl.edu.agh.ietanks.boards.model.Board;
-import pl.edu.agh.ietanks.boards.model.Obstacle;
+import pl.edu.agh.ietanks.boards.model.Field;
 
 import java.util.List;
 
 public class MapPojo {
     private final int width;
     private final int height;
-    private final List<Obstacle> obstacles;
+    private final List<Field> obstacles;
 
     public MapPojo(Board boardModel) {
         this.width = boardModel.getWidth();
@@ -16,7 +16,7 @@ public class MapPojo {
         this.obstacles = boardModel.getObstacles();
     }
 
-    public List<Obstacle> getObstacles() {
+    public List<Field> getObstacles() {
         return obstacles;
     }
 

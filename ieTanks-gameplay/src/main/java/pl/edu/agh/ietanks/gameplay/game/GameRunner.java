@@ -63,11 +63,11 @@ class GameRunner implements Runnable, Game {
     
     private void setupEngineParams() {
         BoardDefinition gameBoardDefinition = toBoardDefinition(gameBoard, bots);
-        initialGamersPositions.putAll(gameBoardDefinition.initialTankPositions());
 
         gameEngine = gameEngineFactory.createEngineInstance(gameBoardDefinition,
                 Lists.transform(bots, botAlgorithm -> new BotExecutor(botAlgorithm.id(), botAlgorithm.pythonCode())),
                 GameConfig.newBuilder().withTurnsLimit(10).createGameConfig());
+        gameEngine.currentBoard().tankIds().forEach(tankId -> initialGamersPositions.put(tankId, gameEngine.currentBoard().findTank(tankId).get()));
 
         LOGGER.startGame();
     }
