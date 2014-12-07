@@ -49,8 +49,6 @@ public abstract class AbstractMissileEvent implements Event {
         CREATED("created"),
         MOVED("moved"),
         DESTROYED("destroyed"),
-
-
         ;
 
         private String actionName;

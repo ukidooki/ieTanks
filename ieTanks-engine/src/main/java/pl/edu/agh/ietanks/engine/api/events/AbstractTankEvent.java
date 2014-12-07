@@ -36,7 +36,6 @@ public abstract class AbstractTankEvent implements Event {
         MOVED("moved"),
         BUMPED_INTO_WALL("bumped"),
         NOT_MOVED("none"),
-
         ;
 
         private String actionName;

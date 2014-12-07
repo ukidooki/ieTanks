@@ -44,9 +44,4 @@ public class MissileDestroyed extends AbstractMissileEvent {
 
         return true;
     }
-
-    @Override
-    public MissileAction getAction() {
-        return MissileAction.DESTROYED;
-    }
 }
