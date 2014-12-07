@@ -2,23 +2,24 @@ var ieTanksVisualization = angular.module('ieTanksVisualization', []);
 
 ieTanksVisualization.controller('GameCtrl', ['$scope', '$interval', '$routeParams', 'REST',
     function ($scope, $interval, $routeParams, REST) {
-        $scope.map = {border: 20, obstacles:[{type:'', x:5, y:10}]};
-
         /* TODO uncomment when REST interface is ready
-        var step = 0;
-        $interval(function () {
-            var events = REST.events.query({ gameId: $routeParams.gameId }, function() {
+        var gameInfo = REST.game.query({ gameId: $routeParams.gameId }, function() {
+            var step = 0,
+                events = gameInfo['events'];
+            $scope.map = gameInfo['map'];
+            $interval(function () {
                 if (step < events.length) {
                     $scope.state = events[step];
                     ++step;
                 } else {
                     console.log('No more events to display.');
                 }
-            }, function () {
-                console.log('Failed to load game events.');
-            });
-        }, 3000);
+            }, 3000);
+        }, function () {
+            console.log('Failed to load game events.');
+        });
         */
+        $scope.map = {border: 20, obstacles:[{type:'', x:5, y:10}]};
         var states = [{players:[{id:'blabla', action:'move', x:'10', y:'5'}, {id:'blabla2', action:'move', x:'3', y:'2'}], missiles:[]},
             {players:[{id:'blabla', action:'move', x:'6', y:'2'}, {id:'blabla2', action:'move', x:'11', y:'2'}], missiles:[]},
             {players:[{id:'blabla', action:'move', x:'15', y:'19'}, {id:'blabla2', action:'move', x:'5', y:'5'}], missiles:[]},
@@ -38,7 +39,7 @@ ieTanksVisualization.controller('GameCtrl', ['$scope', '$interval', '$routeParam
 ])
     .controller('GameHistory', ['$scope', '$interval', 'REST',
         function ($scope, $interval, REST) {
-            var gameHistory = REST.finishedGames.query(function () {
+            var gameHistory = REST.games.query(function () {
                 $scope.gameHistory = gameHistory;
             }, function () {
                 console.log('Failed to retrieve finished games list.');
