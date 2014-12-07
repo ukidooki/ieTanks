@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.ietanks.boards.model.Board;
 import pl.edu.agh.ietanks.engine.api.BoardDefinition;
-import pl.edu.agh.ietanks.engine.api.Engine;
+import pl.edu.agh.ietanks.engine.api.EngineFactory;
 import pl.edu.agh.ietanks.engine.api.Position;
 import pl.edu.agh.ietanks.gameplay.game.api.BotAlgorithm;
 import pl.edu.agh.ietanks.gameplay.game.api.GameHistory;
@@ -19,9 +19,12 @@ public class GameRunnerFactory {
     @Autowired
     private GameHistory storage;
 
-    public GameRunner create(Board board, List<BotAlgorithm> algorithms, Engine gameEngine) {
+    @Autowired
+    private EngineFactory engineFactory;
+
+    public GameRunner create(Board board, List<BotAlgorithm> algorithms) {
         BoardDefinition boardDefinition = toBoardDefinition(board, algorithms);
-        GameRunner gameRunner = new GameRunner(storage, gameEngine, boardDefinition, algorithms);
+        GameRunner gameRunner = new GameRunner(storage, engineFactory, boardDefinition, algorithms);
 
         return gameRunner;
     }

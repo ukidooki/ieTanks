@@ -22,6 +22,8 @@ public class SimpleEngineTest {
     private static final String TANK_1 = "1";
     private static final String TANK_2 = "2";
 
+    private final EngineFactory factory = new SimpleEngineFactory();
+
     @Test
     public void shouldMoveTanksInTurns() throws Exception {
         // given
@@ -34,8 +36,8 @@ public class SimpleEngineTest {
         Bot bot1 = BotBuilder.fromSequence(TANK_0, new Move(Direction.Right, 1));
         Bot bot2 = BotBuilder.fromSequence(TANK_1, new Move(Direction.Right, 1));
 
-        Engine engine = new SimpleEngine();
-        engine.setup(startingBoard, Lists.newArrayList(bot1, bot2), GameConfig.defaults());
+        Engine engine = factory.createEngineInstance(
+                startingBoard, Lists.newArrayList(bot1, bot2), GameConfig.defaults());
 
         // when
         final List<Event> events1 = engine.nextMove().getRoundEvents();
@@ -61,8 +63,7 @@ public class SimpleEngineTest {
         Bot bot1 = BotBuilder.fromSequence(TANK_0, new Move(Direction.Right, 1), new Move(Direction.Left, 1));
         Bot bot2 = BotBuilder.fromSequence(TANK_1, new Move(Direction.Up, 1), new Move(Direction.Down, 1));
 
-        Engine engine = new SimpleEngine();
-        engine.setup(startingBoard, Lists.newArrayList(bot1, bot2),
+        Engine engine = factory.createEngineInstance(startingBoard, Lists.newArrayList(bot1, bot2),
                      GameConfig.newBuilder().withTurnsLimit(4).createGameConfig());
 
         for(int i=0; i<3; ++i) {
@@ -89,8 +90,8 @@ public class SimpleEngineTest {
         Bot bot2 = BotBuilder.fromSequence(TANK_1, new Shot(Direction.Right, 1), new Shot(Direction.Right, 1));
         Bot bot3 = BotBuilder.fromSequence(TANK_2, new Shot(Direction.Right, 1), new Shot(Direction.Right, 1));
 
-        Engine engine = new SimpleEngine();
-        engine.setup(startingBoard, Lists.newArrayList(bot1, bot2, bot3), GameConfig.defaults());
+        Engine engine = factory.createEngineInstance(
+                startingBoard, Lists.newArrayList(bot1, bot2, bot3), GameConfig.defaults());
 
         String firstTank = engine.currentBoard().findTank(Position.topLeft().toDown(3));
 

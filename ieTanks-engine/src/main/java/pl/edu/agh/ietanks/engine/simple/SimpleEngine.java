@@ -20,10 +20,9 @@ public class SimpleEngine implements Engine {
     private GameLogic gameLogic;
     private GameFinishingPolicy finishingPolicy;
 
-    private Queue<Bot> turns = new ArrayDeque<>();
+    private final Queue<Bot> turns = new ArrayDeque<>();
 
-    @Override
-    public void setup(BoardDefinition initialBoard, List<? extends Bot> bots, GameConfig configuration) {
+    SimpleEngine(BoardDefinition initialBoard, List<? extends Bot> bots, GameConfig configuration) {
         final List<String> botIds = bots.stream().map(Bot::id).collect(Collectors.toList());
         this.gameLogic = new GameLogic(initialBoard, botIds);
 
