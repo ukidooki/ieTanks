@@ -18,17 +18,18 @@ public class SimpleEngine implements Engine {
     private final TanksOrderPolicy orderPolicy = new RandomOrderPolicy();
 
     private GameLogic gameLogic;
-    private GameConfig config;
+    private GameFinishingPolicy finishingPolicy;
 
     private Queue<Bot> turns = new ArrayDeque<>();
-    private int turnCounter = 0;
 
     @Override
     public void setup(BoardDefinition initialBoard, List<? extends Bot> bots, GameConfig configuration) {
         final List<String> botIds = bots.stream().map(Bot::id).collect(Collectors.toList());
-
         this.gameLogic = new GameLogic(initialBoard, botIds);
-        this.config = configuration;
+
+        finishingPolicy = new CompositeFinishingPolicy(
+                new MaximumNumberOfTurns(configuration.turnsLimit()),
+                new LastBotLeft());
 
         turns.addAll(orderPolicy.determineTurnsOrder(bots));
     }
@@ -45,8 +46,9 @@ public class SimpleEngine implements Engine {
         turns.add(currentBot);
         final List<Event> turnEvents = Lists.newArrayList(Iterables.concat(missileEvents, tankEvents));
 
-        turnCounter++;
-        if (turnCounter >= config.turnsLimit()) {
+        finishingPolicy.nextTurn(gameLogic.board(), turnEvents);
+
+        if (finishingPolicy.hasFinished()) {
             return RoundResults.Finished(turnEvents);
         } else {
             return RoundResults.Continue(turnEvents);
