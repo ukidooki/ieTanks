@@ -11,7 +11,7 @@ var ieTanksApp = angular.module('ieTanksApp', [
 ]); // add other modules if dependant here
 
 ieTanksApp.config(['$routeProvider',
-    function($routeProvider) {
+    function ($routeProvider) {
         $routeProvider.
             when('/game/:gameId', {
                 templateUrl: 'html/game.html',
@@ -38,7 +38,7 @@ ieTanksApp.config(['$routeProvider',
 ]);
 
 ieTanksApp.config(
-    function($authProvider) {
+    function ($authProvider) {
         $authProvider.google({
             url: 'api/auth/google',
             clientId: '989200984574-h79sl47vm75o4ffo1ccj4timmmtfn4oc.apps.googleusercontent.com'
@@ -46,51 +46,36 @@ ieTanksApp.config(
     }
 );
 
-ieTanksApp.controller('NavbarCtrl', function($scope, $auth) {
-        $scope.isAuthenticated = function() {
-            return $auth.isAuthenticated();
-        };
-    });
+ieTanksApp.controller('NavbarCtrl', function ($scope, $auth) {
+    $scope.isAuthenticated = function () {
+        return $auth.isAuthenticated();
+    };
+});
 
-ieTanksApp.controller('LoginCtrl', function($scope, $auth) {
-        $scope.authenticate = function(provider) {
-            $auth.authenticate(provider)
-                .then(function() {
-                    alert({
-                        content: 'You have successfully logged in',
-                        animation: 'fadeZoomFadeDown',
-                        type: 'material',
-                        duration: 3
-                    });
-                })
-                .catch(function(response) {
-                    alert({
-                        content: response.data.message,
-                        animation: 'fadeZoomFadeDown',
-                        type: 'material',
-                        duration: 3
-                    });
-                });
-        };
-    });
-
-ieTanksApp.controller('LogoutCtrl', function($auth, $alert) {
-        if (!$auth.isAuthenticated()) {
-            return;
-        }
-        $auth.logout()
-            .then(function() {
-                $alert({
-                    content: 'You have been logged out',
-                    animation: 'fadeZoomFadeDown',
-                    type: 'material',
-                    duration: 3
-                });
+ieTanksApp.controller('LoginCtrl', function ($scope, $auth) {
+    $scope.authenticate = function (provider) {
+        $auth.authenticate(provider)
+            .then(function () {
+                alert('You have successfully logged in');
+            })
+            .catch(function (response) {
+                alert('Login failure');
             });
-    });
+    };
+});
 
-ieTanksApp.run(function($rootScope, $location) {
-    $rootScope.newGameId = Math.floor(Math.random()*1000); // FIXME get ID from server instead?
+ieTanksApp.controller('LogoutCtrl', function ($auth) {
+    if (!$auth.isAuthenticated()) {
+        return;
+    }
+    $auth.logout()
+        .then(function () {
+            alert('You have been logged out');
+        });
+});
+
+ieTanksApp.run(function ($rootScope, $location) {
+    $rootScope.newGameId = Math.floor(Math.random() * 1000); // FIXME get ID from server instead?
     $rootScope.isActive = function (viewLocation) {
         return $location.path().indexOf(viewLocation) === 0;
     };

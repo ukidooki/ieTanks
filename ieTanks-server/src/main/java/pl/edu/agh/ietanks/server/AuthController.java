@@ -8,19 +8,17 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MultivaluedMap;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 public class AuthController {
-    private static final String googleClientSecret = "UiyPaGZURKbzQPsjKama9bKb";
+    private static final String googleClientSecret = "MR3csGuHzjJEk9ZpZ3cbEcBD ";
     private static final String grantType = "authorization_code";
     private static final String googleAccessTokenUrl = "https://accounts.google.com/o/oauth2/token";
     private static final String googlePeopleApiUrl = "https://www.googleapis.com/plus/v1/people/me/openIdConnect";
@@ -31,7 +29,7 @@ public class AuthController {
     public AuthTokensService authTokensService;
 
     @RequestMapping(value = "/auth/google", method = RequestMethod.POST)
-    public String loginWithGoogle(@RequestBody AuthResult authResult, HttpServletRequest request) throws Exception {
+    public Map<String, String> loginWithGoogle(@RequestBody AuthResult authResult, HttpServletRequest request) throws Exception {
         MultivaluedMap<String, String> accessData = new MultivaluedMapImpl();
         accessData.add("client_id", authResult.clientId);
         accessData.add("redirect_uri", authResult.redirectUri);
@@ -49,9 +47,27 @@ public class AuthController {
         clientResponse = client.resource(googlePeopleApiUrl).header(authHeaderKey, String.format("Bearer %s", accessToken)).get(ClientResponse.class);
         Map<String, Object> userInfo = getResponseEntity(clientResponse);
 
-        String token = authTokensService.generateToken(request.getRemoteHost(), (String)userInfo.get("sub"), (String)userInfo.get("email"));
+        String token = authTokensService.generateToken(request.getRemoteHost(), (String) userInfo.get("sub"), (String) userInfo.get("email"));
 
-        return token;
+        Map<String, String> result = new HashMap<String, String>();
+        result.put("token", token);
+
+        return result;
+    }
+
+    @RequestMapping(value = "/auth/userId", method = RequestMethod.GET)
+    public String getUserId(@RequestHeader HashMap<String, String> header) {
+        String authenticationToken = header.get("authenticationToken");
+        if (authenticationToken == null) {
+            return "{\"status\":\"access denied\"}";
+        }
+
+        String userId = authTokensService.getUserId(authenticationToken);
+        if (userId == null) {
+            return "{\"status\":\"access denied\"}";
+        }
+
+        return userId;
     }
 
     private Map<String, Object> getResponseEntity(ClientResponse response) throws ClientHandlerException, UniformInterfaceException, IOException {

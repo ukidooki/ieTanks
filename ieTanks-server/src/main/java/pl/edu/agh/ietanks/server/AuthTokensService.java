@@ -35,4 +35,8 @@ public class AuthTokensService {
 
         return generatedToken;
     }
+
+    public String getUserId(String authenticationToken) {
+        return tokensToUsersDic.get(authenticationToken);
+    }
 }
