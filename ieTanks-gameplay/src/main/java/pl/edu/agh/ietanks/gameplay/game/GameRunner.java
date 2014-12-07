@@ -3,11 +3,7 @@ package pl.edu.agh.ietanks.gameplay.game;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import pl.edu.agh.ietanks.boards.model.Board;
-import pl.edu.agh.ietanks.engine.api.BoardDefinition;
-import pl.edu.agh.ietanks.engine.api.Engine;
-import pl.edu.agh.ietanks.engine.api.EngineFactory;
-import pl.edu.agh.ietanks.engine.api.GameConfig;
-import pl.edu.agh.ietanks.engine.api.Position;
+import pl.edu.agh.ietanks.engine.api.*;
 import pl.edu.agh.ietanks.engine.api.events.Event;
 import pl.edu.agh.ietanks.engine.api.events.RoundResults;
 import pl.edu.agh.ietanks.gameplay.bot.BotExecutor;
@@ -58,9 +54,13 @@ class GameRunner implements Runnable, Game {
                         Position.topLeft().toDown(startingPoint.getY()).toRight(startingPoint.getX())
         ).collect(Collectors.toList());
 
-        return new BoardDefinition(width, height, goodPositions);
+        final List<Position> obstaclesPositions = board.getObstacles().stream().map(obstaclePoint ->
+                        Position.topLeft().toDown(obstaclePoint.getY()).toRight(obstaclePoint.getX())
+        ).collect(Collectors.toList());
+
+        return new BoardDefinition(width, height, goodPositions, obstaclesPositions);
     }
-    
+
     private void setupEngineParams() {
         BoardDefinition gameBoardDefinition = toBoardDefinition(gameBoard, bots);
 
@@ -87,7 +87,7 @@ class GameRunner implements Runnable, Game {
 
         historyStorage.storeFinishedGame(this);
     }
-        
+
     @Override
     public GameId getId() {
         return gameId;

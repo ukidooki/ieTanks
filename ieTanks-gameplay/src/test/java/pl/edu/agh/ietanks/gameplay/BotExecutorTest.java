@@ -39,7 +39,8 @@ public class BotExecutorTest {
         HashMap map = new HashMap<Integer, Position>();
 
         List<Position> positions = Arrays.asList(new Position(5, 5), new Position(4, 4));
-        BoardDefinition boardDefinition = new BoardDefinition(20, 20, positions);
+        List<Position> obstacles = Arrays.asList(new Position(1, 1));
+        BoardDefinition boardDefinition = new BoardDefinition(20, 20, positions, obstacles);
         GameplayBoardView board = new BoardState(boardDefinition);
 
         //when

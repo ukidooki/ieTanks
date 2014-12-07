@@ -24,7 +24,7 @@ public class BoardState implements GameplayBoardView {
 
         tanks = new HashMap<>();
         missiles = new ArrayList<>();
-        taken.addAll(tanks.values());
+        taken.addAll(definition.obstacles());
     }
 
     @Override

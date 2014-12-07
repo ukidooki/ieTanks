@@ -106,8 +106,8 @@ public class GameLogicTest {
                 "....");
 
         expectedEvents(
-                new TankMoved(TANK_0, Direction.Right, 2));
-        new TankBumpedIntoWall(TANK_0, Direction.Right, 5);
+                new TankMoved(TANK_0, Direction.Right, 2),
+                new TankBumpedIntoWall(TANK_0, Direction.Right, 5));
     }
 
     @Test
@@ -320,5 +320,25 @@ public class GameLogicTest {
                 ".....",
                 ".....");
         assertThat(logic.board().findMissiles()).hasSize(0);
+    }
+
+    @Test
+    public void shouldTankNotMoveToObstacle() throws Exception {
+        given(
+                "0.#.",
+                "....",
+                "....",
+                "....");
+
+        when(new Move(Direction.Right, 3), TANK_0);
+
+        then(
+                ".0#.",
+                "....",
+                "....",
+                "....");
+
+        expectedEvents(
+                new TankMoved(TANK_0, Direction.Right, 1));
     }
 }

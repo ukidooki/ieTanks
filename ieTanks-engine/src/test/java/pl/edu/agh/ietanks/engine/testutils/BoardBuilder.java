@@ -13,6 +13,7 @@ public class BoardBuilder {
         final int width = asciiRepresentation[0].length();
 
         final List<Position> startingPositions = Lists.newArrayList();
+        final List<Position> obstaclesPositions = Lists.newArrayList();
 
         for (int i = 0; i < height; ++i) {
             for (int j = 0; j < width; ++j) {
@@ -22,12 +23,14 @@ public class BoardBuilder {
                     // nothing to do
                 } else if (element == 'x') {
                     startingPositions.add(Position.topLeft().toDown(i).toRight(j));
+                } else if (element == '#') {
+                    obstaclesPositions.add(Position.topLeft().toDown(i).toRight(j));
                 } else {
                     throw new IllegalArgumentException("Got unexpected character: " + element);
                 }
             }
         }
 
-        return new BoardDefinition(width, height, startingPositions);
+        return new BoardDefinition(width, height, startingPositions, obstaclesPositions);
     }
 }
