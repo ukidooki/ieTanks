@@ -1,6 +1,7 @@
 package pl.edu.agh.ietanks.gameplay;
 
 import org.junit.Test;
+import org.mockito.internal.util.collections.ArrayUtils;
 import pl.edu.agh.ietanks.engine.api.*;
 import pl.edu.agh.ietanks.engine.simple.BoardState;
 import pl.edu.agh.ietanks.engine.simple.actions.Shot;
@@ -9,7 +10,9 @@ import pl.edu.agh.ietanks.gameplay.game.api.BotId;
 import pl.edu.agh.ietanks.gameplay.testutils.ResourceUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -34,12 +37,10 @@ public class BotExecutorTest {
         BotId id = new BotId("1");
         BotExecutor underTest = new BotExecutor(id, pythonAlgorithm);
         HashMap map = new HashMap<Integer, Position>();
-        map.put("1", new Position(5, 5));
-        map.put("2", new Position(4, 4));
-        // TODO: used class outside of API!
-        BoardDefinition boardDefinition = new BoardDefinition(20, 20, map);
+
+        List<Position> positions = Arrays.asList(new Position(5, 5), new Position(4, 4));
+        BoardDefinition boardDefinition = new BoardDefinition(20, 20, positions);
         GameplayBoardView board = new BoardState(boardDefinition);
-        //GameplayBoardView board = null;
 
         //when
         Action resultAction = underTest.performAction(board);
