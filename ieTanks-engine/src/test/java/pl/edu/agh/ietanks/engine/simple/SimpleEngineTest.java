@@ -4,15 +4,15 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 import pl.edu.agh.ietanks.engine.api.*;
-import pl.edu.agh.ietanks.engine.api.events.Event;
-import pl.edu.agh.ietanks.engine.api.events.RoundResults;
-import pl.edu.agh.ietanks.engine.api.events.TankMoved;
+import pl.edu.agh.ietanks.engine.api.events.*;
 import pl.edu.agh.ietanks.engine.simple.actions.Move;
+import pl.edu.agh.ietanks.engine.simple.actions.Shot;
 import pl.edu.agh.ietanks.engine.testutils.BoardBuilder;
 import pl.edu.agh.ietanks.engine.testutils.BotBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -20,6 +20,7 @@ public class SimpleEngineTest {
 
     private static final String TANK_0 = "0";
     private static final String TANK_1 = "1";
+    private static final String TANK_2 = "2";
 
     @Test
     public void shouldMoveTanksInTurns() throws Exception {
@@ -73,5 +74,39 @@ public class SimpleEngineTest {
 
         // then
         assertThat(roundResults.isGameFinished()).isTrue();
+    }
+
+    @Test
+    public void shouldFinishGameWhenLastTankLeft() {
+        // given
+        BoardDefinition startingBoard = BoardBuilder.fromASCII(
+                ".....",
+                ".....",
+                ".....",
+                "x.x.x");
+
+        Bot bot1 = BotBuilder.fromSequence(TANK_0, new Shot(Direction.Right, 1), new Shot(Direction.Right, 1));
+        Bot bot2 = BotBuilder.fromSequence(TANK_1, new Shot(Direction.Right, 1), new Shot(Direction.Right, 1));
+        Bot bot3 = BotBuilder.fromSequence(TANK_2, new Shot(Direction.Right, 1), new Shot(Direction.Right, 1));
+
+        Engine engine = new SimpleEngine();
+        engine.setup(startingBoard, Lists.newArrayList(bot1, bot2, bot3), GameConfig.defaults());
+
+        String firstTank = engine.currentBoard().findTank(Position.topLeft().toDown(3));
+
+        // when
+
+        List<Event> events = Lists.newArrayList();
+
+        for (int i = 0; i < 10; ++i) {
+            RoundResults result = engine.nextMove();
+            events.addAll(result.getRoundEvents());
+
+            if (result.isGameFinished()) break;
+        }
+
+        // then
+
+        assertThat(events).contains(new GameFinished(Optional.of(firstTank)));
     }
 }
