@@ -11,6 +11,7 @@ import pl.edu.agh.ietanks.gameplay.game.api.GameHistory;
 import pl.edu.agh.ietanks.gameplay.game.api.GameId;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class GameHistoryService {
@@ -32,9 +33,9 @@ public class GameHistoryService {
 
     @RequestMapping("/api/game/{gameId}")
     public GamePojo getGame(@ModelAttribute("gameId") GameId gameId) {
-        Game storedGame = gameHistory.getGame(gameId);
-        if(storedGame == null) throw new GameNotFoundException(gameId);
+        Optional<Game> storedGame = gameHistory.getGame(gameId);
+        if(!storedGame.isPresent()) throw new GameNotFoundException(gameId);
 
-        return  new GamePojo(storedGame);
+        return  new GamePojo(storedGame.get());
     }
 }
