@@ -6,7 +6,7 @@ ieTanksServices.factory('REST', ['$resource',
             games:  $resource('/api/game'),         // GET
             game:   $resource('/api/game/:gameId'), // GET|POST
             bot:    $resource('/api/bot'),          // GET|POST
-            maps:   $resource('/api/board')         // GET
+            maps:   $resource('/api/board'),      // GET
             auth:   $resource('/api/login')         // POST
             // add more calls to external components
         };
