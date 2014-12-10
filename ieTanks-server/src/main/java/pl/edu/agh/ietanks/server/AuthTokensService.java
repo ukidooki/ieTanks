@@ -7,9 +7,12 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import org.joda.time.DateTime;
+
+import java.sql.Date;
+import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +27,7 @@ public class AuthTokensService {
         JWTClaimsSet claim = new JWTClaimsSet();
         claim.setSubject(sub);
         claim.setIssuer(host);
-        claim.setExpirationTime(DateTime.now().plusDays(1).toDate());
+        claim.setExpirationTime(Date.from(LocalDateTime.now().plusDays(1).atZone(ZoneId.systemDefault()).toInstant()));
 
         JWSSigner signer = new MACSigner(tokenSecret);
         SignedJWT jwt = new SignedJWT(jwtHeader, claim);

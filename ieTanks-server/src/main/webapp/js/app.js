@@ -41,7 +41,7 @@ ieTanksApp.config(
     function ($authProvider) {
         $authProvider.google({
             url: 'api/auth/google',
-            clientId: '989200984574-h79sl47vm75o4ffo1ccj4timmmtfn4oc.apps.googleusercontent.com'
+            clientId: '835037334788-4drs5n9ugjk4cflsp2pc6kod1apv8sk3.apps.googleusercontent.com'
         });
     }
 );

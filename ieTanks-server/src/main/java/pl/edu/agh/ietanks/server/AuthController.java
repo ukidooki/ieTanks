@@ -18,7 +18,7 @@ import java.util.Map;
 
 @RestController
 public class AuthController {
-    private static final String googleClientSecret = "MR3csGuHzjJEk9ZpZ3cbEcBD ";
+    private static final String googleClientSecret = "MR3csGuHzjJEk9ZpZ3cbEcBD";
     private static final String grantType = "authorization_code";
     private static final String googleAccessTokenUrl = "https://accounts.google.com/o/oauth2/token";
     private static final String googlePeopleApiUrl = "https://www.googleapis.com/plus/v1/people/me/openIdConnect";
