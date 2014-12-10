@@ -24,12 +24,7 @@ ieTanksApp.config(['$routeProvider',
             when('/login', {
                 url: '/login',
                 templateUrl: 'html/login.html',
-                controller: 'LoginCtrl'
-            }).
-            when('/logout', {
-                url: '/logout',
-                template: null,
-                controller: 'LogoutCtrl'
+                controller: 'AuthCtrl'
             }).
             otherwise({
                 redirectTo: '/'
@@ -46,13 +41,11 @@ ieTanksApp.config(
     }
 );
 
-ieTanksApp.controller('NavbarCtrl', function ($scope, $auth) {
+ieTanksApp.controller('AuthCtrl', function ($scope, $auth) {
     $scope.isAuthenticated = function () {
         return $auth.isAuthenticated();
     };
-});
 
-ieTanksApp.controller('LoginCtrl', function ($scope, $auth) {
     $scope.authenticate = function (provider) {
         $auth.authenticate(provider)
             .then(function () {
@@ -62,16 +55,16 @@ ieTanksApp.controller('LoginCtrl', function ($scope, $auth) {
                 alert('Login failure');
             });
     };
-});
 
-ieTanksApp.controller('LogoutCtrl', function ($auth) {
-    if (!$auth.isAuthenticated()) {
-        return;
-    }
-    $auth.logout()
-        .then(function () {
-            alert('You have been logged out');
-        });
+    $scope.logout = function () {
+        if (!$auth.isAuthenticated()) {
+            return;
+        }
+        $auth.logout()
+            .then(function () {
+                alert('You have been logged out');
+            })
+    };
 });
 
 ieTanksApp.run(function ($rootScope, $location) {
