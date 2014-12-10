@@ -1,7 +1,19 @@
 package pl.edu.agh.ietanks.server;
 
 public class AuthResult {
-    public String code;
-    public String clientId;
-    public String redirectUri;
+    private String code;
+    private String clientId;
+    private String redirectUri;
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public String getRedirectUri() {
+        return redirectUri;
+    }
 }

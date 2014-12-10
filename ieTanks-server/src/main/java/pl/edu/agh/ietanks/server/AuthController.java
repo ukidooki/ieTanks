@@ -24,6 +24,7 @@ public class AuthController {
     private static final String googlePeopleApiUrl = "https://www.googleapis.com/plus/v1/people/me/openIdConnect";
     private static final String authHeaderKey = "Authorization";
     private static final ObjectMapper mapper = new ObjectMapper();
+    private final Client client = new Client();
 
     @Autowired
     public AuthTokensService authTokensService;
@@ -31,13 +32,12 @@ public class AuthController {
     @RequestMapping(value = "/auth/google", method = RequestMethod.POST)
     public Map<String, String> loginWithGoogle(@RequestBody AuthResult authResult, HttpServletRequest request) throws Exception {
         MultivaluedMap<String, String> accessData = new MultivaluedMapImpl();
-        accessData.add("client_id", authResult.clientId);
-        accessData.add("redirect_uri", authResult.redirectUri);
+        accessData.add("client_id", authResult.getClientId());
+        accessData.add("redirect_uri", authResult.getRedirectUri());
         accessData.add("client_secret", googleClientSecret);
-        accessData.add("code", authResult.code);
+        accessData.add("code", authResult.getCode());
         accessData.add("grant_type", grantType);
 
-        Client client = new Client();
         ClientResponse clientResponse;
 
         clientResponse = client.resource(googleAccessTokenUrl).entity(accessData).post(ClientResponse.class);
@@ -56,18 +56,12 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/auth/userId", method = RequestMethod.GET)
-    public String getUserId(@RequestHeader HashMap<String, String> header) {
-        String authenticationToken = header.get("authenticationToken");
+    public String getUserId(@RequestHeader("authenticationToken") String authenticationToken) {
         if (authenticationToken == null) {
-            return "{\"status\":\"access denied\"}";
+            return null;
         }
 
-        String userId = authTokensService.getUserId(authenticationToken);
-        if (userId == null) {
-            return "{\"status\":\"access denied\"}";
-        }
-
-        return userId;
+        return authTokensService.getUserId(authenticationToken);
     }
 
     private Map<String, Object> getResponseEntity(ClientResponse response) throws ClientHandlerException, UniformInterfaceException, IOException {
