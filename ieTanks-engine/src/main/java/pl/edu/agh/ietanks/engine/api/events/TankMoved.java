@@ -38,7 +38,7 @@ public class TankMoved extends AbstractTankEvent {
 
         if (step != tankMoved.step) return false;
         if (direction != tankMoved.direction) return false;
-        if (position != tankMoved.position) return false;
+        if (!position.equals(tankMoved.position)) return false;
         if (tankId != null ? !tankId.equals(tankMoved.tankId) : tankMoved.tankId != null) return false;
 
         return true;
