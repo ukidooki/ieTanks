@@ -217,6 +217,21 @@ public class GameLogicTest {
     }
 
     @Test
+    public void shouldMissileBeRemovedJustAfterCreation() throws Exception {
+        given(
+                "....",
+                "0...",
+                "....",
+                "....",
+                "....");
+
+        when(new Shot(Direction.Left, 1), TANK_0);
+
+        // then
+        assertThat(logic.board().findMissiles()).hasSize(0);
+    }
+
+    @Test
     public void shouldMissileAndTankBeRemoved() throws Exception {
         given(
                 "....",

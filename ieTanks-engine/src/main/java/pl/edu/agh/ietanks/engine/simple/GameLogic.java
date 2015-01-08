@@ -184,6 +184,11 @@ public class GameLogic {
         board.createMissile(missile);
         events.add(new MissileCreated(missileId, destination, shot.getDirection(), shot.getSpeed()));
 
+        // if missile destination is not within board, destroy it
+        if (!board.isWithin(destination)) {
+            events.add(new MissileDestroyed(missileId, destination, shot.getDirection(), shot.getSpeed()));
+        }
+
         // remove missiles at the same positions
         if (board.findMissiles(destination).size() > 1) {
 
